@@ -1,0 +1,1068 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Assistência Técnica — Grupo Sohome</title>
+<style>
+@import url('https://fonts.googleapis.com/css2?family=DM+Sans:ital,wght@0,300;0,400;0,500;0,600;1,300&display=swap');
+:root{
+  --brand:      #868279;
+  --brand-dark: #6b6962;
+  --brand-deep: #868279;   /* cabeçalho, rodapé, blocos = mesmo cinza-oliva */
+  --brand-light:#b0ada6;
+  --brand-pale: #f0ede8;
+  --cream:      #faf8f5;
+  --white:      #ffffff;
+  --text:       #3e3d39;
+  --danger:     #c0392b;
+  --success:    #2e7d5e;
+  --warning:    #8b6800;
+  --border:     #d9d6d0;
+}
+*{box-sizing:border-box;margin:0;padding:0;}
+body{font-family:'DM Sans',sans-serif;background:var(--cream);color:var(--text);min-height:100vh;display:flex;flex-direction:column;}
+
+/* ══ HEADER ══════════════════════════════════════════ */
+header{
+  background:var(--brand);
+  padding:0 48px;
+  display:flex;align-items:stretch;justify-content:space-between;
+  min-height:78px;flex-shrink:0;
+}
+.hdr-left{display:flex;align-items:center;gap:28px;}
+.hdr-logo-text{display:flex;flex-direction:column;justify-content:center;line-height:1;}
+.hdr-logo-text .lgo-grupo{
+  font-size:10px;font-weight:300;letter-spacing:.45em;
+  text-transform:uppercase;color:rgba(255,255,255,.72);
+  margin-bottom:5px;
+}
+.hdr-logo-text .lgo-name{
+  font-size:28px;letter-spacing:.06em;color:#fff;
+  display:flex;align-items:baseline;gap:0;
+}
+.lgo-name .so{font-weight:300;}
+.lgo-name .home{font-weight:600;}
+.hdr-divider{width:1px;background:rgba(255,255,255,.2);align-self:stretch;margin:14px 0;}
+.hdr-meta{display:flex;flex-direction:column;justify-content:center;}
+.hdr-meta .sub{font-size:10px;letter-spacing:.18em;text-transform:uppercase;color:rgba(255,255,255,.6);}
+.hdr-meta .tag{font-size:9px;letter-spacing:.1em;text-transform:uppercase;color:rgba(255,255,255,.35);margin-top:4px;}
+.hdr-right{display:flex;align-items:center;}
+
+/* ── Logo H (cabeçalho) ── */
+/*.ico-h{width:44px;height:44px;flex-shrink:0;}  */
+.ico-h {
+  width: 44px;  /* Ou o tamanho que desejar */
+  flex-shrink:0;
+}
+
+
+/* ══ LOGO PRINCIPAL ════════════════════════════════════════ */
+
+.logo-principal {
+  height: 44px; /* Ajuste o valor conforme desejar */
+  width: auto;  /* Mantém a proporção */
+}
+
+
+
+/* ══════════════════════════════════════════ */
+
+
+
+
+/* ══ STEP BAR ════════════════════════════════════════ */
+.step-bar{
+  background:var(--brand-dark);
+  border-top:1px solid rgba(0,0,0,.12);
+  padding:0 48px;display:flex;align-items:center;flex-shrink:0;
+}
+.step-item{
+  display:flex;align-items:center;gap:9px;
+  padding:11px 18px 11px 0;font-size:11px;
+  color:rgba(255,255,255,.45);letter-spacing:.08em;
+  cursor:default;transition:color .2s;
+}
+.step-item.active{color:rgba(255,255,255,.88);}
+.step-item.done{color:var(--success);cursor:pointer;}
+.step-num{
+  width:20px;height:20px;border-radius:50%;border:1px solid currentColor;
+  display:flex;align-items:center;justify-content:center;
+  font-size:10px;font-weight:600;flex-shrink:0;
+}
+.step-item.done .step-num{background:var(--success);border-color:var(--success);color:#fff;}
+.step-divider{width:28px;height:1px;background:rgba(255,255,255,.15);margin:0 4px;}
+
+/* ══ PANELS ══════════════════════════════════════════ */
+.panel{display:none;flex:1;}.panel.active{display:block;}
+.main-content{padding:40px 48px;max-width:1100px;margin:0 auto;}
+
+/* ══ TYPOGRAPHY ══════════════════════════════════════ */
+.section-title{font-size:28px;font-weight:300;color:var(--text);margin-bottom:6px;letter-spacing:-.01em;}
+.section-desc{font-size:13px;color:var(--brand-light);margin-bottom:32px;line-height:1.7;}
+
+/* ══ BLOCK CARDS ═════════════════════════════════════ */
+.block-card{
+  background:var(--white);border:1px solid var(--border);
+  border-radius:3px;overflow:hidden;margin-bottom:18px;transition:border-color .25s;
+}
+.block-card.complete{border-color:#9fceb5;}
+.block-card.invalid{border-color:var(--danger);}
+.block-header{
+  padding:12px 20px;font-size:10px;letter-spacing:.14em;
+  text-transform:uppercase;font-weight:600;
+  background:var(--brand);color:rgba(255,255,255,.7);
+  border-bottom:1px solid rgba(0,0,0,.06);
+  display:flex;align-items:center;justify-content:space-between;
+}
+.block-header-left{display:flex;align-items:center;gap:7px;}
+.block-status{font-size:11px;color:#9fceb5;opacity:0;transition:opacity .2s;font-weight:500;}
+.block-card.complete .block-status{opacity:1;}
+
+.block-body{padding:16px 20px;}
+
+/* ══ CLASSIFICATION GRID ═════════════════════════════ */
+.class-grid{display:grid;grid-template-columns:1fr 1fr;gap:9px;}
+.class-option{
+  display:flex;align-items:center;gap:9px;padding:10px 14px;
+  border:1px solid var(--border);border-radius:3px;cursor:pointer;
+  transition:all .15s;background:var(--white);
+}
+.class-option:hover{border-color:var(--brand);background:var(--brand-pale);}
+.class-option.selected{border-color:var(--brand);background:#eeece8;}
+.class-option input[type=radio]{accent-color:var(--brand);width:14px;height:14px;flex-shrink:0;}
+.class-option label{font-size:13px;cursor:pointer;line-height:1.4;}
+
+/* campo "outros" expansível */
+.outros-field{
+  display:none;margin-top:12px;
+}
+.outros-field.show{display:block;}
+.outros-field textarea{
+  width:100%;padding:10px 13px;border:1px solid var(--border);border-radius:3px;
+  font-family:'DM Sans',sans-serif;font-size:13px;color:var(--text);
+  background:var(--cream);outline:none;resize:vertical;min-height:80px;
+  transition:border-color .15s;
+}
+.outros-field textarea:focus{border-color:var(--brand);}
+.outros-field label{
+  display:block;font-size:10px;letter-spacing:.1em;text-transform:uppercase;
+  color:var(--brand-light);font-weight:500;margin-bottom:6px;
+}
+
+/* ══ QUESTION ROWS ═══════════════════════════════════ */
+.q-row{
+  display:flex;align-items:center;justify-content:space-between;
+  padding:11px 0;border-bottom:1px solid var(--brand-pale);
+}
+.q-row:last-child{border-bottom:none;}
+.q-label{font-size:13px;color:var(--text);line-height:1.4;flex:1;}
+.q-label .note{display:block;font-size:11px;color:var(--brand-light);margin-top:2px;}
+.toggle-group{display:flex;gap:5px;flex-shrink:0;margin-left:16px;}
+.toggle-btn{
+  padding:5px 13px;font-size:11px;border:1px solid var(--border);
+  border-radius:2px;cursor:pointer;font-family:'DM Sans',sans-serif;
+  background:var(--white);color:var(--brand);transition:all .15s;
+}
+.toggle-btn:hover{border-color:var(--brand);}
+.toggle-btn.yes.active{background:var(--success);border-color:var(--success);color:#fff;}
+.toggle-btn.no.active{background:var(--danger);border-color:var(--danger);color:#fff;}
+.toggle-btn.neu.active{background:var(--brand);border-color:var(--brand);color:#fff;}
+
+/* expandable explanation after toggle */
+.toggle-explain{
+  display:none;margin-top:10px;padding:10px 14px;border-radius:3px;
+  font-size:12px;line-height:1.6;
+}
+.toggle-explain.show{display:block;}
+.toggle-explain.ok{background:#eef6f2;border:1px solid #c8e6d8;color:var(--success);}
+.toggle-explain.warn{background:#fdf0ee;border:1px solid #f5d5d0;color:var(--danger);}
+
+/* ══ DATE + COUNTER ══════════════════════════════════ */
+.date-fields{display:grid;grid-template-columns:1fr 1fr;border-top:1px solid var(--border);}
+.date-field{padding:14px 20px;border-right:1px solid var(--border);}
+.date-field:last-of-type{border-right:none;}
+.date-field label{
+  display:block;font-size:10px;letter-spacing:.1em;
+  text-transform:uppercase;color:var(--brand-light);margin-bottom:6px;font-weight:500;
+}
+.date-field input[type=date]{
+  width:100%;padding:8px 11px;border:1px solid var(--border);border-radius:2px;
+  font-family:'DM Sans',sans-serif;font-size:13px;color:var(--text);
+  background:var(--cream);outline:none;transition:border-color .15s;
+}
+.date-field input[type=date]:focus{border-color:var(--brand);}
+.date-field input[type=date].error{border-color:var(--danger);}
+.date-field .field-note{font-size:11px;color:var(--brand-light);margin-top:4px;line-height:1.4;}
+.counter-row{
+  padding:13px 20px;border-top:1px solid var(--border);
+  background:var(--brand-pale);display:flex;align-items:center;gap:18px;flex-wrap:wrap;
+}
+.counter-badge{display:flex;align-items:center;gap:11px;flex:1;min-width:200px;}
+.counter-number{
+  font-size:40px;font-weight:300;line-height:1;min-width:62px;text-align:right;letter-spacing:-.02em;
+}
+.counter-number.ok{color:var(--success);}
+.counter-number.warn{color:var(--warning);}
+.counter-number.over{color:var(--danger);}
+.counter-number.empty{color:var(--brand-light);}
+.counter-info{flex:1;}
+.counter-label{font-size:10px;letter-spacing:.1em;text-transform:uppercase;color:var(--brand-light);margin-bottom:2px;}
+.counter-status{font-size:12px;font-weight:500;line-height:1.4;}
+.counter-bar-wrap{flex:2;min-width:160px;}
+.counter-bar-track{height:4px;background:var(--border);border-radius:2px;overflow:hidden;margin-bottom:4px;}
+.counter-bar-fill{height:100%;border-radius:2px;transition:width .4s,background .3s;width:0%;}
+.counter-bar-labels{display:flex;justify-content:space-between;font-size:10px;color:var(--brand-light);}
+.btn-recalc{
+  padding:6px 13px;background:var(--brand-dark);color:#fff;
+  border:none;border-radius:2px;font-size:10px;letter-spacing:.06em;
+  text-transform:uppercase;font-family:'DM Sans',sans-serif;cursor:pointer;flex-shrink:0;transition:background .2s;
+}
+.btn-recalc:hover{background:var(--brand);}
+
+/* ══ WARRANTY ALERT ══════════════════════════════════ */
+.warranty-alert{
+  display:none;background:#fdf0ee;border:1px solid #f5d5d0;
+  border-left:4px solid var(--danger);border-radius:3px;
+  padding:13px 16px;margin-bottom:18px;font-size:13px;color:var(--danger);line-height:1.6;font-weight:500;
+}
+.warranty-alert.show{display:block;}
+
+/* ══ BLOCO 5 — reparo ════════════════════════════════ */
+.reparo-section{margin-top:0;}
+
+/* ══ ADVANCE ═════════════════════════════════════════ */
+.advance-wrap{
+  margin-top:24px;display:flex;align-items:center;justify-content:space-between;
+  padding:18px 0;border-top:1px solid var(--border);
+}
+.advance-note{font-size:12px;color:var(--brand-light);line-height:1.5;max-width:480px;}
+.btn-advance{
+  padding:12px 30px;background:var(--brand);color:#fff;
+  border:none;border-radius:2px;font-size:11px;letter-spacing:.14em;
+  text-transform:uppercase;font-family:'DM Sans',sans-serif;cursor:pointer;transition:background .2s;flex-shrink:0;
+}
+.btn-advance:hover{background:var(--brand-dark);}
+
+/* ══ FOOTER NOTE ═════════════════════════════════════ */
+.page-footer-note{
+  border-top:1px solid var(--border);padding:16px 48px;max-width:1100px;margin:0 auto;
+}
+.page-footer-note p{font-size:11px;color:var(--brand-light);line-height:1.8;}
+
+/* ══ SITE FOOTER ═════════════════════════════════════ */
+.site-footer{
+  background:var(--brand);padding:18px 48px;
+  display:flex;align-items:center;justify-content:space-between;
+  flex-shrink:0;
+}
+.site-footer .ft-text{font-size:10px;letter-spacing:.14em;text-transform:uppercase;color:rgba(255,255,255,.5);}
+.ico-h-sm{width:36px;height:36px;flex-shrink:0;opacity:.65;}
+
+/* ══ FORM ════════════════════════════════════════════ */
+.form-grid{display:grid;grid-template-columns:1fr 1fr;gap:14px;margin-bottom:14px;}
+.form-full{margin-bottom:14px;}
+.field-group{display:flex;flex-direction:column;gap:5px;}
+.field-group label{font-size:10px;letter-spacing:.1em;text-transform:uppercase;color:var(--brand-light);font-weight:500;}
+.field-group input,.field-group select,.field-group textarea{
+  padding:9px 12px;border:1px solid var(--border);border-radius:2px;
+  font-family:'DM Sans',sans-serif;font-size:13px;color:var(--text);
+  background:var(--cream);outline:none;transition:border-color .15s;width:100%;
+}
+.field-group input:focus,.field-group select:focus,.field-group textarea:focus{border-color:var(--brand);}
+.field-group input[readonly]{background:var(--brand-pale);color:var(--brand-dark);cursor:default;}
+.field-group textarea{resize:vertical;min-height:96px;}
+.field-group .field-note{font-size:11px;color:var(--brand-light);}
+.field-group input.error,.field-group textarea.error,.field-group select.error{border-color:var(--danger) !important;}
+.req-star{color:var(--danger);margin-left:1px;}
+
+/* product search */
+.product-wrap{position:relative;}
+.product-dropdown{
+  position:absolute;top:100%;left:0;right:0;background:var(--white);
+  border:1px solid var(--border);border-top:none;border-radius:0 0 3px 3px;
+  max-height:210px;overflow-y:auto;z-index:100;display:none;box-shadow:0 4px 12px rgba(0,0,0,.07);
+}
+.product-dropdown.open{display:block;}
+.product-item{padding:9px 12px;font-size:13px;cursor:pointer;color:var(--text);border-bottom:1px solid var(--brand-pale);transition:background .1s;}
+.product-item:last-child{border-bottom:none;}
+.product-item:hover{background:var(--brand-pale);}
+.product-item strong{color:var(--brand);}
+
+/* file upload */
+.upload-zone{
+  border:2px dashed var(--border);border-radius:3px;padding:24px;
+  text-align:center;cursor:pointer;transition:all .2s;background:var(--white);
+}
+.upload-zone:hover,.upload-zone.drag-over{border-color:var(--brand);background:var(--brand-pale);}
+.upload-zone p{font-size:13px;color:var(--brand-light);margin-top:5px;}
+.upload-zone .up-icon{font-size:24px;margin-bottom:3px;}
+.file-list{margin-top:10px;display:flex;flex-wrap:wrap;gap:7px;}
+.file-chip{
+  display:flex;align-items:center;gap:5px;padding:4px 9px;
+  background:var(--brand-pale);border:1px solid var(--border);
+  border-radius:20px;font-size:11px;color:var(--text);
+}
+.file-chip button{background:none;border:none;cursor:pointer;color:var(--brand-light);font-size:14px;line-height:1;padding:0;}
+.file-chip button:hover{color:var(--danger);}
+
+/* reincidencia */
+.recidencia-row{
+  display:flex;align-items:center;gap:14px;padding:13px 15px;
+  border:1px solid var(--border);border-radius:3px;background:var(--white);margin-bottom:12px;
+}
+.recidencia-label{font-size:13px;flex:1;}
+.switch{position:relative;width:42px;height:22px;flex-shrink:0;}
+.switch input{opacity:0;width:0;height:0;}
+.slider{position:absolute;inset:0;background:var(--border);border-radius:22px;cursor:pointer;transition:.3s;}
+.slider:before{content:'';position:absolute;width:16px;height:16px;left:3px;bottom:3px;background:#fff;border-radius:50%;transition:.3s;}
+input:checked+.slider{background:var(--success);}
+input:checked+.slider:before{transform:translateX(20px);}
+
+/* form sections */
+.form-section{margin-bottom:26px;}
+.form-section-title{
+  font-size:10px;letter-spacing:.14em;text-transform:uppercase;font-weight:600;
+  color:var(--brand);margin-bottom:13px;padding-bottom:7px;border-bottom:1px solid var(--border);
+}
+
+/* submit */
+.btn-submit{
+  width:100%;padding:15px;background:var(--brand);color:#fff;
+  border:none;border-radius:2px;font-size:11px;letter-spacing:.18em;
+  text-transform:uppercase;font-family:'DM Sans',sans-serif;cursor:pointer;transition:background .2s;margin-top:6px;
+}
+.btn-submit:hover{background:var(--brand-dark);}
+
+/* error hint */
+.error-hint{
+  display:none;margin-top:14px;padding:12px 16px;border-radius:3px;
+  background:#fdf0ee;border:1px solid #f5d5d0;color:var(--danger);font-size:13px;line-height:1.6;
+}
+.error-hint.show{display:block;}
+
+/* confirmation */
+.confirmation{display:none;flex-direction:column;align-items:center;justify-content:center;min-height:60vh;text-align:center;padding:56px 40px;}
+.confirmation.show{display:flex;}
+.conf-icon{font-size:56px;margin-bottom:20px;}
+.conf-title{font-size:34px;font-weight:300;color:var(--text);margin-bottom:6px;}
+.conf-subtitle{font-size:13px;color:var(--brand-light);margin-bottom:28px;}
+.conf-ticket{background:var(--white);border:1px solid var(--border);border-radius:3px;padding:24px 36px;margin-bottom:28px;}
+.conf-ticket-label{font-size:10px;letter-spacing:.14em;text-transform:uppercase;color:var(--brand-light);margin-bottom:7px;}
+.conf-ticket-number{font-size:44px;font-weight:300;color:var(--brand);letter-spacing:.06em;}
+.conf-info{font-size:13px;color:var(--brand-light);line-height:1.7;max-width:460px;margin-bottom:28px;}
+.conf-info strong{color:var(--text);}
+.btn-new{
+  padding:12px 30px;background:var(--brand);color:#fff;border:none;border-radius:2px;
+  font-size:10px;letter-spacing:.14em;text-transform:uppercase;
+  font-family:'DM Sans',sans-serif;cursor:pointer;transition:background .2s;
+}
+.btn-new:hover{background:var(--brand-dark);}
+
+@media(max-width:768px){
+  header,.site-footer{padding:0 20px;}
+  .step-bar,.page-footer-note{padding:0 20px;}
+  .main-content{padding:24px 20px;}
+  .class-grid,.form-grid{grid-template-columns:1fr;}
+  .date-fields{grid-template-columns:1fr;}
+  .date-field{border-right:none;border-bottom:1px solid var(--border);}
+  .date-field:last-of-type{border-bottom:none;}
+  .counter-row,.advance-wrap{flex-direction:column;align-items:flex-start;}
+  .hdr-divider{display:none;}
+}
+</style>
+</head>
+<body>
+
+<!-- ══ HEADER ══════════════════════════════════════════ -->
+<header>
+  <div class="hdr-left">
+    <!-- Logo GRUPO SOHOME texto fiel à imagem -->
+    <div class="hdr-right">
+  	<img 
+    		src="https://gruposohome.com/wp-content/uploads/elementor/thumbs/Logotipo-Grupo-Sohome-r0ndeoiyx17wxl4d0krujxz43zovmymi8m4tgi7n72.webp" 
+    		alt="Logotipo Grupo Sohome" 
+    		class="ico-h logo-principal"
+  	>
+    </div>
+    <div class="hdr-divider"></div>
+    <div class="hdr-meta">
+      <div class="sub">Assistência Técnica</div>
+      <div class="tag">Sistema de Triagem &amp; Registro — Exportação</div>
+    </div>
+  </div>
+
+  <!-- Ícone H — fiel à imagem: quadrado externo + porta + h -->
+  <div class="hdr-right">
+
+    <div class="hdr-right">
+      <img src="J:/COLABORADORES/MANUELA/ASSISTENCIA/formulario_assistencia/LOGO.svg" alt="Logo H" class="ico-h">
+    </div>
+  </div>
+</header>
+
+<!-- Step bar -->
+<div class="step-bar" id="stepBar">
+  <div class="step-item active" id="step1-item">
+    <div class="step-num">1</div><span>Triagem</span>
+  </div>
+  <div class="step-divider"></div>
+  <div class="step-item" id="step2-item">
+    <div class="step-num">2</div><span>Formulário</span>
+  </div>
+</div>
+
+<!-- ══ ABA 1 — TRIAGEM ══════════════════════════════════ -->
+<div class="panel active" id="panel-triagem">
+<div class="main-content">
+
+  <div class="section-title">Triagem da Ocorrência</div>
+  <p class="section-desc">Preencha todos os blocos abaixo antes de avançar. As datas serão carregadas automaticamente para o formulário.</p>
+
+  <!-- BLOCO 1 -->
+  <div class="block-card" id="card-b1">
+    <div class="block-header">
+      <div class="block-header-left">📋 Bloco 1 — Classificação Inicial da Ocorrência</div>
+      <span class="block-status">✓ Preenchido</span>
+    </div>
+    <div class="block-body">
+      <p style="font-size:13px;color:var(--brand-light);margin-bottom:11px;">Selecione o tipo de ocorrência que melhor descreve a situação:<span class="req-star">*</span></p>
+      <div class="class-grid">
+        <div class="class-option" onclick="selectClass(this,'defeito')">
+          <input type="radio" name="b1" value="defeito">
+          <label>🔧 Defeito de fabricação</label>
+        </div>
+        <div class="class-option" onclick="selectClass(this,'avaria')">
+          <input type="radio" name="b1" value="avaria">
+          <label>📦 Avaria de transporte</label>
+        </div>
+        <div class="class-option" onclick="selectClass(this,'erro-pedido')">
+          <input type="radio" name="b1" value="erro-pedido">
+          <label>📄 Erro de pedido / especificação</label>
+        </div>
+        <div class="class-option" onclick="selectClass(this,'outros')">
+          <input type="radio" name="b1" value="outros">
+          <label>📝 Outros</label>
+        </div>
+      </div>
+      <!-- Campo livre "Outros" -->
+      <div class="outros-field" id="outrosField">
+        <label>Descreva a ocorrência <span class="req-star">*</span></label>
+        <textarea id="outrosText" placeholder="Descreva o tipo de ocorrência com o máximo de detalhes..."></textarea>
+      </div>
+    </div>
+  </div>
+
+  <!-- BLOCO 2 -->
+  <div class="block-card" id="card-b2">
+    <div class="block-header">
+      <div class="block-header-left">📅 Bloco 2 — Tempo e Datas</div>
+      <span class="block-status">✓ Preenchido</span>
+    </div>
+    <div class="block-body" style="padding-bottom:0;">
+      <div class="q-row" style="border-bottom:none;padding-bottom:0;">
+        <div class="q-label">O produto foi inspecionado no recebimento? <span class="req-star">*</span></div>
+        <div class="toggle-group">
+          <button class="toggle-btn yes" onclick="toggleYN(this);checkB2()">Sim</button>
+          <button class="toggle-btn no"  onclick="toggleYN(this);checkB2()">Não</button>
+        </div>
+      </div>
+    </div>
+    <div class="date-fields">
+      <div class="date-field">
+        <label>Data da Fatura (Invoice) <span class="req-star">*</span></label>
+        <input type="date" id="invoiceDate" onchange="updateCounter();checkB2()">
+        <span class="field-note">Data de emissão da fatura comercial</span>
+      </div>
+      <div class="date-field">
+        <label>Data de Recebimento da Mercadoria <span class="req-star">*</span></label>
+        <input type="date" id="receiptDate" onchange="updateCounter();checkB2()">
+        <span class="field-note">Data em que o contêiner foi recebido no destino</span>
+      </div>
+    </div>
+    <div class="counter-row">
+      <div class="counter-badge">
+        <div class="counter-number empty" id="counterNumber">—</div>
+        <div class="counter-info">
+          <div class="counter-label">Dias desde o recebimento</div>
+          <div class="counter-status" id="counterStatus" style="color:var(--brand-light);">Preencha a data de recebimento para calcular</div>
+        </div>
+      </div>
+      <div class="counter-bar-wrap">
+        <div class="counter-bar-track"><div class="counter-bar-fill" id="counterBarFill"></div></div>
+        <div class="counter-bar-labels"><span>0 dias</span><span>6 meses</span><span>1 ano (limite)</span></div>
+      </div>
+      <button class="btn-recalc" onclick="updateCounter()">↺ Recalcular</button>
+    </div>
+  </div>
+
+  <!-- Alerta fora de garantia -->
+  <div class="warranty-alert" id="warrantyAlert">
+    ⛔ <strong>Fora do prazo de garantia de 1 ano.</strong> A assistência técnica padrão não é aplicável. Apenas danos estruturais comprovados podem ser avaliados em caráter excepcional, mediante aprovação técnica da Sohome.
+  </div>
+
+  <!-- BLOCO 3 -->
+  <div class="block-card" id="card-b3">
+    <div class="block-header">
+      <div class="block-header-left">🚚 Bloco 3 — Transporte</div>
+      <span class="block-status">✓ Preenchido</span>
+    </div>
+    <div class="block-body">
+      <div class="q-row">
+        <div class="q-label">A embalagem apresentava avaria externa visível? <span class="req-star">*</span>
+          <span class="note">Amassados, rasgos, umidade ou sinais de impacto</span>
+        </div>
+        <div class="toggle-group">
+          <button class="toggle-btn yes" onclick="toggleYN(this);checkB3()">Sim</button>
+          <button class="toggle-btn no"  onclick="toggleYN(this);checkB3()">Não</button>
+        </div>
+      </div>
+      <div class="q-row" style="border-bottom:none;">
+        <div class="q-label">Fotos da embalagem <strong>antes</strong> da abertura estão disponíveis? <span class="req-star">*</span>
+          <span class="note">Essencial para avarias de transporte — sem foto a análise não pode ser concluída</span>
+        </div>
+        <div class="toggle-group">
+          <button class="toggle-btn yes" onclick="toggleYN(this);checkB3()">Sim</button>
+          <button class="toggle-btn no"  onclick="toggleYN(this);checkB3()">Não</button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- BLOCO 4 -->
+  <div class="block-card" id="card-b4">
+    <div class="block-header">
+      <div class="block-header-left">🔍 Bloco 4 — Detalhamento do Defeito</div>
+      <span class="block-status">✓ Preenchido</span>
+    </div>
+    <div class="block-body">
+      <div class="q-row">
+        <div class="q-label">O defeito <strong>impede o uso</strong> do produto? <span class="req-star">*</span></div>
+        <div class="toggle-group">
+          <button class="toggle-btn yes" onclick="toggleYN(this);checkB4()">Sim</button>
+          <button class="toggle-btn no"  onclick="toggleYN(this);checkB4()">Não</button>
+        </div>
+      </div>
+      <div class="q-row" style="border-bottom:none;">
+        <div class="q-label">O defeito é: <span class="req-star">*</span></div>
+        <div class="toggle-group">
+          <button class="toggle-btn neu" onclick="toggleExclusive(this);checkB4()">Visível</button>
+          <button class="toggle-btn neu" onclick="toggleExclusive(this);checkB4()">Afeta a funcionalidade</button>
+          <button class="toggle-btn neu" onclick="toggleExclusive(this);checkB4()">Ambos</button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- BLOCO 5 -->
+  <div class="block-card" id="card-b5">
+    <div class="block-header">
+      <div class="block-header-left">🔧 Bloco 5 — Possibilidade de Reparo</div>
+      <span class="block-status">✓ Preenchido</span>
+    </div>
+    <div class="block-body">
+      <div class="q-row" style="border-bottom:none;">
+        <div class="q-label">
+          <strong>Este defeito pode ser reparado localmente no destino?</strong> <span class="req-star">*</span>
+          <span class="note">Considere a disponibilidade de prestadores de serviço e peças na região do cliente</span>
+        </div>
+        <div class="toggle-group">
+          <button class="toggle-btn yes" onclick="toggleReparoYN(this,'sim')">Sim</button>
+          <button class="toggle-btn no"  onclick="toggleReparoYN(this,'nao')">Não</button>
+        </div>
+      </div>
+      <!-- Explicação Sim -->
+      <div class="toggle-explain ok" id="reparo-sim">
+        ✓ <strong>Reparo local viável.</strong> O cliente deverá contratar um prestador especializado. O procedimento seguirá o fluxo: orçamento → aprovação Sohome → execução → invoice de serviço → reembolso. Lembre-se: nenhum pagamento é realizado sem invoice emitida pelo prestador.
+      </div>
+      <!-- Explicação Não -->
+      <div class="toggle-explain warn" id="reparo-nao">
+        ✗ <strong>Reparo local inviável.</strong> Sem prestadores capacitados ou peças disponíveis na região, a Sohome avaliará a decisão final após análise das evidências.
+      </div>
+    </div>
+  </div>
+
+  <!-- Avançar -->
+  <div class="advance-wrap">
+    <p class="advance-note">Todos os campos marcados com <span class="req-star">*</span> são obrigatórios. As datas e a classificação serão carregadas automaticamente para o formulário.</p>
+    <button class="btn-advance" onclick="validateAndAdvance()">Avançar para o Formulário →</button>
+  </div>
+  <div class="error-hint" id="triageError">Preencha todos os campos obrigatórios da triagem antes de avançar.</div>
+
+</div><!-- /main-content -->
+
+<div class="page-footer-note">
+  <p><strong style="color:var(--brand-dark);font-weight:500;">Referência de cobertura:</strong>
+  São procedentes de AT defeitos de fabricação comprovados, reincidências, componentes faltantes ou incorretos, reclamações dentro do prazo de 1 ano.
+  Não são procedentes variações naturais de mármore, madeira ou textura, divergências de até 2cm em produtos artesanais, e reclamações após 1 ano.</p>
+</div>
+</div><!-- /panel-triagem -->
+
+<!-- ══ ABA 2 — FORMULÁRIO ══════════════════════════════ -->
+<div class="panel" id="panel-formulario">
+
+  <div class="confirmation" id="confirmationScreen">
+    <div class="conf-icon">✅</div>
+    <div class="conf-title">Reclamação Registrada!</div>
+    <div class="conf-subtitle">Sua solicitação foi enviada com sucesso.</div>
+    <div class="conf-ticket">
+      <div class="conf-ticket-label">Número de Atendimento</div>
+      <div class="conf-ticket-number" id="ticketNumber">—</div>
+    </div>
+    <div class="conf-info">
+      Guarde este número para acompanhar o andamento da assistência técnica.<br>
+      Em até <strong>24 horas</strong> nossa equipe entrará em contato pelo e-mail cadastrado com a definição da tratativa.<br><br>
+      Para dúvidas, informe este número ao seu representante comercial Sohome.
+    </div>
+    <button class="btn-new" onclick="resetAll()">+ Abrir nova assistência</button>
+  </div>
+
+  <div class="main-content" id="formContent">
+    <div class="section-title">Formulário de Assistência</div>
+    <p class="section-desc">Todos os campos são obrigatórios. As datas da triagem são carregadas automaticamente.</p>
+
+    <div class="form-section">
+      <div class="form-section-title">Dados do Lojista</div>
+      <div class="form-grid">
+        <div class="field-group">
+          <label>Razão Social <span class="req-star">*</span></label>
+          <input type="text" id="f-razao" placeholder="Nome completo da empresa">
+        </div>
+        <div class="field-group">
+          <label>CNPJ / Tax ID <span class="req-star">*</span></label>
+          <input type="text" id="f-cnpj" placeholder="Ex: 00.000.000/0001-00">
+        </div>
+      </div>
+      <div class="form-grid">
+        <div class="field-group">
+          <label>País <span class="req-star">*</span></label>
+          <input type="text" id="f-pais" placeholder="País de origem da loja">
+        </div>
+        <div class="field-group">
+          <label>Telefone <span class="req-star">*</span></label>
+          <input type="text" id="f-tel" placeholder="+00 000 000 0000">
+        </div>
+      </div>
+      <div class="form-grid">
+        <div class="field-group">
+          <label>E-mail de Contato <span class="req-star">*</span></label>
+          <input type="email" id="f-email" placeholder="email@empresa.com">
+          <span class="field-note">⚠ Este e-mail receberá todas as tratativas — verifique com atenção</span>
+        </div>
+        <div class="field-group">
+          <label>Nome do Responsável <span class="req-star">*</span></label>
+          <input type="text" id="f-resp" placeholder="Nome completo">
+        </div>
+      </div>
+    </div>
+
+    <div class="form-section">
+      <div class="form-section-title">Dados da Reclamação</div>
+      <div class="form-grid">
+        <div class="field-group">
+          <label>Commercial Invoice <span class="req-star">*</span></label>
+          <input type="text" id="f-invoice" placeholder="Número exato da invoice do produto reclamado">
+          <span class="field-note">Invoice errada trava o processo — não inserir número genérico</span>
+        </div>
+        <div class="field-group">
+          <label>Quantidade de Módulos <span class="req-star">*</span></label>
+          <input type="number" id="f-modulos" min="1" placeholder="Ex: 1">
+          <span class="field-note">Apenas os módulos afetados pelo defeito</span>
+        </div>
+      </div>
+      <div class="form-full">
+        <div class="field-group">
+          <label>Produto <span class="req-star">*</span></label>
+          <div class="product-wrap">
+            <input type="text" id="f-produto-input" placeholder="Digite para pesquisar..." oninput="filterProducts()" autocomplete="off">
+            <input type="hidden" id="f-produto-value">
+            <div class="product-dropdown" id="productDropdown"></div>
+          </div>
+        </div>
+      </div>
+      <div class="recidencia-row">
+        <div class="recidencia-label">
+          <strong>Reincidência?</strong>
+          <span style="display:block;font-size:11px;color:var(--brand-light);margin-top:2px;">Marque se já houve assistência técnica anterior neste produto</span>
+        </div>
+        <label class="switch">
+          <input type="checkbox" id="f-reincidencia" onchange="toggleReincidencia()">
+          <span class="slider"></span>
+        </label>
+      </div>
+      <div id="reincidencia-extra" style="display:none;margin-bottom:14px;">
+        <div class="field-group">
+          <label>Invoice de Origem (1ª ocorrência) <span class="req-star">*</span></label>
+          <input type="text" id="f-invoice-orig" placeholder="Número da invoice da primeira assistência">
+        </div>
+      </div>
+      <div class="form-full">
+        <div class="field-group">
+          <label>Descrição do Problema <span class="req-star">*</span></label>
+          <textarea id="f-descricao" placeholder="Descreva: o que ocorreu, como ocorreu e quando foi identificado. Quanto mais detalhes, mais assertiva será a análise."></textarea>
+        </div>
+      </div>
+    </div>
+
+    <div class="form-section">
+      <div class="form-section-title">Datas — Preenchidas automaticamente pela triagem</div>
+      <div class="form-grid">
+        <div class="field-group">
+          <label>Data da Invoice <span class="req-star">*</span></label>
+          <input type="date" id="f-data-invoice" readonly>
+          <span class="field-note">Para alterar, volte à triagem.</span>
+        </div>
+        <div class="field-group">
+          <label>Data de Recebimento da Mercadoria <span class="req-star">*</span></label>
+          <input type="date" id="f-data-recebimento" readonly>
+          <span class="field-note">Para alterar, volte à triagem.</span>
+        </div>
+      </div>
+    </div>
+
+    <div class="form-section">
+      <div class="form-section-title">Anexos — Fotos e Vídeos <span class="req-star">*</span></div>
+      <p style="font-size:13px;color:var(--brand-light);margin-bottom:12px;">Obrigatório: 1 foto do produto completo · 1 foto do defeito · 1 foto no ambiente · 1 vídeo demonstrando o problema</p>
+      <div class="upload-zone" id="uploadZone" onclick="document.getElementById('fileInput').click()" ondragover="dragOver(event)" ondragleave="dragLeave(event)" ondrop="dropFiles(event)">
+        <div class="up-icon">📎</div>
+        <strong style="font-size:13px;color:var(--text);">Clique ou arraste arquivos aqui</strong>
+        <p>Imagens (JPG, PNG) e vídeos (MP4, MOV) — vários arquivos ao mesmo tempo</p>
+        <input type="file" id="fileInput" multiple accept="image/*,video/*" style="display:none" onchange="handleFiles(this.files)">
+      </div>
+      <div class="file-list" id="fileList"></div>
+    </div>
+
+    <div class="error-hint" id="formError">Preencha todos os campos obrigatórios antes de enviar.</div>
+    <button class="btn-submit" onclick="submitForm()">Enviar Assistência Técnica →</button>
+  </div>
+
+</div><!-- /panel-formulario -->
+
+<!-- ══ SITE FOOTER ══════════════════════════════════════ -->
+<footer class="site-footer">
+  <span class="ft-text">Grupo Sohome — Assistência Técnica Exportação</span>
+  <div class="hdr-right">
+        <img src="J:/COLABORADORES/MANUELA/ASSISTENCIA/formulario_assistencia/LOGO.svg" alt="Logo H" class="ico-h">
+     </div>
+</footer>
+
+<script>
+const PRODUCTS = [
+  "ABACO","ABDERA","ACCORD","ACORES","ACESSORIOS","ACLIVE","ADANA","ADIGE","ADRIA",
+  "AGADIR","AGATA","AGRA","AGUEDA","AIGLE","AION","AIRTON","AIZY","AJUDA","ALAGOA",
+  "ALAMO","ALAVA","ALBA","ALBANO","ALBUFEIRA","ALBURNIA","ALCALA","ALCAMO","ALCARIA",
+  "ALCAZAR","ALCOBA","ALCOCHETE","ALCOI","ALDEIA","ALDON","ALEA","ALECTO","ALEGRE",
+  "ALENTEJO","ALERIA","ALERTO","ALFAMA","ALFARO","ALFERMA","ALFOLD","ALGECIRAS",
+  "ALGOR","ALHAMBRA","ALIA","ALIANO","ALICANTE","ALIER","ALIJO","ALIMA","ALIO",
+  "ALION","ALIOS","ALIOTH","ALISEDA","ALITO","ALIVA","ALIXAN","ALIZ","ALIZO",
+  "ALJEZUR","ALJUBARROTA","ALKAID","ALKEN","ALKMAAR","ALLANCHE","ALLARD","ALLASSAC",
+  "ALLAUCH","ALLEGRE","ALLENBACH","ALLENC","ALLES","ALLIER","ALLIGNY","ALLINGES",
+  "ALLONS","ALLONZIER","ALLOS","ALLOUE","ALMA","ALMADA","ALMANSA","ALMARAZ",
+  "ALMARGEM","ALMARGEN","ALMASSORA","ALMENDRAL","ALMERIA","ALMOGIA","ALMONACID",
+  "ALMONASTER","ALMONTE","ALMOROX","ALMOSTER","ALMUDEVAR","ALMUNECAR","ALMUSSAFES",
+  "ALORA","ALOSNO","ALOVERA","ALOZAINA","ALPALHAO","ALPEDRETE","ALPEDRINHA","ALPEDRIZ",
+  "BERAT","BRUGES","CANNES","CENTURY","COMO","FIUME","NAPOLES","SANZIO","SEQUOIA",
+  "VENICE","VIENNA","ZURIQUE"
+].sort();
+
+let uploadedFiles = [];
+
+// ── Navigation ────────────────────────────────────────
+function goToForm() {
+  syncDatesToForm();
+  document.getElementById('panel-triagem').classList.remove('active');
+  document.getElementById('panel-formulario').classList.add('active');
+  document.getElementById('step1-item').classList.remove('active');
+  document.getElementById('step1-item').classList.add('done');
+  document.getElementById('step2-item').classList.add('active');
+  window.scrollTo({top:0,behavior:'smooth'});
+}
+
+function goToTriagem() {
+  document.getElementById('panel-formulario').classList.remove('active');
+  document.getElementById('panel-triagem').classList.add('active');
+  document.getElementById('step2-item').classList.remove('active');
+  document.getElementById('step1-item').classList.remove('done');
+  document.getElementById('step1-item').classList.add('active');
+  window.scrollTo({top:0,behavior:'smooth'});
+}
+
+document.getElementById('step1-item').addEventListener('click', () => {
+  if (document.getElementById('panel-formulario').classList.contains('active')) goToTriagem();
+});
+
+// ── Triagem validation ────────────────────────────────
+function validateAndAdvance() {
+  let ok = true;
+  const err = document.getElementById('triageError');
+
+  // Bloco 1: classificação
+  const b1 = document.querySelector('#card-b1 input[type=radio]:checked');
+  document.getElementById('card-b1').classList.toggle('invalid', !b1);
+  if (!b1) ok = false;
+
+  // Bloco 1: se "outros", precisa de texto
+  if (b1 && b1.value === 'outros') {
+    const ot = document.getElementById('outrosText').value.trim();
+    document.getElementById('outrosText').classList.toggle('error', !ot);
+    if (!ot) ok = false;
+  }
+
+  // Bloco 2: inspeção + datas
+  const b2insp = document.querySelector('#card-b2 .toggle-btn.active');
+  const ivDate = document.getElementById('invoiceDate').value;
+  const rcDate = document.getElementById('receiptDate').value;
+  const b2ok = !!b2insp && !!ivDate && !!rcDate;
+  document.getElementById('card-b2').classList.toggle('invalid', !b2ok);
+  document.getElementById('invoiceDate').classList.toggle('error', !ivDate);
+  document.getElementById('receiptDate').classList.toggle('error', !rcDate);
+  if (!b2ok) ok = false;
+
+  // Bloco 3: 2 perguntas
+  const b3groups = document.querySelectorAll('#card-b3 .toggle-group');
+  const b3ok = Array.from(b3groups).every(g => g.querySelector('.active'));
+  document.getElementById('card-b3').classList.toggle('invalid', !b3ok);
+  if (!b3ok) ok = false;
+
+  // Bloco 4: 2 perguntas
+  const b4groups = document.querySelectorAll('#card-b4 .toggle-group');
+  const b4ok = Array.from(b4groups).every(g => g.querySelector('.active'));
+  document.getElementById('card-b4').classList.toggle('invalid', !b4ok);
+  if (!b4ok) ok = false;
+
+  // Bloco 5: reparo
+  const b5ok = !!document.querySelector('#card-b5 .toggle-btn.active');
+  document.getElementById('card-b5').classList.toggle('invalid', !b5ok);
+  if (!b5ok) ok = false;
+
+  if (!ok) {
+    err.classList.add('show');
+    // scroll to first invalid
+    const first = document.querySelector('.block-card.invalid');
+    if (first) first.scrollIntoView({behavior:'smooth', block:'center'});
+    return;
+  }
+  err.classList.remove('show');
+  goToForm();
+}
+
+// ── Block completion ──────────────────────────────────
+function markBlock(id, done) {
+  const card = document.getElementById(id);
+  card.classList.toggle('complete', done);
+  if (done) card.classList.remove('invalid');
+}
+
+function checkB2() {
+  const insp  = !!document.querySelector('#card-b2 .toggle-btn.active');
+  const iv    = !!document.getElementById('invoiceDate').value;
+  const rc    = !!document.getElementById('receiptDate').value;
+  markBlock('card-b2', insp && iv && rc);
+}
+function checkB3() {
+  markBlock('card-b3', Array.from(document.querySelectorAll('#card-b3 .toggle-group')).every(g=>g.querySelector('.active')));
+}
+function checkB4() {
+  markBlock('card-b4', Array.from(document.querySelectorAll('#card-b4 .toggle-group')).every(g=>g.querySelector('.active')));
+}
+
+// ── Toggle helpers ────────────────────────────────────
+function toggleYN(btn) {
+  btn.parentElement.querySelectorAll('.toggle-btn').forEach(b=>b.classList.remove('active'));
+  btn.classList.add('active');
+}
+function toggleExclusive(btn) {
+  btn.parentElement.querySelectorAll('.toggle-btn').forEach(b=>b.classList.remove('active'));
+  btn.classList.add('active');
+}
+
+// ── Bloco 1 ───────────────────────────────────────────
+function selectClass(el, val) {
+  document.querySelectorAll('#card-b1 .class-option').forEach(o=>o.classList.remove('selected'));
+  el.classList.add('selected');
+  el.querySelector('input').checked = true;
+  markBlock('card-b1', true);
+  // mostrar/ocultar campo "outros"
+  const field = document.getElementById('outrosField');
+  if (val === 'outros') {
+    field.classList.add('show');
+  } else {
+    field.classList.remove('show');
+    document.getElementById('outrosText').value = '';
+    document.getElementById('outrosText').classList.remove('error');
+  }
+}
+
+// ── Bloco 5 — reparo ──────────────────────────────────
+function toggleReparoYN(btn, val) {
+  document.querySelectorAll('#card-b5 .toggle-btn').forEach(b=>b.classList.remove('active'));
+  btn.classList.add('active');
+  document.getElementById('reparo-sim').classList.toggle('show', val==='sim');
+  document.getElementById('reparo-nao').classList.toggle('show', val==='nao');
+  markBlock('card-b5', true);
+}
+
+// ── Counter ───────────────────────────────────────────
+function updateCounter() {
+  const rv    = document.getElementById('receiptDate').value;
+  const numEl = document.getElementById('counterNumber');
+  const stEl  = document.getElementById('counterStatus');
+  const bar   = document.getElementById('counterBarFill');
+  const wa    = document.getElementById('warrantyAlert');
+  if (!rv) {
+    numEl.textContent='—'; numEl.className='counter-number empty';
+    stEl.textContent='Preencha a data de recebimento para calcular'; stEl.style.color='var(--brand-light)';
+    bar.style.width='0%'; bar.style.background='var(--border)';
+    wa.classList.remove('show'); return;
+  }
+  const today   = new Date(); today.setHours(0,0,0,0);
+  const receipt = new Date(rv+'T00:00:00');
+  const days    = Math.floor((today-receipt)/(1000*60*60*24));
+  const rem     = 365-days;
+  const pct     = Math.min(100,Math.max(0,(days/365)*100));
+  numEl.textContent = Math.max(0,days);
+  let bc,st,sc;
+  if(days<0){bc='var(--border)';st='Data no futuro — verifique o preenchimento';sc='var(--brand-light)';numEl.className='counter-number empty';wa.classList.remove('show');}
+  else if(days<=270){bc='var(--success)';st='✓ Dentro do prazo — faltam '+rem+' dias para o limite de 1 ano';sc='var(--success)';numEl.className='counter-number ok';wa.classList.remove('show');}
+  else if(days<=365){bc='var(--warning)';st='⚠ Próximo do limite — faltam apenas '+rem+' dia(s)';sc='var(--warning)';numEl.className='counter-number warn';wa.classList.remove('show');}
+  else{bc='var(--danger)';st='✗ Fora do prazo — '+Math.abs(rem)+' dias além do limite de 1 ano';sc='var(--danger)';numEl.className='counter-number over';wa.classList.add('show');}
+  stEl.textContent=st; stEl.style.color=sc;
+  bar.style.width=pct+'%'; bar.style.background=bc;
+}
+
+// ── Sync dates ────────────────────────────────────────
+function syncDatesToForm() {
+  const iv = document.getElementById('invoiceDate').value;
+  const rv = document.getElementById('receiptDate').value;
+  if(iv) document.getElementById('f-data-invoice').value=iv;
+  if(rv) document.getElementById('f-data-recebimento').value=rv;
+}
+
+// ── Product search ────────────────────────────────────
+function filterProducts() {
+  const q  = document.getElementById('f-produto-input').value.trim().toUpperCase();
+  const dd = document.getElementById('productDropdown');
+  document.getElementById('f-produto-value').value='';
+  if(!q){dd.classList.remove('open');return;}
+  const m = PRODUCTS.filter(p=>p.includes(q)).slice(0,30);
+  if(!m.length){dd.innerHTML='<div class="product-item" style="color:var(--brand-light);">Nenhum produto encontrado</div>';dd.classList.add('open');return;}
+  dd.innerHTML=m.map(p=>'<div class="product-item" onclick="selectProduct(\''+p+'\')">'+p.replace(new RegExp(q,'g'),'<strong>'+q+'</strong>')+'</div>').join('');
+  dd.classList.add('open');
+}
+function selectProduct(name){
+  document.getElementById('f-produto-input').value=name;
+  document.getElementById('f-produto-value').value=name;
+  document.getElementById('productDropdown').classList.remove('open');
+}
+document.addEventListener('click',e=>{
+  if(!e.target.closest('.product-wrap')) document.getElementById('productDropdown').classList.remove('open');
+});
+
+// ── Reincidência ──────────────────────────────────────
+function toggleReincidencia(){
+  document.getElementById('reincidencia-extra').style.display=document.getElementById('f-reincidencia').checked?'block':'none';
+}
+
+// ── File upload ───────────────────────────────────────
+function handleFiles(files){
+  Array.from(files).forEach(f=>{if(!uploadedFiles.find(u=>u.name===f.name&&u.size===f.size))uploadedFiles.push(f);});
+  renderFileList();
+}
+function renderFileList(){
+  document.getElementById('fileList').innerHTML=uploadedFiles.map((f,i)=>`<div class="file-chip"><span>${f.type.startsWith('video')?'🎥':'📷'} ${f.name}</span><button onclick="removeFile(${i})" title="Remover">×</button></div>`).join('');
+}
+function removeFile(i){uploadedFiles.splice(i,1);renderFileList();}
+function dragOver(e){e.preventDefault();document.getElementById('uploadZone').classList.add('drag-over');}
+function dragLeave(){document.getElementById('uploadZone').classList.remove('drag-over');}
+function dropFiles(e){e.preventDefault();dragLeave();handleFiles(e.dataTransfer.files);}
+
+// ── Submit form ───────────────────────────────────────
+function submitForm(){
+  const err = document.getElementById('formError');
+  let ok = true;
+
+  // text/number/email inputs
+  const req = ['f-razao','f-cnpj','f-pais','f-tel','f-email','f-resp','f-invoice','f-modulos','f-produto-value','f-descricao'];
+  req.forEach(id=>{
+    const el=document.getElementById(id);
+    const empty = !el.value.trim();
+    el.classList.toggle('error', empty);
+    if(empty) ok=false;
+  });
+
+  // dates (readonly but must have value from triagem)
+  ['f-data-invoice','f-data-recebimento'].forEach(id=>{
+    const el=document.getElementById(id);
+    const empty=!el.value;
+    el.classList.toggle('error',empty);
+    if(empty) ok=false;
+  });
+
+  // reincidencia invoice
+  if(document.getElementById('f-reincidencia').checked){
+    const el=document.getElementById('f-invoice-orig');
+    const empty=!el.value.trim();
+    el.classList.toggle('error',empty);
+    if(empty) ok=false;
+  }
+
+  // at least 1 file
+  if(uploadedFiles.length===0){
+    document.getElementById('uploadZone').style.borderColor='var(--danger)';
+    ok=false;
+  } else {
+    document.getElementById('uploadZone').style.borderColor='';
+  }
+
+  if(!ok){err.classList.add('show');err.scrollIntoView({behavior:'smooth',block:'center'});return;}
+  err.classList.remove('show');
+
+  const ticket='AT-'+new Date().getFullYear()+'-'+String(Math.floor(10000+Math.random()*90000));
+  document.getElementById('ticketNumber').textContent=ticket;
+  document.getElementById('formContent').style.display='none';
+  document.getElementById('confirmationScreen').classList.add('show');
+  window.scrollTo({top:0,behavior:'smooth'});
+}
+
+// ── Reset — limpa tudo e volta ao início limpo ─────────
+function resetAll(){
+  // limpa formulário
+  ['f-razao','f-cnpj','f-pais','f-tel','f-email','f-resp','f-invoice','f-modulos',
+   'f-produto-input','f-produto-value','f-descricao','f-invoice-orig'].forEach(id=>{
+    const el=document.getElementById(id);
+    if(el){el.value='';el.classList.remove('error');}
+  });
+  document.getElementById('f-reincidencia').checked=false;
+  document.getElementById('reincidencia-extra').style.display='none';
+  uploadedFiles=[];renderFileList();
+  document.getElementById('formContent').style.display='block';
+  document.getElementById('confirmationScreen').classList.remove('show');
+  document.getElementById('formError').classList.remove('show');
+  document.getElementById('uploadZone').style.borderColor='';
+
+  // limpa triagem
+  document.querySelectorAll('#card-b1 .class-option').forEach(o=>o.classList.remove('selected'));
+  document.querySelectorAll('input[name=b1]').forEach(r=>r.checked=false);
+  document.getElementById('outrosField').classList.remove('show');
+  document.getElementById('outrosText').value='';
+  document.querySelectorAll('.toggle-btn').forEach(b=>b.classList.remove('active'));
+  document.getElementById('reparo-sim').classList.remove('show');
+  document.getElementById('reparo-nao').classList.remove('show');
+  document.getElementById('invoiceDate').value='';
+  document.getElementById('receiptDate').value='';
+  document.getElementById('invoiceDate').classList.remove('error');
+  document.getElementById('receiptDate').classList.remove('error');
+  ['card-b1','card-b2','card-b3','card-b4','card-b5'].forEach(id=>{
+    const c=document.getElementById(id);
+    c.classList.remove('complete','invalid');
+  });
+  document.getElementById('warrantyAlert').classList.remove('show');
+  document.getElementById('triageError').classList.remove('show');
+  updateCounter();
+
+  // volta para passo 1 limpo
+  goToTriagem();
+}
+</script>
+</body>
+</html>
