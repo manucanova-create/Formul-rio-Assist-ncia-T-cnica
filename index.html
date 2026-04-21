@@ -10,7 +10,6 @@
 :root{
   --brand:      #868279;
   --brand-dark: #6b6962;
-  --brand-deep: #868279;   /* cabeçalho, rodapé, blocos = mesmo cinza-oliva */
   --brand-light:#b0ada6;
   --brand-pale: #f0ede8;
   --cream:      #faf8f5;
@@ -22,354 +21,210 @@
   --border:     #d9d6d0;
 }
 *{box-sizing:border-box;margin:0;padding:0;}
-body{font-family:'DM Sans',sans-serif;background:var(--cream);color:var(--text);min-height:100vh;display:flex;flex-direction:column;}
+body{font-family:'DM Sans',sans-serif;background:var(--cream);color:var(--text);min-height:100vh;display:flex;flex-direction:column;font-size:15px;}
 
 /* ══ HEADER ══════════════════════════════════════════ */
-header{
-  background:var(--brand);
-  padding:0 48px;
-  display:flex;align-items:stretch;justify-content:space-between;
-  min-height:78px;flex-shrink:0;
-}
+header{background:var(--brand);padding:0 48px;display:flex;align-items:stretch;justify-content:space-between;min-height:78px;flex-shrink:0;}
 .hdr-left{display:flex;align-items:center;gap:28px;}
-.hdr-logo-text{display:flex;flex-direction:column;justify-content:center;line-height:1;}
-.hdr-logo-text .lgo-grupo{
-  font-size:10px;font-weight:300;letter-spacing:.45em;
-  text-transform:uppercase;color:rgba(255,255,255,.72);
-  margin-bottom:5px;
-}
-.hdr-logo-text .lgo-name{
-  font-size:28px;letter-spacing:.06em;color:#fff;
-  display:flex;align-items:baseline;gap:0;
-}
-.lgo-name .so{font-weight:300;}
-.lgo-name .home{font-weight:600;}
 .hdr-divider{width:1px;background:rgba(255,255,255,.2);align-self:stretch;margin:14px 0;}
 .hdr-meta{display:flex;flex-direction:column;justify-content:center;}
 .hdr-meta .sub{font-size:10px;letter-spacing:.18em;text-transform:uppercase;color:rgba(255,255,255,.6);}
 .hdr-meta .tag{font-size:9px;letter-spacing:.1em;text-transform:uppercase;color:rgba(255,255,255,.35);margin-top:4px;}
 .hdr-right{display:flex;align-items:center;}
-
-/* ── Logo H (cabeçalho) ── */
-/*.ico-h{width:80px;height:80px;flex-shrink:0;}  */
-.ico-h {
-  width: 44px;  /* Ou o tamanho que desejar */
-  flex-shrink:0;
-}
-
-
-/* ══ LOGO PRINCIPAL ════════════════════════════════════════ */
-
-.logo-principal {
-  height: 70px; /* Ajuste o valor conforme desejar */
-  width: auto;  /* Mantém a proporção */
-}
-
-
-
-/* ══════════════════════════════════════════ */
-
-
-
+.ico-h{width:44px;flex-shrink:0;}
+.logo-principal{height:70px;width:auto;}
 
 /* ══ STEP BAR ════════════════════════════════════════ */
-.step-bar{
-  background:var(--brand-dark);
-  border-top:1px solid rgba(0,0,0,.12);
-  padding:0 48px;display:flex;align-items:center;flex-shrink:0;
-}
-.step-item{
-  display:flex;align-items:center;gap:9px;
-  padding:11px 18px 11px 0;font-size:11px;
-  color:rgba(255,255,255,.45);letter-spacing:.08em;
-  cursor:default;transition:color .2s;
-}
-.step-item.active{color:rgba(255,255,255,.88);}
+.step-bar{background:var(--brand-dark);border-top:1px solid rgba(0,0,0,.12);padding:0 48px;display:flex;align-items:center;flex-shrink:0;}
+.step-item{display:flex;align-items:center;gap:10px;padding:14px 22px 14px 0;font-size:13px;color:rgba(255,255,255,.4);letter-spacing:.05em;cursor:default;transition:color .2s;}
+.step-item.active{color:#fff;}
 .step-item.done{color:var(--success);cursor:pointer;}
-.step-num{
-  width:20px;height:20px;border-radius:50%;border:1px solid currentColor;
-  display:flex;align-items:center;justify-content:center;
-  font-size:10px;font-weight:600;flex-shrink:0;
-}
+.step-num{width:26px;height:26px;border-radius:50%;border:1.5px solid currentColor;display:flex;align-items:center;justify-content:center;font-size:11px;font-weight:700;flex-shrink:0;}
 .step-item.done .step-num{background:var(--success);border-color:var(--success);color:#fff;}
-.step-divider{width:28px;height:1px;background:rgba(255,255,255,.15);margin:0 4px;}
+.step-item.active .step-num{border-color:#fff;}
+.step-divider{flex:1;max-width:80px;height:1px;background:rgba(255,255,255,.15);margin:0 4px;}
 
 /* ══ PANELS ══════════════════════════════════════════ */
 .panel{display:none;flex:1;}.panel.active{display:block;}
-.main-content{padding:40px 48px;max-width:1100px;margin:0 auto;}
+.main-content{padding:42px 48px;max-width:1080px;margin:0 auto;}
 
-/* ══ TYPOGRAPHY ══════════════════════════════════════ */
-.section-title{font-size:28px;font-weight:300;color:var(--text);margin-bottom:6px;letter-spacing:-.01em;}
-.section-desc{font-size:13px;color:var(--brand-light);margin-bottom:32px;line-height:1.7;}
+/* ══ PAGE TITLES ═════════════════════════════════════ */
+.page-title{font-size:26px;font-weight:300;color:var(--text);margin-bottom:6px;letter-spacing:-.01em;}
+.page-desc{font-size:15px;color:var(--brand-light);margin-bottom:34px;line-height:1.7;}
 
-/* ══ BLOCK CARDS ═════════════════════════════════════ */
-.block-card{
-  background:var(--white);border:1px solid var(--border);
-  border-radius:3px;overflow:hidden;margin-bottom:18px;transition:border-color .25s;
+/* ══ SECTION DIVIDER ═════════════════════════════════ */
+.section-divider{
+  font-size:10px;letter-spacing:.16em;text-transform:uppercase;font-weight:700;
+  color:var(--brand);margin:32px 0 16px;padding-bottom:8px;
+  border-bottom:2px solid var(--brand-pale);
+  display:flex;align-items:center;gap:8px;
 }
-.block-card.complete{border-color:#9fceb5;}
-.block-card.invalid{border-color:var(--danger);}
-.block-header{
-  padding:12px 20px;font-size:10px;letter-spacing:.14em;
-  text-transform:uppercase;font-weight:600;
-  background:var(--brand);color:rgba(255,255,255,.7);
-  border-bottom:1px solid rgba(0,0,0,.06);
+
+/* ══ CARD ════════════════════════════════════════════ */
+.card{background:var(--white);border:1px solid var(--border);border-radius:4px;overflow:hidden;margin-bottom:16px;transition:border-color .2s;}
+.card.complete{border-color:#9fceb5;}
+.card.invalid{border-color:var(--danger);}
+.card-header{
+  padding:13px 22px;font-size:10px;letter-spacing:.14em;text-transform:uppercase;font-weight:700;
+  background:var(--brand);color:rgba(255,255,255,.75);
   display:flex;align-items:center;justify-content:space-between;
 }
-.block-header-left{display:flex;align-items:center;gap:7px;}
-.block-status{font-size:11px;color:#9fceb5;opacity:0;transition:opacity .2s;font-weight:500;}
-.block-card.complete .block-status{opacity:1;}
+.card-status{font-size:12px;color:#9fceb5;opacity:0;transition:opacity .2s;font-weight:500;}
+.card.complete .card-status{opacity:1;}
+.card-body{padding:20px 22px;}
 
-.block-body{padding:16px 20px;}
-
-/* ══ CLASSIFICATION GRID ═════════════════════════════ */
-.class-grid{display:grid;grid-template-columns:1fr 1fr;gap:9px;}
-.class-option{
-  display:flex;align-items:center;gap:9px;padding:10px 14px;
-  border:1px solid var(--border);border-radius:3px;cursor:pointer;
-  transition:all .15s;background:var(--white);
-}
-.class-option:hover{border-color:var(--brand);background:var(--brand-pale);}
-.class-option.selected{border-color:var(--brand);background:#eeece8;}
-.class-option input[type=radio]{accent-color:var(--brand);width:14px;height:14px;flex-shrink:0;}
-.class-option label{font-size:13px;cursor:pointer;line-height:1.4;}
-
-/* campo "outros" expansível */
-.outros-field{
-  display:none;margin-top:12px;
-}
-.outros-field.show{display:block;}
-.outros-field textarea{
-  width:100%;padding:10px 13px;border:1px solid var(--border);border-radius:3px;
-  font-family:'DM Sans',sans-serif;font-size:13px;color:var(--text);
-  background:var(--cream);outline:none;resize:vertical;min-height:80px;
-  transition:border-color .15s;
-}
-.outros-field textarea:focus{border-color:var(--brand);}
-.outros-field label{
-  display:block;font-size:10px;letter-spacing:.1em;text-transform:uppercase;
-  color:var(--brand-light);font-weight:500;margin-bottom:6px;
-}
-
-/* ══ QUESTION ROWS ═══════════════════════════════════ */
-.q-row{
-  display:flex;align-items:center;justify-content:space-between;
-  padding:11px 0;border-bottom:1px solid var(--brand-pale);
-}
-.q-row:last-child{border-bottom:none;}
-.q-label{font-size:13px;color:var(--text);line-height:1.4;flex:1;}
-.q-label .note{display:block;font-size:11px;color:var(--brand-light);margin-top:2px;}
-.toggle-group{display:flex;gap:5px;flex-shrink:0;margin-left:16px;}
-.toggle-btn{
-  padding:5px 13px;font-size:11px;border:1px solid var(--border);
-  border-radius:2px;cursor:pointer;font-family:'DM Sans',sans-serif;
-  background:var(--white);color:var(--brand);transition:all .15s;
-}
-.toggle-btn:hover{border-color:var(--brand);}
-.toggle-btn.yes.active{background:var(--success);border-color:var(--success);color:#fff;}
-.toggle-btn.no.active{background:var(--danger);border-color:var(--danger);color:#fff;}
-.toggle-btn.neu.active{background:var(--brand);border-color:var(--brand);color:#fff;}
-
-/* expandable explanation after toggle */
-.toggle-explain{
-  display:none;margin-top:10px;padding:10px 14px;border-radius:3px;
-  font-size:12px;line-height:1.6;
-}
-.toggle-explain.show{display:block;}
-.toggle-explain.ok{background:#eef6f2;border:1px solid #c8e6d8;color:var(--success);}
-.toggle-explain.warn{background:#fdf0ee;border:1px solid #f5d5d0;color:var(--danger);}
-
-/* ══ DATE + COUNTER ══════════════════════════════════ */
-.date-fields{display:grid;grid-template-columns:1fr 1fr;border-top:1px solid var(--border);}
-.date-field{padding:14px 20px;border-right:1px solid var(--border);}
-.date-field:last-of-type{border-right:none;}
-.date-field label{
-  display:block;font-size:10px;letter-spacing:.1em;
-  text-transform:uppercase;color:var(--brand-light);margin-bottom:6px;font-weight:500;
-}
-.date-field input[type=date]{
-  width:100%;padding:8px 11px;border:1px solid var(--border);border-radius:2px;
-  font-family:'DM Sans',sans-serif;font-size:13px;color:var(--text);
-  background:var(--cream);outline:none;transition:border-color .15s;
-}
-.date-field input[type=date]:focus{border-color:var(--brand);}
-.date-field input[type=date].error{border-color:var(--danger);}
-.date-field .field-note{font-size:11px;color:var(--brand-light);margin-top:4px;line-height:1.4;}
-.counter-row{
-  padding:13px 20px;border-top:1px solid var(--border);
-  background:var(--brand-pale);display:flex;align-items:center;gap:18px;flex-wrap:wrap;
-}
-.counter-badge{display:flex;align-items:center;gap:11px;flex:1;min-width:200px;}
-.counter-number{
-  font-size:40px;font-weight:300;line-height:1;min-width:62px;text-align:right;letter-spacing:-.02em;
-}
-.counter-number.ok{color:var(--success);}
-.counter-number.warn{color:var(--warning);}
-.counter-number.over{color:var(--danger);}
-.counter-number.empty{color:var(--brand-light);}
-.counter-info{flex:1;}
-.counter-label{font-size:10px;letter-spacing:.1em;text-transform:uppercase;color:var(--brand-light);margin-bottom:2px;}
-.counter-status{font-size:12px;font-weight:500;line-height:1.4;}
-.counter-bar-wrap{flex:2;min-width:160px;}
-.counter-bar-track{height:4px;background:var(--border);border-radius:2px;overflow:hidden;margin-bottom:4px;}
-.counter-bar-fill{height:100%;border-radius:2px;transition:width .4s,background .3s;width:0%;}
-.counter-bar-labels{display:flex;justify-content:space-between;font-size:10px;color:var(--brand-light);}
-.btn-recalc{
-  padding:6px 13px;background:var(--brand-dark);color:#fff;
-  border:none;border-radius:2px;font-size:10px;letter-spacing:.06em;
-  text-transform:uppercase;font-family:'DM Sans',sans-serif;cursor:pointer;flex-shrink:0;transition:background .2s;
-}
-.btn-recalc:hover{background:var(--brand);}
-
-/* ══ WARRANTY ALERT ══════════════════════════════════ */
-.warranty-alert{
-  display:none;background:#fdf0ee;border:1px solid #f5d5d0;
-  border-left:4px solid var(--danger);border-radius:3px;
-  padding:13px 16px;margin-bottom:18px;font-size:13px;color:var(--danger);line-height:1.6;font-weight:500;
-}
-.warranty-alert.show{display:block;}
-
-/* ══ BLOCO 5 — reparo ════════════════════════════════ */
-.reparo-section{margin-top:0;}
-
-/* ══ ADVANCE ═════════════════════════════════════════ */
-.advance-wrap{
-  margin-top:24px;display:flex;align-items:center;justify-content:space-between;
-  padding:18px 0;border-top:1px solid var(--border);
-}
-.advance-note{font-size:12px;color:var(--brand-light);line-height:1.5;max-width:480px;}
-.btn-advance{
-  padding:12px 30px;background:var(--brand);color:#fff;
-  border:none;border-radius:2px;font-size:11px;letter-spacing:.14em;
-  text-transform:uppercase;font-family:'DM Sans',sans-serif;cursor:pointer;transition:background .2s;flex-shrink:0;
-}
-.btn-advance:hover{background:var(--brand-dark);}
-
-/* ══ FOOTER NOTE ═════════════════════════════════════ */
-.page-footer-note{
-  border-top:1px solid var(--border);padding:16px 48px;max-width:1100px;margin:0 auto;
-}
-.page-footer-note p{font-size:11px;color:var(--brand-light);line-height:1.8;}
-
-/* ══ SITE FOOTER ═════════════════════════════════════ */
-.site-footer{
-  background:var(--brand);padding:18px 48px;
-  display:flex;align-items:center;justify-content:space-between;
-  flex-shrink:0;
-}
-.site-footer .ft-text{font-size:10px;letter-spacing:.14em;text-transform:uppercase;color:rgba(255,255,255,.5);}
-.ico-h-sm{width:36px;height:36px;flex-shrink:0;opacity:.65;}
-
-/* ══ FORM ════════════════════════════════════════════ */
-.form-grid{display:grid;grid-template-columns:1fr 1fr;gap:14px;margin-bottom:14px;}
-.form-full{margin-bottom:14px;}
-.field-group{display:flex;flex-direction:column;gap:5px;}
-.field-group label{font-size:10px;letter-spacing:.1em;text-transform:uppercase;color:var(--brand-light);font-weight:500;}
-.field-group input,.field-group select,.field-group textarea{
-  padding:9px 12px;border:1px solid var(--border);border-radius:2px;
-  font-family:'DM Sans',sans-serif;font-size:13px;color:var(--text);
+/* ══ FORM FIELDS ═════════════════════════════════════ */
+.form-grid{display:grid;grid-template-columns:1fr 1fr;gap:16px;margin-bottom:16px;}
+.form-grid-3{display:grid;grid-template-columns:2fr 1fr 1fr;gap:16px;margin-bottom:16px;}
+.form-full{margin-bottom:16px;}
+.field{display:flex;flex-direction:column;gap:6px;}
+.field label{font-size:11px;letter-spacing:.1em;text-transform:uppercase;color:var(--brand-light);font-weight:600;}
+.field input,.field select,.field textarea{
+  padding:11px 14px;border:1px solid var(--border);border-radius:3px;
+  font-family:'DM Sans',sans-serif;font-size:15px;color:var(--text);
   background:var(--cream);outline:none;transition:border-color .15s;width:100%;
 }
-.field-group input:focus,.field-group select:focus,.field-group textarea:focus{border-color:var(--brand);}
-.field-group input[readonly]{background:var(--brand-pale);color:var(--brand-dark);cursor:default;}
-.field-group textarea{resize:vertical;min-height:96px;}
-.field-group .field-note{font-size:11px;color:var(--brand-light);}
-.field-group input.error,.field-group textarea.error,.field-group select.error{border-color:var(--danger) !important;}
-.req-star{color:var(--danger);margin-left:1px;}
+.field input:focus,.field select:focus,.field textarea:focus{border-color:var(--brand);}
+.field input[readonly]{background:var(--brand-pale);color:var(--brand-dark);cursor:default;border-style:dashed;}
+.field textarea{resize:vertical;min-height:108px;line-height:1.6;}
+.field .hint{font-size:12px;color:var(--brand-light);line-height:1.4;}
+.field input.err,.field textarea.err{border-color:var(--danger)!important;}
+.req{color:var(--danger);margin-left:1px;}
 
 /* product search */
 .product-wrap{position:relative;}
-.product-dropdown{
-  position:absolute;top:100%;left:0;right:0;background:var(--white);
-  border:1px solid var(--border);border-top:none;border-radius:0 0 3px 3px;
-  max-height:210px;overflow-y:auto;z-index:100;display:none;box-shadow:0 4px 12px rgba(0,0,0,.07);
-}
+.product-dropdown{position:absolute;top:100%;left:0;right:0;background:var(--white);border:1px solid var(--border);border-top:none;border-radius:0 0 4px 4px;max-height:220px;overflow-y:auto;z-index:200;display:none;box-shadow:0 6px 16px rgba(0,0,0,.08);}
 .product-dropdown.open{display:block;}
-.product-item{padding:9px 12px;font-size:13px;cursor:pointer;color:var(--text);border-bottom:1px solid var(--brand-pale);transition:background .1s;}
-.product-item:last-child{border-bottom:none;}
-.product-item:hover{background:var(--brand-pale);}
-.product-item strong{color:var(--brand);}
+.pd-item{padding:11px 14px;font-size:15px;cursor:pointer;color:var(--text);border-bottom:1px solid var(--brand-pale);transition:background .1s;}
+.pd-item:last-child{border-bottom:none;}
+.pd-item:hover{background:var(--brand-pale);}
+.pd-item strong{color:var(--brand);}
 
-/* file upload */
-.upload-zone{
-  border:2px dashed var(--border);border-radius:3px;padding:24px;
-  text-align:center;cursor:pointer;transition:all .2s;background:var(--white);
-}
+/* ══ TOGGLE QUESTIONS ════════════════════════════════ */
+.q-row{display:flex;align-items:flex-start;justify-content:space-between;padding:16px 0;border-bottom:1px solid var(--brand-pale);}
+.q-row:last-child{border-bottom:none;}
+.q-label{font-size:15px;color:var(--text);line-height:1.5;flex:1;padding-right:20px;}
+.q-label .note{display:block;font-size:12px;color:var(--brand-light);margin-top:4px;}
+.tg{display:flex;gap:7px;flex-shrink:0;padding-top:2px;}
+.tb{padding:8px 18px;font-size:13px;border:1px solid var(--border);border-radius:3px;cursor:pointer;font-family:'DM Sans',sans-serif;background:var(--white);color:var(--brand);transition:all .15s;}
+.tb:hover{border-color:var(--brand);}
+.tb.yes.on{background:var(--success);border-color:var(--success);color:#fff;}
+.tb.no.on{background:var(--danger);border-color:var(--danger);color:#fff;}
+.tb.neu.on{background:var(--brand);border-color:var(--brand);color:#fff;}
+
+/* expand panels */
+.expand{display:none;margin-top:14px;padding:16px 18px;border-radius:3px;font-size:14px;line-height:1.65;}
+.expand.show{display:block;}
+.expand.ok{background:#eef6f2;border:1px solid #c8e6d8;color:var(--success);}
+.expand.warn{background:#fdf0ee;border:1px solid #f5d5d0;color:var(--danger);}
+
+/* reparo fields */
+.reparo-fields{display:none;margin-top:16px;background:var(--brand-pale);border:1px solid var(--border);border-radius:3px;padding:20px;}
+.reparo-fields.show{display:block;}
+
+/* ══ UPLOAD ZONE ═════════════════════════════════════ */
+.upload-zone{border:2px dashed var(--border);border-radius:3px;padding:28px;text-align:center;cursor:pointer;transition:all .2s;background:var(--white);}
 .upload-zone:hover,.upload-zone.drag-over{border-color:var(--brand);background:var(--brand-pale);}
+.upload-zone .up-icon{font-size:28px;margin-bottom:5px;}
+.upload-zone strong{font-size:15px;color:var(--text);}
 .upload-zone p{font-size:13px;color:var(--brand-light);margin-top:5px;}
-.upload-zone .up-icon{font-size:24px;margin-bottom:3px;}
-.file-list{margin-top:10px;display:flex;flex-wrap:wrap;gap:7px;}
-.file-chip{
-  display:flex;align-items:center;gap:5px;padding:4px 9px;
-  background:var(--brand-pale);border:1px solid var(--border);
-  border-radius:20px;font-size:11px;color:var(--text);
-}
-.file-chip button{background:none;border:none;cursor:pointer;color:var(--brand-light);font-size:14px;line-height:1;padding:0;}
-.file-chip button:hover{color:var(--danger);}
+.file-list{margin-top:12px;display:flex;flex-wrap:wrap;gap:8px;}
+.chip{display:flex;align-items:center;gap:6px;padding:6px 12px;background:var(--brand-pale);border:1px solid var(--border);border-radius:20px;font-size:13px;color:var(--text);}
+.chip button{background:none;border:none;cursor:pointer;color:var(--brand-light);font-size:16px;line-height:1;padding:0;}
+.chip button:hover{color:var(--danger);}
 
-/* reincidencia */
-.recidencia-row{
-  display:flex;align-items:center;gap:14px;padding:13px 15px;
-  border:1px solid var(--border);border-radius:3px;background:var(--white);margin-bottom:12px;
-}
-.recidencia-label{font-size:13px;flex:1;}
-.switch{position:relative;width:42px;height:22px;flex-shrink:0;}
+/* ══ DATE + COUNTER ══════════════════════════════════ */
+.date-fields{display:grid;grid-template-columns:1fr 1fr;}
+.date-field{padding:16px 22px;border-right:1px solid var(--border);}
+.date-field:last-of-type{border-right:none;}
+.date-field label{display:block;font-size:11px;letter-spacing:.1em;text-transform:uppercase;color:var(--brand-light);margin-bottom:7px;font-weight:600;}
+.date-field input[type=date]{width:100%;padding:10px 13px;border:1px solid var(--border);border-radius:3px;font-family:'DM Sans',sans-serif;font-size:15px;color:var(--text);background:var(--cream);outline:none;transition:border-color .15s;}
+.date-field input[type=date]:focus{border-color:var(--brand);}
+.date-field input[type=date].err{border-color:var(--danger);}
+.date-field .hint{font-size:12px;color:var(--brand-light);margin-top:5px;}
+.counter-row{padding:16px 22px;background:var(--brand-pale);display:flex;align-items:center;gap:20px;flex-wrap:wrap;}
+.counter-badge{display:flex;align-items:center;gap:14px;flex:1;min-width:210px;}
+.counter-num{font-size:44px;font-weight:300;line-height:1;min-width:68px;text-align:right;letter-spacing:-.02em;}
+.counter-num.ok{color:var(--success);}.counter-num.warn{color:var(--warning);}.counter-num.over{color:var(--danger);}.counter-num.empty{color:var(--brand-light);}
+.counter-info{flex:1;}
+.counter-lbl{font-size:10px;letter-spacing:.1em;text-transform:uppercase;color:var(--brand-light);margin-bottom:3px;}
+.counter-st{font-size:13px;font-weight:500;line-height:1.4;}
+.bar-wrap{flex:2;min-width:160px;}
+.bar-track{height:5px;background:var(--border);border-radius:2px;overflow:hidden;margin-bottom:5px;}
+.bar-fill{height:100%;border-radius:2px;transition:width .4s,background .3s;width:0%;}
+.bar-labels{display:flex;justify-content:space-between;font-size:11px;color:var(--brand-light);}
+.btn-recalc{padding:8px 15px;background:var(--brand-dark);color:#fff;border:none;border-radius:3px;font-size:11px;letter-spacing:.06em;text-transform:uppercase;font-family:'DM Sans',sans-serif;cursor:pointer;flex-shrink:0;transition:background .2s;}
+.btn-recalc:hover{background:var(--brand);}
+
+/* ══ WARRANTY ALERT ══════════════════════════════════ */
+.warranty-alert{display:none;background:#fdf0ee;border:1px solid #f5d5d0;border-left:4px solid var(--danger);border-radius:3px;padding:14px 18px;margin-top:16px;font-size:14px;color:var(--danger);line-height:1.6;font-weight:500;}
+.warranty-alert.show{display:block;}
+
+/* ══ SWITCH (reincidência) ═══════════════════════════ */
+.switch-row{display:flex;align-items:center;gap:14px;padding:14px 16px;border:1px solid var(--border);border-radius:3px;background:var(--white);margin-top:12px;}
+.switch-label{font-size:15px;flex:1;}
+.switch{position:relative;width:44px;height:24px;flex-shrink:0;}
 .switch input{opacity:0;width:0;height:0;}
-.slider{position:absolute;inset:0;background:var(--border);border-radius:22px;cursor:pointer;transition:.3s;}
-.slider:before{content:'';position:absolute;width:16px;height:16px;left:3px;bottom:3px;background:#fff;border-radius:50%;transition:.3s;}
+.slider{position:absolute;inset:0;background:var(--border);border-radius:24px;cursor:pointer;transition:.3s;}
+.slider:before{content:'';position:absolute;width:18px;height:18px;left:3px;bottom:3px;background:#fff;border-radius:50%;transition:.3s;}
 input:checked+.slider{background:var(--success);}
 input:checked+.slider:before{transform:translateX(20px);}
 
-/* form sections */
-.form-section{margin-bottom:26px;}
-.form-section-title{
-  font-size:10px;letter-spacing:.14em;text-transform:uppercase;font-weight:600;
-  color:var(--brand);margin-bottom:13px;padding-bottom:7px;border-bottom:1px solid var(--border);
-}
+/* ══ CLASS GRID ══════════════════════════════════════ */
+.class-grid{display:grid;grid-template-columns:1fr 1fr;gap:10px;}
+.class-opt{display:flex;align-items:center;gap:10px;padding:13px 16px;border:1px solid var(--border);border-radius:3px;cursor:pointer;transition:all .15s;background:var(--white);}
+.class-opt:hover{border-color:var(--brand);background:var(--brand-pale);}
+.class-opt.sel{border-color:var(--brand);background:#eeece8;}
+.class-opt input[type=radio]{accent-color:var(--brand);width:15px;height:15px;flex-shrink:0;}
+.class-opt label{font-size:15px;cursor:pointer;line-height:1.4;}
+.outros-field{display:none;margin-top:14px;}
+.outros-field.show{display:block;}
+.outros-field label{display:block;font-size:11px;letter-spacing:.1em;text-transform:uppercase;color:var(--brand-light);font-weight:600;margin-bottom:7px;}
+.outros-field textarea{width:100%;padding:11px 14px;border:1px solid var(--border);border-radius:3px;font-family:'DM Sans',sans-serif;font-size:15px;color:var(--text);background:var(--cream);outline:none;resize:vertical;min-height:90px;transition:border-color .15s;}
+.outros-field textarea:focus{border-color:var(--brand);}
 
-/* submit */
-.btn-submit{
-  width:100%;padding:15px;background:var(--brand);color:#fff;
-  border:none;border-radius:2px;font-size:11px;letter-spacing:.18em;
-  text-transform:uppercase;font-family:'DM Sans',sans-serif;cursor:pointer;transition:background .2s;margin-top:6px;
-}
+/* ══ ADVANCE / SUBMIT ════════════════════════════════ */
+.advance-wrap{margin-top:28px;display:flex;align-items:center;justify-content:space-between;padding:20px 0;border-top:1px solid var(--border);}
+.advance-note{font-size:13px;color:var(--brand-light);line-height:1.5;max-width:480px;}
+.btn-advance{padding:14px 34px;background:var(--brand);color:#fff;border:none;border-radius:3px;font-size:13px;letter-spacing:.1em;text-transform:uppercase;font-family:'DM Sans',sans-serif;cursor:pointer;transition:background .2s;flex-shrink:0;}
+.btn-advance:hover{background:var(--brand-dark);}
+.btn-submit{width:100%;padding:16px;background:var(--brand);color:#fff;border:none;border-radius:3px;font-size:13px;letter-spacing:.14em;text-transform:uppercase;font-family:'DM Sans',sans-serif;cursor:pointer;transition:background .2s;margin-top:10px;}
 .btn-submit:hover{background:var(--brand-dark);}
 
-/* error hint */
-.error-hint{
-  display:none;margin-top:14px;padding:12px 16px;border-radius:3px;
-  background:#fdf0ee;border:1px solid #f5d5d0;color:var(--danger);font-size:13px;line-height:1.6;
-}
-.error-hint.show{display:block;}
+/* ══ ERRORS ══════════════════════════════════════════ */
+.err-hint{display:none;margin-top:14px;padding:13px 18px;border-radius:3px;background:#fdf0ee;border:1px solid #f5d5d0;color:var(--danger);font-size:14px;line-height:1.6;}
+.err-hint.show{display:block;}
 
-/* confirmation */
+/* ══ FOOTER NOTE ═════════════════════════════════════ */
+.page-footer-note{border-top:1px solid var(--border);padding:18px 48px;max-width:1080px;margin:0 auto;}
+.page-footer-note p{font-size:12px;color:var(--brand-light);line-height:1.8;}
+
+/* ══ SITE FOOTER ═════════════════════════════════════ */
+.site-footer{background:var(--brand);padding:18px 48px;display:flex;align-items:center;justify-content:space-between;flex-shrink:0;margin-top:auto;}
+.ft-text{font-size:12px;letter-spacing:.12em;text-transform:uppercase;color:rgba(255,255,255,.5);}
+
+/* ══ CONFIRMATION ════════════════════════════════════ */
 .confirmation{display:none;flex-direction:column;align-items:center;justify-content:center;min-height:60vh;text-align:center;padding:56px 40px;}
 .confirmation.show{display:flex;}
-.conf-icon{font-size:56px;margin-bottom:20px;}
-.conf-title{font-size:34px;font-weight:300;color:var(--text);margin-bottom:6px;}
-.conf-subtitle{font-size:13px;color:var(--brand-light);margin-bottom:28px;}
-.conf-ticket{background:var(--white);border:1px solid var(--border);border-radius:3px;padding:24px 36px;margin-bottom:28px;}
-.conf-ticket-label{font-size:10px;letter-spacing:.14em;text-transform:uppercase;color:var(--brand-light);margin-bottom:7px;}
-.conf-ticket-number{font-size:44px;font-weight:300;color:var(--brand);letter-spacing:.06em;}
-.conf-info{font-size:13px;color:var(--brand-light);line-height:1.7;max-width:460px;margin-bottom:28px;}
+.conf-icon{font-size:64px;margin-bottom:22px;}
+.conf-title{font-size:36px;font-weight:300;color:var(--text);margin-bottom:8px;}
+.conf-sub{font-size:15px;color:var(--brand-light);margin-bottom:32px;}
+.conf-ticket{background:var(--white);border:1px solid var(--border);border-radius:4px;padding:28px 44px;margin-bottom:32px;}
+.conf-ticket-lbl{font-size:11px;letter-spacing:.14em;text-transform:uppercase;color:var(--brand-light);margin-bottom:8px;}
+.conf-ticket-num{font-size:48px;font-weight:300;color:var(--brand);letter-spacing:.06em;}
+.conf-info{font-size:15px;color:var(--brand-light);line-height:1.8;max-width:500px;margin-bottom:32px;}
 .conf-info strong{color:var(--text);}
-.btn-new{
-  padding:12px 30px;background:var(--brand);color:#fff;border:none;border-radius:2px;
-  font-size:10px;letter-spacing:.14em;text-transform:uppercase;
-  font-family:'DM Sans',sans-serif;cursor:pointer;transition:background .2s;
-}
+.btn-new{padding:13px 34px;background:var(--brand);color:#fff;border:none;border-radius:3px;font-size:12px;letter-spacing:.12em;text-transform:uppercase;font-family:'DM Sans',sans-serif;cursor:pointer;transition:background .2s;}
 .btn-new:hover{background:var(--brand-dark);}
 
 @media(max-width:768px){
-  header,.site-footer{padding:0 20px;}
-  .step-bar,.page-footer-note{padding:0 20px;}
-  .main-content{padding:24px 20px;}
-  .class-grid,.form-grid{grid-template-columns:1fr;}
-  .date-fields{grid-template-columns:1fr;}
+  header,.site-footer,.page-footer-note{padding:0 20px;}
+  .step-bar{padding:0 20px;}
+  .main-content{padding:28px 20px;}
+  .form-grid,.form-grid-3,.class-grid,.date-fields{grid-template-columns:1fr;}
   .date-field{border-right:none;border-bottom:1px solid var(--border);}
   .date-field:last-of-type{border-bottom:none;}
-  .counter-row,.advance-wrap{flex-direction:column;align-items:flex-start;}
-  .hdr-divider{display:none;}
+  .advance-wrap{flex-direction:column;gap:16px;align-items:flex-start;}
 }
 </style>
 </head>
@@ -378,234 +233,188 @@ input:checked+.slider:before{transform:translateX(20px);}
 <!-- ══ HEADER ══════════════════════════════════════════ -->
 <header>
   <div class="hdr-left">
-    <!-- Logo GRUPO SOHOME texto fiel à imagem -->
     <div class="hdr-right">
-  	<img 
-    		src="LOGO GRUPO SOHOME-56.png" 
-    		class="ico-h logo-principal"
-  	>
+      <img src="LOGO GRUPO SOHOME-56.png" class="ico-h logo-principal">
     </div>
     <div class="hdr-divider"></div>
     <div class="hdr-meta">
-      <div class="sub" style="font-size: 16px; font-weight: bold;">Assistência Técnica</div>
-      <div class="tag" style="font-size: 12px;">Sistema de Triagem &amp; Registro — Exportação</div>
-</div>
+      <div class="sub" style="font-size:16px;font-weight:bold;">Assistência Técnica</div>
+      <div class="tag" style="font-size:12px;">Sistema de Registro — Exportação</div>
     </div>
   </div>
-
-    <div class="hdr-right">
-      <img src="LOGO GRUPO SOHOME-60.png" alt="Logo H" class="ico-h">
-    </div>
+  <div class="hdr-right">
+    <img src="LOGO GRUPO SOHOME-60.png" alt="Logo H" class="ico-h">
   </div>
 </header>
 
-<!-- Step bar -->
-<div class="step-bar" id="stepBar">
-  <div class="step-item active" id="step1-item">
-    <div class="step-num">1</div><span>Triagem</span>
+<!-- ══ STEP BAR ════════════════════════════════════════ -->
+<div class="step-bar">
+  <div class="step-item active" id="s1">
+    <div class="step-num">1</div><span>Identificação</span>
   </div>
   <div class="step-divider"></div>
-  <div class="step-item" id="step2-item">
-    <div class="step-num">2</div><span>Formulário</span>
+  <div class="step-item" id="s2">
+    <div class="step-num">2</div><span>Registro</span>
   </div>
 </div>
 
-<!-- ══ ABA 1 — TRIAGEM ══════════════════════════════════ -->
-<div class="panel active" id="panel-triagem">
+
+<!-- ══════════════════════════════════════════════════
+     ETAPA 1 — IDENTIFICAÇÃO
+══════════════════════════════════════════════════════ -->
+<div class="panel active" id="panel-id">
 <div class="main-content">
 
-  <div class="section-title">Triagem da Ocorrência</div>
-  <p class="section-desc">Preencha todos os blocos abaixo antes de avançar. As datas serão carregadas automaticamente para o formulário.</p>
+  <div class="page-title">Identificação</div>
+  <p class="page-desc">Informe o número da invoice, os dados do lojista e as datas antes de prosseguir.</p>
 
-  <!-- BLOCO 1 -->
-  <div class="block-card" id="card-b1">
-    <div class="block-header">
-      <div class="block-header-left">📋 Bloco 1 — Classificação Inicial da Ocorrência</div>
-      <span class="block-status">✓ Preenchido</span>
+  <!-- ── Invoice ── -->
+  <div class="section-divider">🧾 Número da Invoice</div>
+  <div class="card" id="c-invoice">
+    <div class="card-header">
+      <span>Commercial Invoice</span>
+      <span class="card-status">✓ Preenchido</span>
     </div>
-    <div class="block-body">
-      <p style="font-size:13px;color:var(--brand-light);margin-bottom:11px;">Selecione o tipo de ocorrência que melhor descreve a situação:<span class="req-star">*</span></p>
-      <div class="class-grid">
-        <div class="class-option" onclick="selectClass(this,'defeito')">
-          <input type="radio" name="b1" value="defeito">
-          <label>🔧 Defeito de fabricação</label>
+    <div class="card-body">
+      <div class="form-grid">
+        <div class="field">
+          <label>Número da Invoice <span class="req">*</span></label>
+          <input type="text" id="f-invoice" placeholder="Número exato da invoice do produto reclamado" oninput="checkInvoiceCard()">
+          <span class="hint">⚠ Invoice errada trava o processo — não inserir número genérico</span>
         </div>
-        <div class="class-option" onclick="selectClass(this,'avaria')">
-          <input type="radio" name="b1" value="avaria">
-          <label>📦 Avaria de transporte</label>
+        <div class="field">
+          <label>Reincidência?</label>
+          <div class="switch-row">
+            <span class="switch-label">
+              Já houve AT anterior neste produto?
+              <span style="display:block;font-size:12px;color:var(--brand-light);margin-top:2px;">Marque se for uma ocorrência repetida</span>
+            </span>
+            <label class="switch">
+              <input type="checkbox" id="f-reincidencia" onchange="toggleReincidencia()">
+              <span class="slider"></span>
+            </label>
+          </div>
+          <div id="reincidencia-extra" style="display:none;margin-top:10px;">
+            <div class="field">
+              <label>Invoice de Origem (1ª ocorrência) <span class="req">*</span></label>
+              <input type="text" id="f-invoice-orig" placeholder="Número da invoice da primeira assistência">
+            </div>
+          </div>
         </div>
-        <div class="class-option" onclick="selectClass(this,'erro-pedido')">
-          <input type="radio" name="b1" value="erro-pedido">
-          <label>📄 Erro de pedido / especificação</label>
-        </div>
-        <div class="class-option" onclick="selectClass(this,'outros')">
-          <input type="radio" name="b1" value="outros">
-          <label>📝 Outros</label>
-        </div>
-      </div>
-      <!-- Campo livre "Outros" -->
-      <div class="outros-field" id="outrosField">
-        <label>Descreva a ocorrência <span class="req-star">*</span></label>
-        <textarea id="outrosText" placeholder="Descreva o tipo de ocorrência com o máximo de detalhes..."></textarea>
       </div>
     </div>
   </div>
 
-  <!-- BLOCO 2 -->
-  <div class="block-card" id="card-b2">
-    <div class="block-header">
-      <div class="block-header-left">📅 Bloco 2 — Tempo e Datas</div>
-      <span class="block-status">✓ Preenchido</span>
+  <!-- ── Dados do Lojista ── -->
+  <div class="section-divider">👤 Dados do Lojista</div>
+  <div class="card" id="c-lojista">
+    <div class="card-header">
+      <span>Informações do Cliente</span>
+      <span class="card-status">✓ Preenchido</span>
     </div>
-    <div class="block-body" style="padding-bottom:0;">
-      <div class="q-row" style="border-bottom:none;padding-bottom:0;">
-        <div class="q-label">O produto foi inspecionado no recebimento? <span class="req-star">*</span></div>
-        <div class="toggle-group">
-          <button class="toggle-btn yes" onclick="toggleYN(this);checkB2()">Sim</button>
-          <button class="toggle-btn no"  onclick="toggleYN(this);checkB2()">Não</button>
+    <div class="card-body">
+      <div class="form-grid">
+        <div class="field">
+          <label>Razão Social <span class="req">*</span></label>
+          <input type="text" id="f-razao" placeholder="Nome completo da empresa" oninput="checkLojista()">
+        </div>
+        <div class="field">
+          <label>CNPJ / Tax ID <span class="req">*</span></label>
+          <input type="text" id="f-cnpj" placeholder="Ex: 00.000.000/0001-00" oninput="checkLojista()">
+        </div>
+      </div>
+      <div class="form-grid">
+        <div class="field">
+          <label>País <span class="req">*</span></label>
+          <input type="text" id="f-pais" placeholder="País de origem da loja" oninput="checkLojista()">
+        </div>
+        <div class="field">
+          <label>Telefone <span class="req">*</span></label>
+          <input type="text" id="f-tel" placeholder="+00 000 000 0000" oninput="checkLojista()">
+        </div>
+      </div>
+      <div class="form-grid">
+        <div class="field">
+          <label>E-mail de Contato <span class="req">*</span></label>
+          <input type="email" id="f-email" placeholder="email@empresa.com" oninput="checkLojista()">
+          <span class="hint">Este e-mail receberá todas as tratativas — verifique com atenção</span>
+        </div>
+        <div class="field">
+          <label>Nome do Responsável <span class="req">*</span></label>
+          <input type="text" id="f-resp" placeholder="Nome completo" oninput="checkLojista()">
         </div>
       </div>
     </div>
+  </div>
+
+  <!-- ── Datas + Contador ── -->
+  <div class="section-divider">📅 Datas e Prazo de Garantia</div>
+  <div class="card" id="c-datas">
+    <div class="card-header">
+      <span>Datas da Invoice e Recebimento</span>
+      <span class="card-status">✓ Preenchido</span>
+    </div>
     <div class="date-fields">
       <div class="date-field">
-        <label>Data da Fatura (Invoice) <span class="req-star">*</span></label>
-        <input type="date" id="invoiceDate" onchange="updateCounter();checkB2()">
-        <span class="field-note">Data de emissão da fatura comercial</span>
+        <label>Data da Fatura (Invoice) <span class="req">*</span></label>
+        <input type="date" id="invoiceDate" onchange="updateCounter();checkDatas()">
+        <span class="hint">Data de emissão da fatura comercial</span>
       </div>
       <div class="date-field">
-        <label>Data de Recebimento da Mercadoria <span class="req-star">*</span></label>
-        <input type="date" id="receiptDate" onchange="updateCounter();checkB2()">
-        <span class="field-note">Data em que o contêiner foi recebido no destino</span>
+        <label>Data de Recebimento da Mercadoria <span class="req">*</span></label>
+        <input type="date" id="receiptDate" onchange="updateCounter();checkDatas()">
+        <span class="hint">Data em que o contêiner foi recebido no destino</span>
       </div>
     </div>
     <div class="counter-row">
       <div class="counter-badge">
-        <div class="counter-number empty" id="counterNumber">—</div>
+        <div class="counter-num empty" id="counterNum">—</div>
         <div class="counter-info">
-          <div class="counter-label">Dias desde o recebimento</div>
-          <div class="counter-status" id="counterStatus" style="color:var(--brand-light);">Preencha a data de recebimento para calcular</div>
+          <div class="counter-lbl">Dias desde o recebimento</div>
+          <div class="counter-st" id="counterSt" style="color:var(--brand-light);">Preencha a data de recebimento para calcular</div>
         </div>
       </div>
-      <div class="counter-bar-wrap">
-        <div class="counter-bar-track"><div class="counter-bar-fill" id="counterBarFill"></div></div>
-        <div class="counter-bar-labels"><span>0 dias</span><span>6 meses</span><span>1 ano (limite)</span></div>
+      <div class="bar-wrap">
+        <div class="bar-track"><div class="bar-fill" id="barFill"></div></div>
+        <div class="bar-labels"><span>0 dias</span><span>6 meses</span><span>1 ano (limite)</span></div>
       </div>
       <button class="btn-recalc" onclick="updateCounter()">↺ Recalcular</button>
     </div>
-  </div>
-
-  <!-- Alerta fora de garantia -->
-  <div class="warranty-alert" id="warrantyAlert">
-    ⛔ <strong>Fora do prazo de garantia de 1 ano.</strong> A assistência técnica padrão não é aplicável. Apenas danos estruturais comprovados podem ser avaliados em caráter excepcional, mediante aprovação técnica da Sohome.
-  </div>
-
-  <!-- BLOCO 3 -->
-  <div class="block-card" id="card-b3">
-    <div class="block-header">
-      <div class="block-header-left">🚚 Bloco 3 — Transporte</div>
-      <span class="block-status">✓ Preenchido</span>
-    </div>
-    <div class="block-body">
-      <div class="q-row">
-        <div class="q-label">A embalagem apresentava avaria externa visível? <span class="req-star">*</span>
-          <span class="note">Amassados, rasgos, umidade ou sinais de impacto</span>
-        </div>
-        <div class="toggle-group">
-          <button class="toggle-btn yes" onclick="toggleYN(this);checkB3()">Sim</button>
-          <button class="toggle-btn no"  onclick="toggleYN(this);checkB3()">Não</button>
-        </div>
-      </div>
-      <div class="q-row" style="border-bottom:none;">
-        <div class="q-label">Fotos da embalagem <strong>antes</strong> da abertura estão disponíveis? <span class="req-star">*</span>
-          <span class="note">Essencial para avarias de transporte — sem foto a análise não pode ser concluída</span>
-        </div>
-        <div class="toggle-group">
-          <button class="toggle-btn yes" onclick="toggleYN(this);checkB3()">Sim</button>
-          <button class="toggle-btn no"  onclick="toggleYN(this);checkB3()">Não</button>
-        </div>
-      </div>
-    </div>
-  </div>
-
-  <!-- BLOCO 4 -->
-  <div class="block-card" id="card-b4">
-    <div class="block-header">
-      <div class="block-header-left">🔍 Bloco 4 — Detalhamento do Defeito</div>
-      <span class="block-status">✓ Preenchido</span>
-    </div>
-    <div class="block-body">
-      <div class="q-row">
-        <div class="q-label">O defeito <strong>impede o uso</strong> do produto? <span class="req-star">*</span></div>
-        <div class="toggle-group">
-          <button class="toggle-btn yes" onclick="toggleYN(this);checkB4()">Sim</button>
-          <button class="toggle-btn no"  onclick="toggleYN(this);checkB4()">Não</button>
-        </div>
-      </div>
-      <div class="q-row" style="border-bottom:none;">
-        <div class="q-label">O defeito é: <span class="req-star">*</span></div>
-        <div class="toggle-group">
-          <button class="toggle-btn neu" onclick="toggleExclusive(this);checkB4()">Visível</button>
-          <button class="toggle-btn neu" onclick="toggleExclusive(this);checkB4()">Afeta a funcionalidade</button>
-          <button class="toggle-btn neu" onclick="toggleExclusive(this);checkB4()">Ambos</button>
-        </div>
-      </div>
-    </div>
-  </div>
-
-  <!-- BLOCO 5 -->
-  <div class="block-card" id="card-b5">
-    <div class="block-header">
-      <div class="block-header-left">🔧 Bloco 5 — Possibilidade de Reparo</div>
-      <span class="block-status">✓ Preenchido</span>
-    </div>
-    <div class="block-body">
-      <div class="q-row" style="border-bottom:none;">
-        <div class="q-label">
-          <strong>Este defeito pode ser reparado localmente no destino?</strong> <span class="req-star">*</span>
-          <span class="note">Considere a disponibilidade de prestadores de serviço e peças na região do cliente</span>
-        </div>
-        <div class="toggle-group">
-          <button class="toggle-btn yes" onclick="toggleReparoYN(this,'sim')">Sim</button>
-          <button class="toggle-btn no"  onclick="toggleReparoYN(this,'nao')">Não</button>
-        </div>
-      </div>
-      <!-- Explicação Sim -->
-      <div class="toggle-explain ok" id="reparo-sim">
-        ✓ <strong>Reparo local viável.</strong> O cliente deverá contratar um prestador especializado. O procedimento seguirá o fluxo: orçamento → aprovação Sohome → execução → invoice de serviço → reembolso. Lembre-se: nenhum pagamento é realizado sem invoice emitida pelo prestador.
-      </div>
-      <!-- Explicação Não -->
-      <div class="toggle-explain warn" id="reparo-nao">
-        ✗ <strong>Reparo local inviável.</strong> Sem prestadores capacitados ou peças disponíveis na região, a Sohome avaliará a decisão final após análise das evidências.
-      </div>
+    <div class="warranty-alert" id="warrantyAlert">
+      ⛔ <strong>Fora do prazo de garantia de 1 ano.</strong> A assistência técnica padrão não é aplicável. Apenas danos estruturais comprovados podem ser avaliados em caráter excepcional, mediante aprovação técnica da Sohome.
     </div>
   </div>
 
   <!-- Avançar -->
   <div class="advance-wrap">
-    <p class="advance-note">Todos os campos marcados com <span class="req-star">*</span> são obrigatórios. As datas e a classificação serão carregadas automaticamente para o formulário.</p>
-    <button class="btn-advance" onclick="validateAndAdvance()">Avançar para o Formulário →</button>
+    <p class="advance-note">Todos os campos marcados com <span class="req">*</span> são obrigatórios.</p>
+    <button class="btn-advance" onclick="validateStep1()">Avançar para o Registro →</button>
   </div>
-  <div class="error-hint" id="triageError">Preencha todos os campos obrigatórios da triagem antes de avançar.</div>
+  <div class="err-hint" id="err-step1">Preencha todos os campos obrigatórios antes de avançar.</div>
 
 </div><!-- /main-content -->
 
 <div class="page-footer-note">
-  <p><strong style="color:var(--brand-dark);font-weight:500;">Referência de cobertura:</strong>
+  <p><strong style="color:var(--brand-dark);font-weight:600;">Referência de cobertura:</strong>
   São procedentes de AT defeitos de fabricação comprovados, reincidências, componentes faltantes ou incorretos, reclamações dentro do prazo de 1 ano.
   Não são procedentes variações naturais de mármore, madeira ou textura, divergências de até 2cm em produtos artesanais, e reclamações após 1 ano.</p>
 </div>
-</div><!-- /panel-triagem -->
+</div><!-- /panel-id -->
 
-<!-- ══ ABA 2 — FORMULÁRIO ══════════════════════════════ -->
-<div class="panel" id="panel-formulario">
 
-  <div class="confirmation" id="confirmationScreen">
+<!-- ══════════════════════════════════════════════════
+     ETAPA 2 — REGISTRO
+══════════════════════════════════════════════════════ -->
+<div class="panel" id="panel-reg">
+
+  <!-- Confirmação (tela pós-envio) -->
+  <div class="confirmation" id="confScreen">
     <div class="conf-icon">✅</div>
     <div class="conf-title">Reclamação Registrada!</div>
-    <div class="conf-subtitle">Sua solicitação foi enviada com sucesso.</div>
+    <div class="conf-sub">Sua solicitação foi enviada com sucesso.</div>
     <div class="conf-ticket">
-      <div class="conf-ticket-label">Número de Atendimento</div>
-      <div class="conf-ticket-number" id="ticketNumber">—</div>
+      <div class="conf-ticket-lbl">Número de Atendimento</div>
+      <div class="conf-ticket-num" id="ticketNum">—</div>
     </div>
     <div class="conf-info">
       Guarde este número para acompanhar o andamento da assistência técnica.<br>
@@ -615,441 +424,546 @@ input:checked+.slider:before{transform:translateX(20px);}
     <button class="btn-new" onclick="resetAll()">+ Abrir nova assistência</button>
   </div>
 
-  <div class="main-content" id="formContent">
-    <div class="section-title">Formulário de Assistência</div>
-    <p class="section-desc">Todos os campos são obrigatórios. As datas da triagem são carregadas automaticamente.</p>
+  <!-- Formulário de registro -->
+  <div class="main-content" id="regContent">
 
-    <div class="form-section">
-      <div class="form-section-title">Dados do Lojista</div>
-      <div class="form-grid">
-        <div class="field-group">
-          <label>Razão Social <span class="req-star">*</span></label>
-          <input type="text" id="f-razao" placeholder="Nome completo da empresa">
-        </div>
-        <div class="field-group">
-          <label>CNPJ / Tax ID <span class="req-star">*</span></label>
-          <input type="text" id="f-cnpj" placeholder="Ex: 00.000.000/0001-00">
-        </div>
-      </div>
-      <div class="form-grid">
-        <div class="field-group">
-          <label>País <span class="req-star">*</span></label>
-          <input type="text" id="f-pais" placeholder="País de origem da loja">
-        </div>
-        <div class="field-group">
-          <label>Telefone <span class="req-star">*</span></label>
-          <input type="text" id="f-tel" placeholder="+00 000 000 0000">
-        </div>
-      </div>
-      <div class="form-grid">
-        <div class="field-group">
-          <label>E-mail de Contato <span class="req-star">*</span></label>
-          <input type="email" id="f-email" placeholder="email@empresa.com">
-          <span class="field-note">⚠ Este e-mail receberá todas as tratativas — verifique com atenção</span>
-        </div>
-        <div class="field-group">
-          <label>Nome do Responsável <span class="req-star">*</span></label>
-          <input type="text" id="f-resp" placeholder="Nome completo">
-        </div>
-      </div>
-    </div>
+    <div class="page-title">Registro da Ocorrência</div>
+    <p class="page-desc">Informe os produtos com defeito e responda às perguntas abaixo. Você pode adicionar quantos produtos precisar.</p>
 
-    <div class="form-section">
-      <div class="form-section-title">Dados da Reclamação</div>
-      <div class="form-grid">
-        <div class="field-group">
-          <label>Commercial Invoice <span class="req-star">*</span></label>
-          <input type="text" id="f-invoice" placeholder="Número exato da invoice do produto reclamado">
-          <span class="field-note">Invoice errada trava o processo — não inserir número genérico</span>
-        </div>
-        <div class="field-group">
-          <label>Quantidade de Módulos <span class="req-star">*</span></label>
-          <input type="number" id="f-modulos" min="1" placeholder="Ex: 1">
-          <span class="field-note">Apenas os módulos afetados pelo defeito</span>
-        </div>
-      </div>
-      <div class="form-full">
-        <div class="field-group">
-          <label>Produto <span class="req-star">*</span></label>
-          <div class="product-wrap">
-            <input type="text" id="f-produto-input" placeholder="Digite para pesquisar..." oninput="filterProducts()" autocomplete="off">
-            <input type="hidden" id="f-produto-value">
-            <div class="product-dropdown" id="productDropdown"></div>
-          </div>
-        </div>
-      </div>
-      <div class="recidencia-row">
-        <div class="recidencia-label">
-          <strong>Reincidência?</strong>
-          <span style="display:block;font-size:11px;color:var(--brand-light);margin-top:2px;">Marque se já houve assistência técnica anterior neste produto</span>
-        </div>
-        <label class="switch">
-          <input type="checkbox" id="f-reincidencia" onchange="toggleReincidencia()">
-          <span class="slider"></span>
-        </label>
-      </div>
-      <div id="reincidencia-extra" style="display:none;margin-bottom:14px;">
-        <div class="field-group">
-          <label>Invoice de Origem (1ª ocorrência) <span class="req-star">*</span></label>
-          <input type="text" id="f-invoice-orig" placeholder="Número da invoice da primeira assistência">
-        </div>
-      </div>
-      <div class="form-full">
-        <div class="field-group">
-          <label>Descrição do Problema <span class="req-star">*</span></label>
-          <textarea id="f-descricao" placeholder="Descreva: o que ocorreu, como ocorreu e quando foi identificado. Quanto mais detalhes, mais assertiva será a análise."></textarea>
-        </div>
-      </div>
-    </div>
+    <!-- PRODUCT BLOCKS CONTAINER -->
+    <div class="section-divider" style="margin-top:0;">🛋️ Produto e Defeito</div>
+    <div id="prod-blocks-container"></div>
 
-    <div class="form-section">
-      <div class="form-section-title">Datas — Preenchidas automaticamente pela triagem</div>
-      <div class="form-grid">
-        <div class="field-group">
-          <label>Data da Invoice <span class="req-star">*</span></label>
-          <input type="date" id="f-data-invoice" readonly>
-          <span class="field-note">Para alterar, volte à triagem.</span>
-        </div>
-        <div class="field-group">
-          <label>Data de Recebimento da Mercadoria <span class="req-star">*</span></label>
-          <input type="date" id="f-data-recebimento" readonly>
-          <span class="field-note">Para alterar, volte à triagem.</span>
-        </div>
-      </div>
-    </div>
+    <!-- Add product button -->
+    <button class="btn-add-prod" onclick="addProdBlock()">
+      <span style="font-size:20px;">＋</span> Adicionar outro produto
+    </button>
 
-    <div class="form-section">
-      <div class="form-section-title">Anexos — Fotos e Vídeos <span class="req-star">*</span></div>
-      <p style="font-size:13px;color:var(--brand-light);margin-bottom:12px;">Obrigatório: 1 foto do produto completo · 1 foto do defeito · 1 foto no ambiente · 1 vídeo demonstrando o problema</p>
-      <div class="upload-zone" id="uploadZone" onclick="document.getElementById('fileInput').click()" ondragover="dragOver(event)" ondragleave="dragLeave(event)" ondrop="dropFiles(event)">
-        <div class="up-icon">📎</div>
-        <strong style="font-size:13px;color:var(--text);">Clique ou arraste arquivos aqui</strong>
-        <p>Imagens (JPG, PNG) e vídeos (MP4, MOV) — vários arquivos ao mesmo tempo</p>
-        <input type="file" id="fileInput" multiple accept="image/*,video/*" style="display:none" onchange="handleFiles(this.files)">
-      </div>
-      <div class="file-list" id="fileList"></div>
-    </div>
-
-    <div class="error-hint" id="formError">Preencha todos os campos obrigatórios antes de enviar.</div>
+    <div class="err-hint" id="err-step2">Preencha todos os campos obrigatórios antes de enviar.</div>
     <button class="btn-submit" onclick="submitForm()">Enviar Assistência Técnica →</button>
-  </div>
 
+  </div><!-- /regContent -->
+</div><!-- /panel-reg -->
 
-
-</div><!-- /panel-formulario -->
 
 <!-- ══ SITE FOOTER ══════════════════════════════════════ -->
 <footer class="site-footer">
-  <span class="ft-text" style="font-size: 12px;">Grupo Sohome — Assistência Técnica Exportação</span>
-  <div class="hdr-right">
-        <img src="LOGO GRUPO SOHOME-60.png" alt="Logo H" class="ico-h">
-     </div>
+  <span class="ft-text">Grupo Sohome — Assistência Técnica Exportação</span>
+  <img src="LOGO GRUPO SOHOME-60.png" alt="Logo" class="ico-h">
 </footer>
 
+<style>
+.prod-block{background:var(--white);border:1px solid var(--border);border-radius:4px;overflow:hidden;margin-bottom:16px;transition:border-color .2s;}
+.prod-block.invalid{border-color:var(--danger);}
+.prod-block-header{background:var(--brand);padding:13px 22px;display:flex;align-items:center;justify-content:space-between;gap:12px;}
+.prod-block-header-left{display:flex;align-items:center;gap:10px;min-width:0;flex:1;}
+.prod-block-title{font-size:10px;letter-spacing:.14em;text-transform:uppercase;font-weight:700;color:rgba(255,255,255,.85);flex-shrink:0;}
+.prod-block-summary{font-size:12px;color:rgba(255,255,255,.55);font-style:italic;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;display:none;}
+.prod-block.minimized .prod-block-summary{display:block;}
+.prod-block-header-right{display:flex;align-items:center;gap:6px;flex-shrink:0;}
+.btn-toggle-block{background:rgba(255,255,255,.13);border:1px solid rgba(255,255,255,.22);color:rgba(255,255,255,.85);border-radius:3px;padding:5px 13px;font-size:11px;font-family:'DM Sans',sans-serif;cursor:pointer;transition:background .15s;display:inline-flex;align-items:center;gap:5px;white-space:nowrap;}
+.btn-toggle-block:hover{background:rgba(255,255,255,.24);}
+.btn-rm{background:rgba(255,255,255,.13);border:1px solid rgba(255,255,255,.22);color:rgba(255,255,255,.85);border-radius:3px;padding:5px 13px;font-size:11px;font-family:'DM Sans',sans-serif;cursor:pointer;transition:background .15s;display:none;white-space:nowrap;}
+.btn-rm:hover{background:rgba(192,57,43,.55);}
+.prod-block-body{padding:20px 22px;}
+.prod-block.minimized .prod-block-body{display:none;}
+.prod-sep{border:none;border-top:1px solid var(--brand-pale);margin:18px 0;}
+.btn-add-prod{width:100%;padding:14px;background:transparent;border:2px dashed var(--border);border-radius:4px;color:var(--brand);font-size:14px;font-family:'DM Sans',sans-serif;cursor:pointer;transition:all .2s;margin-bottom:28px;display:flex;align-items:center;justify-content:center;gap:8px;}
+.btn-add-prod:hover{border-color:var(--brand);background:var(--brand-pale);}
+.prod-reparo{display:none;margin-top:14px;background:var(--brand-pale);border:1px solid var(--border);border-radius:3px;padding:18px 20px;}
+.prod-reparo.show{display:block;}
+.prod-reparo-warn{display:none;margin-top:12px;padding:12px 16px;border-radius:3px;font-size:13px;line-height:1.6;background:#fdf0ee;border:1px solid #f5d5d0;color:var(--danger);}
+.prod-reparo-warn.show{display:block;}
+</style>
+
 <script>
+/* ══ Produtos ═══════════════════════════════════════════ */
 const PRODUCTS = [
   "ABACO","ACCORD","ACLIVE","ADANA","AERIS","AGHATA PLUS","AGREABLE","ALAVA","ALCALA","ALESSI","ALEXANDRIA","ALENTO","ALLADRO","ALMERIA","AME","AMARNA","AMBER","AMELIA","ANCONA","ANDROS","ANNE","ARAD","ARCADIA","ARLO","ARTTIS BED","ASSUNCAO","ASTRO","ATLAS","ATTO","AURIC","AURORA","AVANT","AXIS","BANAT","BANCO ONIROS","BANCO POMME","BARCELONA","BARDOT","BAUEN","BEEH","BELGA","BELLE","BERAT","BERLIN","BILBAU","BLUMEN","BOEMI","BOLD","BONHEUR","BONOBO","BRADAN","BRAMANTE","BRASS","BRICK","BRIDGE","BUENOS AIRES","CALIN","CALYX","CANTABYA","CARTAGENA","CARTIER","CATALUNIA","CATALUNIA BED","CECILE","CELLINI BED","CHARMANT","CHERI","CLIFF","CLARTE","CODE","COBAIN","COCON","COLONNA","CORSO","CRES","CROMIE","CUORE","DALI","DEL FIORE","DESSAU","DESIR","DESIREE","DESMOND","DEVA","DEZZA","DIDOT","DOM","DOMIA","DUBAI","DUO CAR BAR","DUNE","ECLAT","ECLIPSE","EDESSA","EDGE","EDIFIANTE","EILEEN","ELAN","ELLIE","ELLIOT","ELLIS","ELYSIAN","EPURE BED","ESPOIR","ESQUEL","ETERIUM","ETHER BED","ETTORE","EVIE","FEVER","FIDDA","FIER","FINN","FITZ","FLAMME","FLEURIR","FLOGE","FLORA","FLORENTINE","FLOW","FORTALEZA","GATSBY","GAUDI","GEM","GENOVA","GIORNATTA","GIORNATTA OFFICE","GIZA","GRACE BED","GRID","GRAZ","GROOVE","GUADALAJARA","HALO","HARPER","HAZEL","HENRI","INTIMITE","IRIS","ISLA","IVY","JENNY","JOHNNY","JOPLIN","JOIE","JULIAN","KAVAJI","KIEDIS","KLEE","KLARIS","KLIMT","KONA","KOVAK","LAGO","LA PAZ","LAUTREC","LEE","LIESEL","LIGURE","LINEA","LINARES","LINA","LIOR","LITERATTO","LIZZ","LIZZA","LOUISE","MADELEINE","MALFATTI","MALIQ","MANIFOLD","MANTOVA","MARBELLA","MARIA","MARY","MAUI BED","MEDELIN","MEHEDINTI BED","METRO","MIYA","MINISTRAL I","MINISTRAL II","MINOS","MIRAGE","MODENA","MODISTE","MODUM","MONOLITH","MONTERIA","MONTERREY","MONTEVIDEO","MOON","MOSER","MUNTENIA","MUSH","NAEVA","NARCISO","NAVARRA","NAVY","NEA","NEW ARAGON","NEW ARROYOS","NEW ASIA","NEW BEDFORD","NEW BLAKE","NEW CARUZO","NEW CHATEAU","NEW ETTORE","NEW HARRY","NEW LIVORNO","NEW MESSINA","NEW NORMANDIA","NEW ROMANO","NEW SAN LUIS","NEW VERSATO","NEW VISCAIA","NEW YANG","NEW ZEFIRO","NICAIA 24","NICEIA","NICKS","NIMBUS","NOIR","NORAH","NUIT","NUVIA","OASI","ODISSEIA","OLTENIA","ONDINA","ORBE","ORBIT","ORIS","ORLY","OTOPENI","OTOPENI BED","OTTE","PAISIBLE","PALERMO PLUS","PARIS","PARMA","PASS","PATOU","PEBBLE","PERRY","PETALA","PETRA","PICASSO","PIERRE","PISAC","PISTACHE","PITESTI 25","PLI","POLARA","POMME","POMME BED","POSITANO","PRESLEY","PRIME","PROUVÉ","QUATTRO","QUILL","REFUGE","RENASCENCE","REPOSE","REINO","RIALTO","RIO DE JANEIRO","ROMAN","ROUND","SABRE","SAKAI","SAMMY","SAN ANDRES","SAN CARLOS","SAN CRISTOBAL","SAN MIGUEL","SAN PIETRO","SAN SEBASTIAN","SANTA MARTA","SANTIAGO","SANTE","SANZIO","SAO PAULO","SAPPHIR","SATURNIA","SENSE","SERENITE","SERVIA","SEY","SIENNA","SILLAGE","SOFT","SOLEIL","SONA","SONETTO","SPAZIO","SPLENDEUR","SPUR","ST MARTIN","STARE","STOLZ","SUBLIME","SUCRE","SUONO","SYSTEM","TAIJIN","TARANTO","TASSEL","TAOS","TER","TESS","THAI","TICIANO","TRESSA","TULUA","TURA","TURIN","UCCELLI","UFO","UMFELD","URBAN","URSOVA","VALEA","VENTURI","VERATO","VERNASA BED","VIENNA","VIE","VILLA LOBOS","VILLACH","VISCRI","VITALITE","VOLPI","VOLTIGE","WASS","WEG","YOKO","YOTT","ZENITH","ZEST","ZIMER"
 ].sort();
 
-let uploadedFiles = [];
+/* ══ Product block counter ════════════════════════════════ */
+let blockCount = 0;
 
-// ── Navigation ────────────────────────────────────────
-function goToForm() {
-  syncDatesToForm();
-  document.getElementById('panel-triagem').classList.remove('active');
-  document.getElementById('panel-formulario').classList.add('active');
-  document.getElementById('step1-item').classList.remove('active');
-  document.getElementById('step1-item').classList.add('done');
-  document.getElementById('step2-item').classList.add('active');
-  window.scrollTo({top:0,behavior:'smooth'});
+/* ══ Per-block file stores ════════════════════════════════ */
+// files[id] = { prod: [], orc: [] }
+const blockFiles = {};
+
+/* ══ Build a product block HTML ══════════════════════════ */
+function buildBlock(id) {
+  return `
+<div class="prod-block" id="pb-${id}">
+  <div class="prod-block-header">
+    <div class="prod-block-header-left">
+      <span class="prod-block-title" id="pb-title-${id}">Produto ${id}</span>
+      <span class="prod-block-summary" id="pb-summary-${id}">—</span>
+    </div>
+    <div class="prod-block-header-right">
+      <button class="btn-toggle-block" id="pb-tog-${id}" onclick="toggleBlock(${id})">
+        <span id="pb-tog-icon-${id}">▲</span> Minimizar
+      </button>
+      <button class="btn-rm" id="pb-rm-${id}" onclick="removeProdBlock(${id})">✕ Remover</button>
+    </div>
+  </div>
+  <div class="prod-block-body">
+
+    <!-- Produto + Quantidade -->
+    <div class="form-grid" style="margin-bottom:16px;">
+      <div class="field">
+        <label>Produto <span class="req">*</span></label>
+        <div class="product-wrap">
+          <input type="text" id="pb-prod-input-${id}" placeholder="Digite para pesquisar..." oninput="filterProd(${id});updateSummary(${id})" autocomplete="off">
+          <input type="hidden" id="pb-prod-value-${id}">
+          <div class="product-dropdown" id="pb-dd-${id}"></div>
+        </div>
+      </div>
+      <div class="field">
+        <label>Qtd. de Módulos <span class="req">*</span></label>
+        <input type="number" id="pb-mod-${id}" min="1" max="99" placeholder="Ex: 1" oninput="updateSummary(${id})">
+        <span class="hint">Apenas os módulos afetados</span>
+      </div>
+    </div>
+
+    <!-- Descrição -->
+    <div class="field" style="margin-bottom:16px;">
+      <label>Descrição do Defeito <span class="req">*</span></label>
+      <textarea id="pb-desc-${id}" placeholder="Descreva: o que ocorreu, como ocorreu e quando foi identificado. Quanto mais detalhes, mais assertiva será a análise."></textarea>
+    </div>
+
+    <!-- Q1: embalagem avariada — antes das fotos -->
+    <div class="q-row" style="margin-bottom:16px;border-bottom:none;">
+      <div class="q-label">
+        A embalagem apresentava avaria externa visível? <span class="req">*</span>
+        <span class="note">Amassados, rasgos, umidade ou sinais de impacto</span>
+      </div>
+      <div class="tg" id="pb-q1-${id}">
+        <button class="tb yes" onclick="togB(this,'pb-q1-${id}')">Sim</button>
+        <button class="tb no"  onclick="togB(this,'pb-q1-${id}')">Não</button>
+      </div>
+    </div>
+
+    <!-- Fotos e vídeos -->
+    <div class="field" style="margin-bottom:18px;">
+      <label>Fotos e Vídeos do Produto <span class="req">*</span></label>
+      <span class="hint" style="margin-bottom:10px;display:block;">1 foto do produto completo · 1 foto do defeito · 1 foto no ambiente · 1 vídeo demonstrando o problema</span>
+      <div class="upload-zone" id="pb-uz-${id}"
+        onclick="document.getElementById('pb-fi-${id}').click()"
+        ondragover="dzB(${id},'prod',true,event)" ondragleave="dzB(${id},'prod',false)" ondrop="dropB(${id},'prod',event)">
+        <div class="up-icon">📎</div>
+        <strong>Clique ou arraste arquivos aqui</strong>
+        <p>Imagens (JPG, PNG) e vídeos (MP4, MOV)</p>
+        <input type="file" id="pb-fi-${id}" multiple accept="image/*,video/*" style="display:none" onchange="addBlockFiles(${id},'prod',this.files)">
+      </div>
+      <div class="file-list" id="pb-fl-${id}"></div>
+    </div>
+
+    <hr class="prod-sep">
+
+    <!-- Q2: impede o uso -->
+    <div class="q-row">
+      <div class="q-label">O defeito <strong>impede o uso</strong> do produto? <span class="req">*</span></div>
+      <div class="tg" id="pb-q2-${id}">
+        <button class="tb yes" onclick="togB(this,'pb-q2-${id}')">Sim</button>
+        <button class="tb no"  onclick="togB(this,'pb-q2-${id}')">Não</button>
+      </div>
+    </div>
+
+    <!-- Q3: reparo local -->
+    <div class="q-row" style="border-bottom:none;">
+      <div class="q-label">
+        <strong>Este defeito pode ser reparado localmente no destino?</strong> <span class="req">*</span>
+        <span class="note">Considere a disponibilidade de prestadores e peças na região do cliente</span>
+      </div>
+      <div class="tg" id="pb-q3-${id}">
+        <button class="tb yes" onclick="togReparo(${id},this,'sim')">Sim</button>
+        <button class="tb no"  onclick="togReparo(${id},this,'nao')">Não</button>
+      </div>
+    </div>
+
+    <!-- Reparo SIM: valor + orçamento -->
+    <div class="prod-reparo" id="pb-reparo-${id}">
+      <p style="font-size:13px;color:var(--success);font-weight:700;margin-bottom:14px;">✓ Reparo local viável — preencha os dados:</p>
+      <div class="form-grid" style="margin-bottom:14px;">
+        <div class="field">
+          <label>Valor Estimado do Reparo <span class="req">*</span></label>
+          <input type="text" id="pb-rv-${id}" placeholder="Ex: U$ 150,00">
+          <span class="hint">Em moeda local ou dólares (U$)</span>
+        </div>
+        <div class="field">
+          <label>Prestador de Serviço</label>
+          <input type="text" id="pb-rp-${id}" placeholder="Nome da empresa ou profissional">
+        </div>
+      </div>
+      <div class="field">
+        <label>Orçamento do Prestador <span class="req">*</span></label>
+        <span class="hint" style="margin-bottom:10px;display:block;">Nenhum pagamento é realizado sem orçamento aprovado previamente pela Sohome</span>
+        <div class="upload-zone" id="pb-ouz-${id}"
+          onclick="document.getElementById('pb-ofi-${id}').click()"
+          ondragover="dzB(${id},'orc',true,event)" ondragleave="dzB(${id},'orc',false)" ondrop="dropB(${id},'orc',event)">
+          <div class="up-icon">📄</div>
+          <strong>Clique ou arraste o orçamento</strong>
+          <p>PDF, imagem ou documento</p>
+          <input type="file" id="pb-ofi-${id}" multiple accept="image/*,.pdf,.doc,.docx" style="display:none" onchange="addBlockFiles(${id},'orc',this.files)">
+        </div>
+        <div class="file-list" id="pb-ofl-${id}"></div>
+      </div>
+    </div>
+
+    <!-- Reparo NÃO -->
+    <div class="prod-reparo-warn" id="pb-reparo-nao-${id}">
+      ✗ <strong>Reparo local inviável.</strong> A Sohome avaliará a decisão final após análise das evidências enviadas.
+    </div>
+
+  </div>
+</div>`;
 }
 
-function goToTriagem() {
-  document.getElementById('panel-formulario').classList.remove('active');
-  document.getElementById('panel-triagem').classList.add('active');
-  document.getElementById('step2-item').classList.remove('active');
-  document.getElementById('step1-item').classList.remove('done');
-  document.getElementById('step1-item').classList.add('active');
-  window.scrollTo({top:0,behavior:'smooth'});
+/* ══ Add / Remove product blocks ══════════════════════════ */
+function addProdBlock() {
+  blockCount++;
+  const id = blockCount;
+  blockFiles[id] = { prod: [], orc: [] };
+  const container = document.getElementById('prod-blocks-container');
+  container.insertAdjacentHTML('beforeend', buildBlock(id));
+  updateBlockTitlesAndButtons();
+  // close dropdowns when clicking outside
+  document.getElementById(`pb-dd-${id}`).addEventListener('mousedown', e => e.stopPropagation());
 }
 
-document.getElementById('step1-item').addEventListener('click', () => {
-  if (document.getElementById('panel-formulario').classList.contains('active')) goToTriagem();
+function removeProdBlock(id) {
+  const el = document.getElementById('pb-' + id);
+  if (el) el.remove();
+  delete blockFiles[id];
+  updateBlockTitlesAndButtons();
+}
+
+function updateBlockTitlesAndButtons() {
+  const blocks = document.querySelectorAll('.prod-block');
+  blocks.forEach((b, i) => {
+    const n = i + 1;
+    const bid = b.id.replace('pb-', '');
+    const titleEl = document.getElementById('pb-title-' + bid);
+    const rmEl    = document.getElementById('pb-rm-' + bid);
+    if (titleEl) titleEl.textContent = 'Produto ' + n;
+    if (rmEl)    rmEl.style.display  = blocks.length > 1 ? 'inline-flex' : 'none';
+    updateSummary(bid);
+  });
+}
+
+/* ══ Minimize / Maximize block ════════════════════════════ */
+function toggleBlock(id) {
+  const block   = document.getElementById('pb-' + id);
+  const btn     = document.getElementById('pb-tog-' + id);
+  const icon    = document.getElementById('pb-tog-icon-' + id);
+  const minimized = block.classList.toggle('minimized');
+  if (minimized) {
+    icon.textContent = '▼';
+    btn.innerHTML    = '<span id="pb-tog-icon-'+id+'">▼</span> Expandir';
+  } else {
+    icon.textContent = '▲';
+    btn.innerHTML    = '<span id="pb-tog-icon-'+id+'">▲</span> Minimizar';
+  }
+  updateSummary(id);
+}
+
+/* ══ Update summary text shown when minimized ════════════ */
+function updateSummary(id) {
+  const summaryEl = document.getElementById('pb-summary-' + id);
+  if (!summaryEl) return;
+  const prod = document.getElementById('pb-prod-input-' + id);
+  const mod  = document.getElementById('pb-mod-' + id);
+  const prodVal = prod ? prod.value.trim() : '';
+  const modVal  = mod  ? mod.value.trim()  : '';
+  if (prodVal) {
+    summaryEl.textContent = prodVal + (modVal ? ' · ' + modVal + ' módulo(s)' : '');
+  } else {
+    summaryEl.textContent = 'Não preenchido';
+  }
+}
+
+/* ══ Product search per block ═════════════════════════════ */
+function filterProd(id) {
+  const q  = document.getElementById('pb-prod-input-' + id).value.trim().toUpperCase();
+  const dd = document.getElementById('pb-dd-' + id);
+  document.getElementById('pb-prod-value-' + id).value = '';
+  if (!q) { dd.classList.remove('open'); return; }
+  const m = PRODUCTS.filter(p => p.includes(q)).slice(0, 30);
+  if (!m.length) {
+    dd.innerHTML = '<div class="pd-item" style="color:var(--brand-light);">Nenhum produto encontrado</div>';
+    dd.classList.add('open'); return;
+  }
+  dd.innerHTML = m.map(p =>
+    `<div class="pd-item" onclick="selProdB(${id},'${p}')">${p.replace(new RegExp(q,'g'),'<strong>'+q+'</strong>')}</div>`
+  ).join('');
+  dd.classList.add('open');
+}
+
+function selProdB(id, name) {
+  document.getElementById('pb-prod-input-' + id).value = name;
+  document.getElementById('pb-prod-value-' + id).value = name;
+  document.getElementById('pb-dd-' + id).classList.remove('open');
+  updateSummary(id);
+}
+
+// Close all dropdowns on outside click
+document.addEventListener('click', e => {
+  document.querySelectorAll('.product-dropdown.open').forEach(dd => {
+    if (!e.target.closest('.product-wrap')) dd.classList.remove('open');
+  });
 });
 
-// ── Triagem validation ────────────────────────────────
-function validateAndAdvance() {
-  let ok = true;
-  const err = document.getElementById('triageError');
+/* ══ Toggle helpers ═══════════════════════════════════════ */
+function togB(btn, groupId) {
+  document.getElementById(groupId).querySelectorAll('.tb').forEach(b => b.classList.remove('on'));
+  btn.classList.add('on');
+}
 
-  // Bloco 1: classificação
-  const b1 = document.querySelector('#card-b1 input[type=radio]:checked');
-  document.getElementById('card-b1').classList.toggle('invalid', !b1);
-  if (!b1) ok = false;
+function togReparo(id, btn, val) {
+  document.getElementById('pb-q3-' + id).querySelectorAll('.tb').forEach(b => b.classList.remove('on'));
+  btn.classList.add('on');
+  document.getElementById('pb-reparo-' + id).classList.toggle('show', val === 'sim');
+  document.getElementById('pb-reparo-nao-' + id).classList.toggle('show', val === 'nao');
+}
 
-  // Bloco 1: se "outros", precisa de texto
-  if (b1 && b1.value === 'outros') {
-    const ot = document.getElementById('outrosText').value.trim();
-    document.getElementById('outrosText').classList.toggle('error', !ot);
-    if (!ot) ok = false;
+/* ══ Per-block file uploads ═══════════════════════════════ */
+function addBlockFiles(id, key, flist) {
+  Array.from(flist).forEach(f => {
+    if (!blockFiles[id][key].find(u => u.name === f.name && u.size === f.size))
+      blockFiles[id][key].push(f);
+  });
+  renderBlockFiles(id, key);
+}
+
+function renderBlockFiles(id, key) {
+  const listId = key === 'prod' ? 'pb-fl-' + id : 'pb-ofl-' + id;
+  const list   = document.getElementById(listId);
+  if (!list) return;
+  list.innerHTML = blockFiles[id][key].map((f, i) => {
+    const icon = key === 'orc' ? '📄' : (f.type.startsWith('video') ? '🎥' : '📷');
+    return `<div class="chip"><span>${icon} ${f.name}</span><button onclick="removeBlockFile(${id},'${key}',${i})" title="Remover">×</button></div>`;
+  }).join('');
+}
+
+function removeBlockFile(id, key, i) {
+  blockFiles[id][key].splice(i, 1);
+  renderBlockFiles(id, key);
+}
+
+function dzB(id, key, on, e) {
+  if (on) e.preventDefault();
+  const zoneId = key === 'prod' ? 'pb-uz-' + id : 'pb-ouz-' + id;
+  document.getElementById(zoneId).classList.toggle('drag-over', on);
+}
+function dropB(id, key, e) {
+  e.preventDefault(); dzB(id, key, false, e);
+  addBlockFiles(id, key, e.dataTransfer.files);
+}
+
+/* ══ Navigation ══════════════════════════════════════════ */
+function goTo(panel) {
+  document.querySelectorAll('.panel').forEach(p => p.classList.remove('active'));
+  document.getElementById('panel-' + panel).classList.add('active');
+  window.scrollTo({top:0,behavior:'smooth'});
+}
+function setSteps(active) {
+  document.getElementById('s1').className = 'step-item' + (active===1?' active':' done');
+  document.getElementById('s2').className = 'step-item' + (active===2?' active':'');
+}
+document.getElementById('s1').addEventListener('click', () => {
+  if (document.getElementById('panel-reg').classList.contains('active')) {
+    goTo('id'); setSteps(1);
+  }
+});
+
+/* ══ ETAPA 1 validation ══════════════════════════════════ */
+function validateStep1(){
+  let ok=true;
+  const err=document.getElementById('err-step1');
+
+  const inv=document.getElementById('f-invoice');
+  inv.classList.toggle('err',!inv.value.trim());
+  if(!inv.value.trim()) ok=false;
+
+  if(document.getElementById('f-reincidencia').checked){
+    const orig=document.getElementById('f-invoice-orig');
+    orig.classList.toggle('err',!orig.value.trim());
+    if(!orig.value.trim()) ok=false;
   }
 
-  // Bloco 2: inspeção + datas
-  const b2insp = document.querySelector('#card-b2 .toggle-btn.active');
-  const ivDate = document.getElementById('invoiceDate').value;
-  const rcDate = document.getElementById('receiptDate').value;
-  const b2ok = !!b2insp && !!ivDate && !!rcDate;
-  document.getElementById('card-b2').classList.toggle('invalid', !b2ok);
-  document.getElementById('invoiceDate').classList.toggle('error', !ivDate);
-  document.getElementById('receiptDate').classList.toggle('error', !rcDate);
-  if (!b2ok) ok = false;
+  ['f-razao','f-cnpj','f-pais','f-tel','f-email','f-resp'].forEach(id=>{
+    const el=document.getElementById(id);
+    el.classList.toggle('err',!el.value.trim());
+    if(!el.value.trim()) ok=false;
+  });
 
-  // Bloco 3: 2 perguntas
-  const b3groups = document.querySelectorAll('#card-b3 .toggle-group');
-  const b3ok = Array.from(b3groups).every(g => g.querySelector('.active'));
-  document.getElementById('card-b3').classList.toggle('invalid', !b3ok);
-  if (!b3ok) ok = false;
+  // datas
+  const iv=document.getElementById('invoiceDate').value;
+  const rv=document.getElementById('receiptDate').value;
+  document.getElementById('invoiceDate').classList.toggle('err',!iv);
+  document.getElementById('receiptDate').classList.toggle('err',!rv);
+  if(!iv||!rv) ok=false;
 
-  // Bloco 4: 2 perguntas
-  const b4groups = document.querySelectorAll('#card-b4 .toggle-group');
-  const b4ok = Array.from(b4groups).every(g => g.querySelector('.active'));
-  document.getElementById('card-b4').classList.toggle('invalid', !b4ok);
-  if (!b4ok) ok = false;
-
-  // Bloco 5: reparo
-  const b5ok = !!document.querySelector('#card-b5 .toggle-btn.active');
-  document.getElementById('card-b5').classList.toggle('invalid', !b5ok);
-  if (!b5ok) ok = false;
-
-  if (!ok) {
+  if(!ok){
     err.classList.add('show');
-    // scroll to first invalid
-    const first = document.querySelector('.block-card.invalid');
-    if (first) first.scrollIntoView({behavior:'smooth', block:'center'});
+    const firstErr=document.querySelector('#panel-id .err');
+    if(firstErr) firstErr.scrollIntoView({behavior:'smooth',block:'center'});
     return;
   }
   err.classList.remove('show');
-  goToForm();
+  // ensure at least one product block exists
+  if(document.querySelectorAll('.prod-block').length===0) addProdBlock();
+  goTo('reg'); setSteps(2);
 }
 
-// ── Block completion ──────────────────────────────────
-function markBlock(id, done) {
-  const card = document.getElementById(id);
-  card.classList.toggle('complete', done);
-  if (done) card.classList.remove('invalid');
+/* ══ Card completion indicators (etapa 1) ════════════════ */
+function checkInvoiceCard(){
+  document.getElementById('c-invoice').classList.toggle('complete', !!document.getElementById('f-invoice').value.trim());
+}
+function checkLojista(){
+  const ok=['f-razao','f-cnpj','f-pais','f-tel','f-email','f-resp'].every(id=>document.getElementById(id).value.trim());
+  document.getElementById('c-lojista').classList.toggle('complete',ok);
+}
+function checkDatas(){
+  const ok=!!document.getElementById('invoiceDate').value&&!!document.getElementById('receiptDate').value;
+  document.getElementById('c-datas').classList.toggle('complete',ok);
 }
 
-function checkB2() {
-  const insp  = !!document.querySelector('#card-b2 .toggle-btn.active');
-  const iv    = !!document.getElementById('invoiceDate').value;
-  const rc    = !!document.getElementById('receiptDate').value;
-  markBlock('card-b2', insp && iv && rc);
-}
-function checkB3() {
-  markBlock('card-b3', Array.from(document.querySelectorAll('#card-b3 .toggle-group')).every(g=>g.querySelector('.active')));
-}
-function checkB4() {
-  markBlock('card-b4', Array.from(document.querySelectorAll('#card-b4 .toggle-group')).every(g=>g.querySelector('.active')));
-}
-
-// ── Toggle helpers ────────────────────────────────────
-function toggleYN(btn) {
-  btn.parentElement.querySelectorAll('.toggle-btn').forEach(b=>b.classList.remove('active'));
-  btn.classList.add('active');
-}
-function toggleExclusive(btn) {
-  btn.parentElement.querySelectorAll('.toggle-btn').forEach(b=>b.classList.remove('active'));
-  btn.classList.add('active');
-}
-
-// ── Bloco 1 ───────────────────────────────────────────
-function selectClass(el, val) {
-  document.querySelectorAll('#card-b1 .class-option').forEach(o=>o.classList.remove('selected'));
-  el.classList.add('selected');
-  el.querySelector('input').checked = true;
-  markBlock('card-b1', true);
-  // mostrar/ocultar campo "outros"
-  const field = document.getElementById('outrosField');
-  if (val === 'outros') {
-    field.classList.add('show');
-  } else {
-    field.classList.remove('show');
-    document.getElementById('outrosText').value = '';
-    document.getElementById('outrosText').classList.remove('error');
+/* ══ Counter ═════════════════════════════════════════════ */
+function updateCounter(){
+  const rv=document.getElementById('receiptDate').value;
+  const ne=document.getElementById('counterNum');
+  const se=document.getElementById('counterSt');
+  const bf=document.getElementById('barFill');
+  const wa=document.getElementById('warrantyAlert');
+  if(!rv){
+    ne.textContent='—';ne.className='counter-num empty';
+    se.textContent='Preencha a data de recebimento para calcular';se.style.color='var(--brand-light)';
+    bf.style.width='0%';bf.style.background='var(--border)';
+    wa.classList.remove('show');checkDatas();return;
   }
-}
-
-// ── Bloco 5 — reparo ──────────────────────────────────
-function toggleReparoYN(btn, val) {
-  document.querySelectorAll('#card-b5 .toggle-btn').forEach(b=>b.classList.remove('active'));
-  btn.classList.add('active');
-  document.getElementById('reparo-sim').classList.toggle('show', val==='sim');
-  document.getElementById('reparo-nao').classList.toggle('show', val==='nao');
-  markBlock('card-b5', true);
-}
-
-// ── Counter ───────────────────────────────────────────
-function updateCounter() {
-  const rv    = document.getElementById('receiptDate').value;
-  const numEl = document.getElementById('counterNumber');
-  const stEl  = document.getElementById('counterStatus');
-  const bar   = document.getElementById('counterBarFill');
-  const wa    = document.getElementById('warrantyAlert');
-  if (!rv) {
-    numEl.textContent='—'; numEl.className='counter-number empty';
-    stEl.textContent='Preencha a data de recebimento para calcular'; stEl.style.color='var(--brand-light)';
-    bar.style.width='0%'; bar.style.background='var(--border)';
-    wa.classList.remove('show'); return;
-  }
-  const today   = new Date(); today.setHours(0,0,0,0);
-  const receipt = new Date(rv+'T00:00:00');
-  const days    = Math.floor((today-receipt)/(1000*60*60*24));
-  const rem     = 365-days;
-  const pct     = Math.min(100,Math.max(0,(days/365)*100));
-  numEl.textContent = Math.max(0,days);
+  const today=new Date();today.setHours(0,0,0,0);
+  const rec=new Date(rv+'T00:00:00');
+  const days=Math.floor((today-rec)/(864e5));
+  const rem=365-days;
+  const pct=Math.min(100,Math.max(0,(days/365)*100));
+  ne.textContent=Math.max(0,days);
   let bc,st,sc;
-  if(days<0){bc='var(--border)';st='Data no futuro — verifique o preenchimento';sc='var(--brand-light)';numEl.className='counter-number empty';wa.classList.remove('show');}
-  else if(days<=270){bc='var(--success)';st='✓ Dentro do prazo — faltam '+rem+' dias para o limite de 1 ano';sc='var(--success)';numEl.className='counter-number ok';wa.classList.remove('show');}
-  else if(days<=365){bc='var(--warning)';st='⚠ Próximo do limite — faltam apenas '+rem+' dia(s)';sc='var(--warning)';numEl.className='counter-number warn';wa.classList.remove('show');}
-  else{bc='var(--danger)';st='✗ Fora do prazo — '+Math.abs(rem)+' dias além do limite de 1 ano';sc='var(--danger)';numEl.className='counter-number over';wa.classList.add('show');}
-  stEl.textContent=st; stEl.style.color=sc;
-  bar.style.width=pct+'%'; bar.style.background=bc;
+  if(days<0){bc='var(--border)';st='Data no futuro — verifique o preenchimento';sc='var(--brand-light)';ne.className='counter-num empty';wa.classList.remove('show');}
+  else if(days<=270){bc='var(--success)';st='✓ Dentro do prazo — faltam '+rem+' dias para o limite de 1 ano';sc='var(--success)';ne.className='counter-num ok';wa.classList.remove('show');}
+  else if(days<=365){bc='var(--warning)';st='⚠ Próximo do limite — faltam apenas '+rem+' dia(s)';sc='var(--warning)';ne.className='counter-num warn';wa.classList.remove('show');}
+  else{bc='var(--danger)';st='✗ Fora do prazo — '+Math.abs(rem)+' dias além do limite';sc='var(--danger)';ne.className='counter-num over';wa.classList.add('show');}
+  se.textContent=st;se.style.color=sc;
+  bf.style.width=pct+'%';bf.style.background=bc;
+  checkDatas();
 }
 
-// ── Sync dates ────────────────────────────────────────
-function syncDatesToForm() {
-  const iv = document.getElementById('invoiceDate').value;
-  const rv = document.getElementById('receiptDate').value;
-  if(iv) document.getElementById('f-data-invoice').value=iv;
-  if(rv) document.getElementById('f-data-recebimento').value=rv;
-}
-
-// ── Product search ────────────────────────────────────
-function filterProducts() {
-  const q  = document.getElementById('f-produto-input').value.trim().toUpperCase();
-  const dd = document.getElementById('productDropdown');
-  document.getElementById('f-produto-value').value='';
-  if(!q){dd.classList.remove('open');return;}
-  const m = PRODUCTS.filter(p=>p.includes(q)).slice(0,30);
-  if(!m.length){dd.innerHTML='<div class="product-item" style="color:var(--brand-light);">Nenhum produto encontrado</div>';dd.classList.add('open');return;}
-  dd.innerHTML=m.map(p=>'<div class="product-item" onclick="selectProduct(\''+p+'\')">'+p.replace(new RegExp(q,'g'),'<strong>'+q+'</strong>')+'</div>').join('');
-  dd.classList.add('open');
-}
-function selectProduct(name){
-  document.getElementById('f-produto-input').value=name;
-  document.getElementById('f-produto-value').value=name;
-  document.getElementById('productDropdown').classList.remove('open');
-}
-document.addEventListener('click',e=>{
-  if(!e.target.closest('.product-wrap')) document.getElementById('productDropdown').classList.remove('open');
-});
-
-// ── Reincidência ──────────────────────────────────────
+/* ══ Reincidência ════════════════════════════════════════ */
 function toggleReincidencia(){
-  document.getElementById('reincidencia-extra').style.display=document.getElementById('f-reincidencia').checked?'block':'none';
+  document.getElementById('reincidencia-extra').style.display=
+    document.getElementById('f-reincidencia').checked?'block':'none';
 }
 
-// ── File upload ───────────────────────────────────────
-function handleFiles(files){
-  Array.from(files).forEach(f=>{if(!uploadedFiles.find(u=>u.name===f.name&&u.size===f.size))uploadedFiles.push(f);});
-  renderFileList();
-}
-function renderFileList(){
-  document.getElementById('fileList').innerHTML=uploadedFiles.map((f,i)=>`<div class="file-chip"><span>${f.type.startsWith('video')?'🎥':'📷'} ${f.name}</span><button onclick="removeFile(${i})" title="Remover">×</button></div>`).join('');
-}
-function removeFile(i){uploadedFiles.splice(i,1);renderFileList();}
-function dragOver(e){e.preventDefault();document.getElementById('uploadZone').classList.add('drag-over');}
-function dragLeave(){document.getElementById('uploadZone').classList.remove('drag-over');}
-function dropFiles(e){e.preventDefault();dragLeave();handleFiles(e.dataTransfer.files);}
-
-// ── Submit form ───────────────────────────────────────
+/* ══ Submit ══════════════════════════════════════════════ */
 function submitForm(){
-  const err = document.getElementById('formError');
-  let ok = true;
+  const err=document.getElementById('err-step2');
+  let ok=true;
 
-  // text/number/email inputs
-  const req = ['f-razao','f-cnpj','f-pais','f-tel','f-email','f-resp','f-invoice','f-modulos','f-produto-value','f-descricao'];
-  req.forEach(id=>{
-    const el=document.getElementById(id);
-    const empty = !el.value.trim();
-    el.classList.toggle('error', empty);
-    if(empty) ok=false;
+  const blocks=document.querySelectorAll('.prod-block');
+  if(blocks.length===0){ ok=false; }
+
+  blocks.forEach(block=>{
+    const id=block.id.replace('pb-','');
+
+    // produto
+    const pv=document.getElementById('pb-prod-value-'+id);
+    const pvEmpty=!pv||!pv.value.trim();
+    if(pv) pv.classList.toggle('err',pvEmpty);
+    const pi=document.getElementById('pb-prod-input-'+id);
+    if(pi) pi.classList.toggle('err',pvEmpty);
+    if(pvEmpty) ok=false;
+
+    // módulos
+    const mod=document.getElementById('pb-mod-'+id);
+    const modEmpty=!mod||!mod.value.trim();
+    if(mod) mod.classList.toggle('err',modEmpty);
+    if(modEmpty) ok=false;
+
+    // descrição
+    const desc=document.getElementById('pb-desc-'+id);
+    const descEmpty=!desc||!desc.value.trim();
+    if(desc) desc.classList.toggle('err',descEmpty);
+    if(descEmpty) ok=false;
+
+    // fotos
+    if(!blockFiles[id]||blockFiles[id].prod.length===0){
+      const uz=document.getElementById('pb-uz-'+id);
+      if(uz) uz.style.borderColor='var(--danger)';
+      ok=false;
+    } else {
+      const uz=document.getElementById('pb-uz-'+id);
+      if(uz) uz.style.borderColor='';
+    }
+
+    // Q1 embalagem
+    const q1=document.getElementById('pb-q1-'+id);
+    if(!q1||!q1.querySelector('.on')){ block.classList.add('invalid'); ok=false; }
+
+    // Q2 impede uso
+    const q2=document.getElementById('pb-q2-'+id);
+    if(!q2||!q2.querySelector('.on')){ block.classList.add('invalid'); ok=false; }
+
+    // Q3 reparo
+    const q3=document.getElementById('pb-q3-'+id);
+    if(!q3||!q3.querySelector('.on')){ block.classList.add('invalid'); ok=false; }
+    else if(q3.querySelector('.yes.on')){
+      // reparo sim → precisa de valor
+      const rv=document.getElementById('pb-rv-'+id);
+      const rvEmpty=!rv||!rv.value.trim();
+      if(rv) rv.classList.toggle('err',rvEmpty);
+      if(rvEmpty) ok=false;
+    }
   });
 
-  // dates (readonly but must have value from triagem)
-  ['f-data-invoice','f-data-recebimento'].forEach(id=>{
-    const el=document.getElementById(id);
-    const empty=!el.value;
-    el.classList.toggle('error',empty);
-    if(empty) ok=false;
-  });
-
-  // reincidencia invoice
-  if(document.getElementById('f-reincidencia').checked){
-    const el=document.getElementById('f-invoice-orig');
-    const empty=!el.value.trim();
-    el.classList.toggle('error',empty);
-    if(empty) ok=false;
-  }
-
-  // at least 1 file
-  if(uploadedFiles.length===0){
-    document.getElementById('uploadZone').style.borderColor='var(--danger)';
-    ok=false;
-  } else {
-    document.getElementById('uploadZone').style.borderColor='';
-  }
-
-  if(!ok){err.classList.add('show');err.scrollIntoView({behavior:'smooth',block:'center'});return;}
+  if(!ok){ err.classList.add('show'); err.scrollIntoView({behavior:'smooth',block:'center'}); return; }
   err.classList.remove('show');
 
   const ticket='AT-'+new Date().getFullYear()+'-'+String(Math.floor(10000+Math.random()*90000));
-  document.getElementById('ticketNumber').textContent=ticket;
-  document.getElementById('formContent').style.display='none';
-  document.getElementById('confirmationScreen').classList.add('show');
+  document.getElementById('ticketNum').textContent=ticket;
+  document.getElementById('regContent').style.display='none';
+  document.getElementById('confScreen').classList.add('show');
   window.scrollTo({top:0,behavior:'smooth'});
 }
 
-// ── Reset — limpa tudo e volta ao início limpo ─────────
+/* ══ Reset ═══════════════════════════════════════════════ */
 function resetAll(){
-  // limpa formulário
-  ['f-razao','f-cnpj','f-pais','f-tel','f-email','f-resp','f-invoice','f-modulos',
-   'f-produto-input','f-produto-value','f-descricao','f-invoice-orig'].forEach(id=>{
+  // etapa 1
+  ['f-invoice','f-invoice-orig','f-razao','f-cnpj','f-pais','f-tel','f-email','f-resp'].forEach(id=>{
     const el=document.getElementById(id);
-    if(el){el.value='';el.classList.remove('error');}
+    if(el){el.value='';el.classList.remove('err');}
   });
   document.getElementById('f-reincidencia').checked=false;
   document.getElementById('reincidencia-extra').style.display='none';
-  uploadedFiles=[];renderFileList();
-  document.getElementById('formContent').style.display='block';
-  document.getElementById('confirmationScreen').classList.remove('show');
-  document.getElementById('formError').classList.remove('show');
-  document.getElementById('uploadZone').style.borderColor='';
-
-  // limpa triagem
-  document.querySelectorAll('#card-b1 .class-option').forEach(o=>o.classList.remove('selected'));
-  document.querySelectorAll('input[name=b1]').forEach(r=>r.checked=false);
-  document.getElementById('outrosField').classList.remove('show');
-  document.getElementById('outrosText').value='';
-  document.querySelectorAll('.toggle-btn').forEach(b=>b.classList.remove('active'));
-  document.getElementById('reparo-sim').classList.remove('show');
-  document.getElementById('reparo-nao').classList.remove('show');
   document.getElementById('invoiceDate').value='';
   document.getElementById('receiptDate').value='';
-  document.getElementById('invoiceDate').classList.remove('error');
-  document.getElementById('receiptDate').classList.remove('error');
-  ['card-b1','card-b2','card-b3','card-b4','card-b5'].forEach(id=>{
-    const c=document.getElementById(id);
-    c.classList.remove('complete','invalid');
-  });
+  ['invoiceDate','receiptDate'].forEach(id=>document.getElementById(id).classList.remove('err'));
+  ['c-invoice','c-lojista','c-datas'].forEach(id=>document.getElementById(id).classList.remove('complete'));
+  document.getElementById('err-step1').classList.remove('show');
   document.getElementById('warrantyAlert').classList.remove('show');
-  document.getElementById('triageError').classList.remove('show');
   updateCounter();
 
-  // volta para passo 1 limpo
-  goToTriagem();
+  // etapa 2: remove all product blocks and reset
+  document.getElementById('prod-blocks-container').innerHTML='';
+  Object.keys(blockFiles).forEach(k=>delete blockFiles[k]);
+  blockCount=0;
+  document.getElementById('regContent').style.display='block';
+  document.getElementById('confScreen').classList.remove('show');
+  document.getElementById('err-step2').classList.remove('show');
+
+  goTo('id'); setSteps(1);
 }
+
+/* ══ Init: add first product block on load ════════════════ */
+addProdBlock();
 </script>
 </body>
 </html>
-
