@@ -2,18 +2,6 @@
 <html lang="pt-BR">
 <head>
 <meta charset="UTF-8">
-<script>
-  const lang = navigator.language || navigator.userLanguage;
-  if (lang.startsWith('es')) {
-    window.location.href = "INDEX.ES.html";
-  } else if (lang.startsWith('en')) {
-    window.location.href = "INDEX.EN.html";
-  }
-  // Se for PT, ele apenas continua carregando o index.html atual
-</script>
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Assistência Técnica — Grupo Sohome</title>
-<meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Assistência Técnica — Grupo Sohome</title>
 <link rel="icon" href="LOGO H.png" type="image/svg+xml">
@@ -419,6 +407,23 @@ input:checked+.slider:before{transform:translateX(20px);}
 ══════════════════════════════════════════════════════ -->
 <div class="panel" id="panel-reg">
 
+  <!-- Confirmação (tela pós-envio) -->
+  <div class="confirmation" id="confScreen">
+    <div class="conf-icon">✅</div>
+    <div class="conf-title">Reclamação Registrada!</div>
+    <div class="conf-sub">Sua solicitação foi enviada com sucesso.</div>
+    <div class="conf-ticket">
+      <div class="conf-ticket-lbl">Número de Atendimento</div>
+      <div class="conf-ticket-num" id="ticketNum">—</div>
+    </div>
+    <div class="conf-info">
+      Guarde este número para acompanhar o andamento da assistência técnica.<br>
+      Em até <strong>24 horas</strong> nossa equipe entrará em contato pelo e-mail cadastrado com a definição da tratativa.<br><br>
+      Para dúvidas, informe este número ao seu representante comercial Sohome.
+    </div>
+    <button class="btn-new" onclick="resetAll()">+ Abrir nova assistência</button>
+  </div>
+
   <!-- Formulário de registro -->
   <div class="main-content" id="regContent">
 
@@ -434,26 +439,11 @@ input:checked+.slider:before{transform:translateX(20px);}
       <span style="font-size:20px;">＋</span> Adicionar outro produto
     </button>
 
-    <div class="err-hint" id="err-step2">Preencha todos os campos obrigatórios de pelo menos um produto e envie antes de salvar.</div>
-    <button class="btn-salvar" onclick="salvarInformacoes()">💾 Salvar as Informações</button>
+    <div class="err-hint" id="err-step2">Preencha todos os campos obrigatórios antes de enviar.</div>
+    <button class="btn-submit" onclick="submitForm()">Enviar Assistência Técnica →</button>
 
   </div><!-- /regContent -->
 </div><!-- /panel-reg -->
-
-<!-- ══ RECEIPT OVERLAY ═══════════════════════════════════ -->
-<div class="receipt-overlay" id="receiptOverlay">
-  <div class="receipt-box">
-    <div class="receipt-header">
-      <h2>📋 Resumo da Assistência Técnica</h2>
-      <button class="receipt-close" onclick="closeReceipt()">✕ Fechar</button>
-    </div>
-    <div class="receipt-body" id="receiptBody"></div>
-    <div class="receipt-actions">
-      <button class="btn-print" onclick="window.print()">🖨️ Imprimir / Salvar PDF</button>
-      <button class="btn-copy-receipt" onclick="copyReceipt()">📋 Copiar Texto</button>
-    </div>
-  </div>
-</div>
 
 
 <!-- ══ SITE FOOTER ══════════════════════════════════════ -->
@@ -484,63 +474,6 @@ input:checked+.slider:before{transform:translateX(20px);}
 .prod-reparo.show{display:block;}
 .prod-reparo-warn{display:none;margin-top:12px;padding:12px 16px;border-radius:3px;font-size:13px;line-height:1.6;background:#fdf0ee;border:1px solid #f5d5d0;color:var(--danger);}
 .prod-reparo-warn.show{display:block;}
-
-/* ══ ENVIAR BUTTON (per product) ════════════════════ */
-.btn-enviar-block{background:rgba(46,125,94,.85);border:1px solid rgba(46,125,94,.9);color:#fff;border-radius:3px;padding:5px 15px;font-size:11px;font-family:'DM Sans',sans-serif;cursor:pointer;transition:all .15s;display:inline-flex;align-items:center;gap:5px;white-space:nowrap;letter-spacing:.04em;text-transform:uppercase;font-weight:600;}
-.btn-enviar-block:hover{background:rgba(46,125,94,1);}
-.btn-enviar-block.sent{background:rgba(255,255,255,.13);border-color:rgba(255,255,255,.22);color:rgba(255,255,255,.5);cursor:default;pointer-events:none;}
-
-/* registration badge in header */
-.reg-badge{display:none;align-items:center;gap:6px;background:rgba(46,125,94,.18);border:1px solid rgba(46,125,94,.35);border-radius:3px;padding:4px 12px;font-size:11px;color:#9fceb5;font-weight:600;letter-spacing:.04em;white-space:nowrap;}
-.reg-badge.show{display:inline-flex;}
-.reg-badge .reg-icon{font-size:13px;}
-
-/* ══ SALVAR / RECEIPT SUMMARY ═══════════════════════ */
-.btn-salvar{width:100%;padding:16px;background:var(--brand);color:#fff;border:none;border-radius:3px;font-size:13px;letter-spacing:.14em;text-transform:uppercase;font-family:'DM Sans',sans-serif;cursor:pointer;transition:background .2s;margin-top:10px;}
-.btn-salvar:hover{background:var(--brand-dark);}
-
-.receipt-overlay{display:none;position:fixed;inset:0;z-index:9999;background:rgba(0,0,0,.55);backdrop-filter:blur(4px);align-items:center;justify-content:center;padding:20px;}
-.receipt-overlay.show{display:flex;}
-.receipt-box{background:var(--white);border-radius:6px;max-width:720px;width:100%;max-height:90vh;overflow-y:auto;box-shadow:0 20px 60px rgba(0,0,0,.25);animation:receiptIn .3s ease;}
-@keyframes receiptIn{from{opacity:0;transform:translateY(20px);}to{opacity:1;transform:translateY(0);}}
-.receipt-header{background:var(--brand);padding:22px 28px;display:flex;align-items:center;justify-content:space-between;border-radius:6px 6px 0 0;}
-.receipt-header h2{font-size:16px;font-weight:600;color:#fff;letter-spacing:.08em;text-transform:uppercase;margin:0;}
-.receipt-close{background:rgba(255,255,255,.15);border:1px solid rgba(255,255,255,.25);color:#fff;border-radius:3px;padding:6px 14px;font-size:12px;cursor:pointer;font-family:'DM Sans',sans-serif;transition:background .15s;}
-.receipt-close:hover{background:rgba(255,255,255,.3);}
-.receipt-body{padding:28px;}
-.receipt-section{margin-bottom:24px;}
-.receipt-section-title{font-size:10px;letter-spacing:.14em;text-transform:uppercase;font-weight:700;color:var(--brand);margin-bottom:12px;padding-bottom:6px;border-bottom:2px solid var(--brand-pale);}
-.receipt-row{display:flex;padding:6px 0;font-size:14px;line-height:1.5;}
-.receipt-row .r-label{color:var(--brand-light);min-width:160px;flex-shrink:0;font-weight:500;}
-.receipt-row .r-value{color:var(--text);flex:1;word-break:break-word;}
-.receipt-prod-card{background:var(--brand-pale);border:1px solid var(--border);border-radius:4px;padding:16px 20px;margin-bottom:12px;}
-.receipt-prod-card h4{font-size:13px;font-weight:700;color:var(--brand-dark);margin-bottom:10px;display:flex;align-items:center;gap:8px;flex-wrap:wrap;}
-.receipt-prod-card .reg-num{font-size:12px;color:var(--success);font-weight:600;background:rgba(46,125,94,.1);padding:2px 10px;border-radius:10px;}
-.receipt-actions{display:flex;gap:10px;padding:20px 28px;border-top:1px solid var(--border);}
-.btn-print{flex:1;padding:13px;background:var(--brand);color:#fff;border:none;border-radius:3px;font-size:12px;letter-spacing:.1em;text-transform:uppercase;font-family:'DM Sans',sans-serif;cursor:pointer;transition:background .15s;}
-.btn-print:hover{background:var(--brand-dark);}
-.btn-copy-receipt{flex:1;padding:13px;background:var(--white);color:var(--brand);border:1px solid var(--border);border-radius:3px;font-size:12px;letter-spacing:.1em;text-transform:uppercase;font-family:'DM Sans',sans-serif;cursor:pointer;transition:all .15s;}
-.btn-copy-receipt:hover{border-color:var(--brand);background:var(--brand-pale);}
-
-.no-products-hint{text-align:center;padding:20px;color:var(--brand-light);font-size:14px;}
-
-@media print{
-  .receipt-overlay{position:static;background:none;backdrop-filter:none;padding:0;}
-  .receipt-box{max-height:none;box-shadow:none;max-width:100%;}
-  .receipt-header{background:var(--brand) !important;-webkit-print-color-adjust:exact;print-color-adjust:exact;}
-  .receipt-actions,.receipt-close{display:none !important;}
-  body>*:not(.receipt-overlay){display:none !important;}
-}
-
-@media(max-width:768px){
-  .receipt-body{padding:20px 16px;}
-  .receipt-row{flex-direction:column;gap:2px;}
-  .receipt-row .r-label{min-width:auto;}
-  .receipt-actions{flex-direction:column;}
-  .prod-block-header-right{flex-wrap:wrap;gap:4px;}
-  .reg-badge{font-size:10px;padding:3px 8px;}
-  .btn-enviar-block{padding:5px 10px;font-size:10px;}
-}
 </style>
 
 <script>
@@ -566,8 +499,6 @@ function buildBlock(id) {
       <span class="prod-block-summary" id="pb-summary-${id}">—</span>
     </div>
     <div class="prod-block-header-right">
-      <span class="reg-badge" id="pb-reg-${id}"><span class="reg-icon">✓</span> <span id="pb-reg-num-${id}"></span></span>
-      <button class="btn-enviar-block" id="pb-enviar-${id}" onclick="enviarProdBlock(${id})">📤 Enviar</button>
       <button class="btn-toggle-block" id="pb-tog-${id}" onclick="toggleBlock(${id})">
         <span id="pb-tog-icon-${id}">▲</span> Minimizar
       </button>
@@ -932,6 +863,77 @@ function toggleReincidencia(){
     document.getElementById('f-reincidencia').checked?'block':'none';
 }
 
+/* ══ Submit ══════════════════════════════════════════════ */
+function submitForm(){
+  const err=document.getElementById('err-step2');
+  let ok=true;
+
+  const blocks=document.querySelectorAll('.prod-block');
+  if(blocks.length===0){ ok=false; }
+
+  blocks.forEach(block=>{
+    const id=block.id.replace('pb-','');
+
+    // produto
+    const pv=document.getElementById('pb-prod-value-'+id);
+    const pvEmpty=!pv||!pv.value.trim();
+    if(pv) pv.classList.toggle('err',pvEmpty);
+    const pi=document.getElementById('pb-prod-input-'+id);
+    if(pi) pi.classList.toggle('err',pvEmpty);
+    if(pvEmpty) ok=false;
+
+    // módulos
+    const mod=document.getElementById('pb-mod-'+id);
+    const modEmpty=!mod||!mod.value.trim();
+    if(mod) mod.classList.toggle('err',modEmpty);
+    if(modEmpty) ok=false;
+
+    // descrição
+    const desc=document.getElementById('pb-desc-'+id);
+    const descEmpty=!desc||!desc.value.trim();
+    if(desc) desc.classList.toggle('err',descEmpty);
+    if(descEmpty) ok=false;
+
+    // fotos
+    if(!blockFiles[id]||blockFiles[id].prod.length===0){
+      const uz=document.getElementById('pb-uz-'+id);
+      if(uz) uz.style.borderColor='var(--danger)';
+      ok=false;
+    } else {
+      const uz=document.getElementById('pb-uz-'+id);
+      if(uz) uz.style.borderColor='';
+    }
+
+    // Q1 embalagem
+    const q1=document.getElementById('pb-q1-'+id);
+    if(!q1||!q1.querySelector('.on')){ block.classList.add('invalid'); ok=false; }
+
+    // Q2 impede uso
+    const q2=document.getElementById('pb-q2-'+id);
+    if(!q2||!q2.querySelector('.on')){ block.classList.add('invalid'); ok=false; }
+
+    // Q3 reparo
+    const q3=document.getElementById('pb-q3-'+id);
+    if(!q3||!q3.querySelector('.on')){ block.classList.add('invalid'); ok=false; }
+    else if(q3.querySelector('.yes.on')){
+      // reparo sim → precisa de valor
+      const rv=document.getElementById('pb-rv-'+id);
+      const rvEmpty=!rv||!rv.value.trim();
+      if(rv) rv.classList.toggle('err',rvEmpty);
+      if(rvEmpty) ok=false;
+    }
+  });
+
+  if(!ok){ err.classList.add('show'); err.scrollIntoView({behavior:'smooth',block:'center'}); return; }
+  err.classList.remove('show');
+
+  const ticket='AT-'+new Date().getFullYear()+'-'+String(Math.floor(10000+Math.random()*90000));
+  document.getElementById('ticketNum').textContent=ticket;
+  document.getElementById('regContent').style.display='none';
+  document.getElementById('confScreen').classList.add('show');
+  window.scrollTo({top:0,behavior:'smooth'});
+}
+
 /* ══ Reset ═══════════════════════════════════════════════ */
 function resetAll(){
   // etapa 1
@@ -952,255 +954,13 @@ function resetAll(){
   // etapa 2: remove all product blocks and reset
   document.getElementById('prod-blocks-container').innerHTML='';
   Object.keys(blockFiles).forEach(k=>delete blockFiles[k]);
-  Object.keys(blockRegs).forEach(k=>delete blockRegs[k]);
   blockCount=0;
   document.getElementById('regContent').style.display='block';
+  document.getElementById('confScreen').classList.remove('show');
   document.getElementById('err-step2').classList.remove('show');
 
   goTo('id'); setSteps(1);
 }
-
-/* ══ Per-block registration store ════════════════════════ */
-const blockRegs = {}; // blockRegs[id] = { ticket, timestamp }
-
-/* ══ Enviar individual product block ═════════════════════ */
-function enviarProdBlock(id) {
-  const block = document.getElementById('pb-' + id);
-  if (!block) return;
-  let ok = true;
-
-  // produto
-  const pv = document.getElementById('pb-prod-value-' + id);
-  const pvEmpty = !pv || !pv.value.trim();
-  if (pv) pv.classList.toggle('err', pvEmpty);
-  const pi = document.getElementById('pb-prod-input-' + id);
-  if (pi) pi.classList.toggle('err', pvEmpty);
-  if (pvEmpty) ok = false;
-
-  // módulos
-  const mod = document.getElementById('pb-mod-' + id);
-  const modEmpty = !mod || !mod.value.trim();
-  if (mod) mod.classList.toggle('err', modEmpty);
-  if (modEmpty) ok = false;
-
-  // descrição
-  const desc = document.getElementById('pb-desc-' + id);
-  const descEmpty = !desc || !desc.value.trim();
-  if (desc) desc.classList.toggle('err', descEmpty);
-  if (descEmpty) ok = false;
-
-  // fotos
-  if (!blockFiles[id] || blockFiles[id].prod.length === 0) {
-    const uz = document.getElementById('pb-uz-' + id);
-    if (uz) uz.style.borderColor = 'var(--danger)';
-    ok = false;
-  } else {
-    const uz = document.getElementById('pb-uz-' + id);
-    if (uz) uz.style.borderColor = '';
-  }
-
-  // Q1 embalagem
-  const q1 = document.getElementById('pb-q1-' + id);
-  if (!q1 || !q1.querySelector('.on')) { ok = false; }
-
-  // Q2 impede uso
-  const q2 = document.getElementById('pb-q2-' + id);
-  if (!q2 || !q2.querySelector('.on')) { ok = false; }
-
-  // Q3 reparo
-  const q3 = document.getElementById('pb-q3-' + id);
-  if (!q3 || !q3.querySelector('.on')) { ok = false; }
-  else if (q3.querySelector('.yes.on')) {
-    const rv = document.getElementById('pb-rv-' + id);
-    const rvEmpty = !rv || !rv.value.trim();
-    if (rv) rv.classList.toggle('err', rvEmpty);
-    if (rvEmpty) ok = false;
-  }
-
-  if (!ok) {
-    block.classList.add('invalid');
-    block.scrollIntoView({ behavior: 'smooth', block: 'center' });
-    return;
-  }
-
-  block.classList.remove('invalid');
-
-  // Generate unique registration number
-  const now = new Date();
-  const seq = String(Math.floor(10000 + Math.random() * 90000));
-  const ticket = 'REC-' + now.getFullYear() + '-' + seq;
-
-  blockRegs[id] = {
-    ticket: ticket,
-    timestamp: now.toLocaleString('pt-BR')
-  };
-
-  // Show badge
-  const badge = document.getElementById('pb-reg-' + id);
-  const badgeNum = document.getElementById('pb-reg-num-' + id);
-  if (badge) badge.classList.add('show');
-  if (badgeNum) badgeNum.textContent = ticket;
-
-  // Mark button as sent
-  const btn = document.getElementById('pb-enviar-' + id);
-  if (btn) {
-    btn.classList.add('sent');
-    btn.innerHTML = '✓ Enviado';
-  }
-
-  // Auto-minimize
-  if (!block.classList.contains('minimized')) {
-    toggleBlock(id);
-  }
-
-  // Mark block as complete
-  block.style.borderColor = '#9fceb5';
-}
-
-/* ══ Salvar Informações (receipt/summary) ════════════════ */
-function salvarInformacoes() {
-  const err = document.getElementById('err-step2');
-  
-  // Check if at least one block was sent
-  const sentIds = Object.keys(blockRegs);
-  if (sentIds.length === 0) {
-    err.textContent = 'Envie pelo menos um produto antes de salvar as informações.';
-    err.classList.add('show');
-    err.scrollIntoView({ behavior: 'smooth', block: 'center' });
-    return;
-  }
-  err.classList.remove('show');
-
-  // Build receipt HTML
-  let html = '';
-
-  // Section: Client info
-  html += '<div class="receipt-section">';
-  html += '<div class="receipt-section-title">🧾 Dados da Invoice e Cliente</div>';
-  html += receiptRow('Invoice', document.getElementById('f-invoice').value || '—');
-  if (document.getElementById('f-reincidencia').checked) {
-    html += receiptRow('Invoice Origem (Reincidência)', document.getElementById('f-invoice-orig').value || '—');
-  }
-  html += receiptRow('Razão Social', document.getElementById('f-razao').value || '—');
-  html += receiptRow('CNPJ / Tax ID', document.getElementById('f-cnpj').value || '—');
-  html += receiptRow('País', document.getElementById('f-pais').value || '—');
-  html += receiptRow('Telefone', document.getElementById('f-tel').value || '—');
-  html += receiptRow('E-mail', document.getElementById('f-email').value || '—');
-  html += receiptRow('Responsável', document.getElementById('f-resp').value || '—');
-  html += receiptRow('Data da Fatura', formatDate(document.getElementById('invoiceDate').value));
-  html += receiptRow('Data de Recebimento', formatDate(document.getElementById('receiptDate').value));
-  html += '</div>';
-
-  // Section: Products
-  html += '<div class="receipt-section">';
-  html += '<div class="receipt-section-title">🛋️ Produtos Registrados</div>';
-
-  const blocks = document.querySelectorAll('.prod-block');
-  let prodIndex = 0;
-  blocks.forEach(b => {
-    const bid = b.id.replace('pb-', '');
-    prodIndex++;
-    const reg = blockRegs[bid];
-    const prodName = (document.getElementById('pb-prod-input-' + bid) || {}).value || '—';
-    const modulos = (document.getElementById('pb-mod-' + bid) || {}).value || '—';
-    const descricao = (document.getElementById('pb-desc-' + bid) || {}).value || '—';
-
-    // Q1
-    const q1El = document.getElementById('pb-q1-' + bid);
-    const q1 = q1El && q1El.querySelector('.yes.on') ? 'Sim' : (q1El && q1El.querySelector('.no.on') ? 'Não' : '—');
-
-    // Q2
-    const q2El = document.getElementById('pb-q2-' + bid);
-    const q2 = q2El && q2El.querySelector('.yes.on') ? 'Sim' : (q2El && q2El.querySelector('.no.on') ? 'Não' : '—');
-
-    // Q3
-    const q3El = document.getElementById('pb-q3-' + bid);
-    const q3 = q3El && q3El.querySelector('.yes.on') ? 'Sim' : (q3El && q3El.querySelector('.no.on') ? 'Não' : '—');
-
-    const valorReparo = (document.getElementById('pb-rv-' + bid) || {}).value || '';
-    const prestador = (document.getElementById('pb-rp-' + bid) || {}).value || '';
-    const fotos = blockFiles[bid] ? blockFiles[bid].prod.length : 0;
-    const orcs = blockFiles[bid] ? blockFiles[bid].orc.length : 0;
-
-    html += '<div class="receipt-prod-card">';
-    html += '<h4>Produto ' + prodIndex + ': ' + prodName;
-    if (reg) {
-      html += ' <span class="reg-num">✓ ' + reg.ticket + '</span>';
-    } else {
-      html += ' <span style="font-size:12px;color:var(--danger);font-weight:500;">(não enviado)</span>';
-    }
-    html += '</h4>';
-    html += receiptRow('Módulos Afetados', modulos);
-    html += receiptRow('Descrição do Defeito', descricao);
-    html += receiptRow('Embalagem Avariada', q1);
-    html += receiptRow('Impede o Uso', q2);
-    html += receiptRow('Reparo Local Possível', q3);
-    if (q3 === 'Sim') {
-      html += receiptRow('Valor do Reparo', valorReparo || '—');
-      html += receiptRow('Prestador', prestador || '—');
-      html += receiptRow('Arquivos Orçamento', orcs + ' arquivo(s)');
-    }
-    html += receiptRow('Fotos/Vídeos', fotos + ' arquivo(s)');
-    if (reg) {
-      html += receiptRow('Registrado em', reg.timestamp);
-    }
-    html += '</div>';
-  });
-
-  html += '</div>';
-
-  // Footer note
-  html += '<div style="text-align:center;font-size:12px;color:var(--brand-light);padding-top:12px;border-top:1px solid var(--border);">';
-  html += 'Grupo Sohome — Assistência Técnica Exportação<br>Documento gerado em ' + new Date().toLocaleString('pt-BR');
-  html += '</div>';
-
-  document.getElementById('receiptBody').innerHTML = html;
-  document.getElementById('receiptOverlay').classList.add('show');
-  document.body.style.overflow = 'hidden';
-}
-
-function receiptRow(label, value) {
-  return '<div class="receipt-row"><span class="r-label">' + label + '</span><span class="r-value">' + (value || '—') + '</span></div>';
-}
-
-function formatDate(val) {
-  if (!val) return '—';
-  const d = new Date(val + 'T00:00:00');
-  return d.toLocaleDateString('pt-BR');
-}
-
-function closeReceipt() {
-  document.getElementById('receiptOverlay').classList.remove('show');
-  document.body.style.overflow = '';
-}
-
-function copyReceipt() {
-  const body = document.getElementById('receiptBody');
-  const text = body.innerText;
-  navigator.clipboard.writeText(text).then(() => {
-    const btn = document.querySelector('.btn-copy-receipt');
-    const orig = btn.textContent;
-    btn.textContent = '✓ Copiado!';
-    setTimeout(() => btn.textContent = orig, 2000);
-  }).catch(() => {
-    // fallback
-    const ta = document.createElement('textarea');
-    ta.value = body.innerText;
-    document.body.appendChild(ta);
-    ta.select();
-    document.execCommand('copy');
-    document.body.removeChild(ta);
-    const btn = document.querySelector('.btn-copy-receipt');
-    btn.textContent = '✓ Copiado!';
-    setTimeout(() => btn.textContent = '📋 Copiar Texto', 2000);
-  });
-}
-
-// Close receipt on overlay click
-document.addEventListener('click', function(e) {
-  const overlay = document.getElementById('receiptOverlay');
-  if (e.target === overlay) closeReceipt();
-});
 
 /* ══ Init: add first product block on load ════════════════ */
 addProdBlock();

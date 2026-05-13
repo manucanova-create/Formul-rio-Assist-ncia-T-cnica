@@ -1,21 +1,9 @@
 <!DOCTYPE html>
-<html lang="pt-BR">
+<html lang="en">
 <head>
 <meta charset="UTF-8">
-<script>
-  const lang = navigator.language || navigator.userLanguage;
-  if (lang.startsWith('es')) {
-    window.location.href = "INDEX.ES.html";
-  } else if (lang.startsWith('en')) {
-    window.location.href = "INDEX.EN.html";
-  }
-  // Se for PT, ele apenas continua carregando o index.html atual
-</script>
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Assistência Técnica — Grupo Sohome</title>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Assistência Técnica — Grupo Sohome</title>
+<title>Technical Assistance — Sohome Group</title>
 <link rel="icon" href="LOGO H.png" type="image/svg+xml">
 <style>
 @import url('https://fonts.googleapis.com/css2?family=DM+Sans:ital,wght@0,300;0,400;0,500;0,600;1,300&display=swap');
@@ -130,10 +118,6 @@ header{background:var(--brand);padding:0 48px;display:flex;align-items:stretch;j
 .expand.ok{background:#eef6f2;border:1px solid #c8e6d8;color:var(--success);}
 .expand.warn{background:#fdf0ee;border:1px solid #f5d5d0;color:var(--danger);}
 
-/* reparo fields */
-.reparo-fields{display:none;margin-top:16px;background:var(--brand-pale);border:1px solid var(--border);border-radius:3px;padding:20px;}
-.reparo-fields.show{display:block;}
-
 /* ══ UPLOAD ZONE ═════════════════════════════════════ */
 .upload-zone{border:2px dashed var(--border);border-radius:3px;padding:28px;text-align:center;cursor:pointer;transition:all .2s;background:var(--white);}
 .upload-zone:hover,.upload-zone.drag-over{border-color:var(--brand);background:var(--brand-pale);}
@@ -182,19 +166,6 @@ header{background:var(--brand);padding:0 48px;display:flex;align-items:stretch;j
 input:checked+.slider{background:var(--success);}
 input:checked+.slider:before{transform:translateX(20px);}
 
-/* ══ CLASS GRID ══════════════════════════════════════ */
-.class-grid{display:grid;grid-template-columns:1fr 1fr;gap:10px;}
-.class-opt{display:flex;align-items:center;gap:10px;padding:13px 16px;border:1px solid var(--border);border-radius:3px;cursor:pointer;transition:all .15s;background:var(--white);}
-.class-opt:hover{border-color:var(--brand);background:var(--brand-pale);}
-.class-opt.sel{border-color:var(--brand);background:#eeece8;}
-.class-opt input[type=radio]{accent-color:var(--brand);width:15px;height:15px;flex-shrink:0;}
-.class-opt label{font-size:15px;cursor:pointer;line-height:1.4;}
-.outros-field{display:none;margin-top:14px;}
-.outros-field.show{display:block;}
-.outros-field label{display:block;font-size:11px;letter-spacing:.1em;text-transform:uppercase;color:var(--brand-light);font-weight:600;margin-bottom:7px;}
-.outros-field textarea{width:100%;padding:11px 14px;border:1px solid var(--border);border-radius:3px;font-family:'DM Sans',sans-serif;font-size:15px;color:var(--text);background:var(--cream);outline:none;resize:vertical;min-height:90px;transition:border-color .15s;}
-.outros-field textarea:focus{border-color:var(--brand);}
-
 /* ══ ADVANCE / SUBMIT ════════════════════════════════ */
 .advance-wrap{margin-top:28px;display:flex;align-items:center;justify-content:space-between;padding:20px 0;border-top:1px solid var(--border);}
 .advance-note{font-size:13px;color:var(--brand-light);line-height:1.5;max-width:480px;}
@@ -233,7 +204,7 @@ input:checked+.slider:before{transform:translateX(20px);}
   header,.site-footer,.page-footer-note{padding:0 20px;}
   .step-bar{padding:0 20px;}
   .main-content{padding:28px 20px;}
-  .form-grid,.form-grid-3,.class-grid,.date-fields{grid-template-columns:1fr;}
+  .form-grid,.form-grid-3,.date-fields{grid-template-columns:1fr;}
   .date-field{border-right:none;border-bottom:1px solid var(--border);}
   .date-field:last-of-type{border-bottom:none;}
   .advance-wrap{flex-direction:column;gap:16px;align-items:flex-start;}
@@ -242,7 +213,6 @@ input:checked+.slider:before{transform:translateX(20px);}
 </head>
 <body>
 
-<!-- ══ HEADER ══════════════════════════════════════════ -->
 <header>
   <div class="hdr-left">
     <div class="hdr-right">
@@ -250,8 +220,8 @@ input:checked+.slider:before{transform:translateX(20px);}
     </div>
     <div class="hdr-divider"></div>
     <div class="hdr-meta">
-      <div class="sub" style="font-size:16px;font-weight:bold;">Assistência Técnica</div>
-      <div class="tag" style="font-size:12px;">Sistema de Registro — Exportação</div>
+      <div class="sub" style="font-size:16px;font-weight:bold;">Technical Assistance</div>
+      <div class="tag" style="font-size:12px;">Recording System — Export</div>
     </div>
   </div>
   <div class="hdr-right">
@@ -259,47 +229,42 @@ input:checked+.slider:before{transform:translateX(20px);}
   </div>
 </header>
 
-<!-- ══ STEP BAR ════════════════════════════════════════ -->
 <div class="step-bar">
   <div class="step-item active" id="s1">
-    <div class="step-num">1</div><span>Identificação</span>
+    <div class="step-num">1</div><span>Identification</span>
   </div>
   <div class="step-divider"></div>
   <div class="step-item" id="s2">
-    <div class="step-num">2</div><span>Registro</span>
+    <div class="step-num">2</div><span>Registration</span>
   </div>
 </div>
 
 
-<!-- ══════════════════════════════════════════════════
-     ETAPA 1 — IDENTIFICAÇÃO
-══════════════════════════════════════════════════════ -->
 <div class="panel active" id="panel-id">
 <div class="main-content">
 
-  <div class="page-title">Identificação</div>
-  <p class="page-desc">Informe o número da invoice, os dados do lojista e as datas antes de prosseguir.</p>
+  <div class="page-title">Identification</div>
+  <p class="page-desc">Please provide the invoice number, dealer details, and dates before proceeding.</p>
 
-  <!-- ── Invoice ── -->
-  <div class="section-divider">🧾 Número da Invoice</div>
+  <div class="section-divider">🧾 Invoice Number</div>
   <div class="card" id="c-invoice">
     <div class="card-header">
       <span>Commercial Invoice</span>
-      <span class="card-status">✓ Preenchido</span>
+      <span class="card-status">✓ Completed</span>
     </div>
     <div class="card-body">
       <div class="form-grid">
         <div class="field">
-          <label>Número da Invoice <span class="req">*</span></label>
-          <input type="text" id="f-invoice" placeholder="Número exato da invoice do produto reclamado" oninput="checkInvoiceCard()">
-          <span class="hint">⚠ Invoice errada trava o processo — não inserir número genérico</span>
+          <label>Invoice Number <span class="req">*</span></label>
+          <input type="text" id="f-invoice" placeholder="Exact invoice number for the product" oninput="checkInvoiceCard()">
+          <span class="hint">⚠ Incorrect invoice number stalls the process — do not use generic numbers</span>
         </div>
         <div class="field">
-          <label>Reincidência?</label>
+          <label>Recurrence?</label>
           <div class="switch-row">
             <span class="switch-label">
-              Já houve AT anterior neste produto?
-              <span style="display:block;font-size:12px;color:var(--brand-light);margin-top:2px;">Marque se for uma ocorrência repetida</span>
+              Has there been prior technical assistance for this product?
+              <span style="display:block;font-size:12px;color:var(--brand-light);margin-top:2px;">Check if this is a repeated issue</span>
             </span>
             <label class="switch">
               <input type="checkbox" id="f-reincidencia" onchange="toggleReincidencia()">
@@ -308,8 +273,8 @@ input:checked+.slider:before{transform:translateX(20px);}
           </div>
           <div id="reincidencia-extra" style="display:none;margin-top:10px;">
             <div class="field">
-              <label>Invoice de Origem (1ª ocorrência) <span class="req">*</span></label>
-              <input type="text" id="f-invoice-orig" placeholder="Número da invoice da primeira assistência">
+              <label>Original Invoice (1st incident) <span class="req">*</span></label>
+              <input type="text" id="f-invoice-orig" placeholder="Invoice number of the first assistance">
             </div>
           </div>
         </div>
@@ -317,148 +282,130 @@ input:checked+.slider:before{transform:translateX(20px);}
     </div>
   </div>
 
-  <!-- ── Dados do Lojista ── -->
-  <div class="section-divider">👤 Dados do Lojista</div>
+  <div class="section-divider">👤 Dealer / Store Details</div>
   <div class="card" id="c-lojista">
     <div class="card-header">
-      <span>Informações do Cliente</span>
-      <span class="card-status">✓ Preenchido</span>
+      <span>Customer Information</span>
+      <span class="card-status">✓ Completed</span>
     </div>
     <div class="card-body">
       <div class="form-grid">
         <div class="field">
-          <label>Razão Social <span class="req">*</span></label>
-          <input type="text" id="f-razao" placeholder="Nome completo da empresa" oninput="checkLojista()">
+          <label>Company Name <span class="req">*</span></label>
+          <input type="text" id="f-razao" placeholder="Full legal company name" oninput="checkLojista()">
         </div>
         <div class="field">
-          <label>CNPJ / Tax ID <span class="req">*</span></label>
-          <input type="text" id="f-cnpj" placeholder="Ex: 00.000.000/0001-00" oninput="checkLojista()">
+          <label>Tax ID / Fiscal ID <span class="req">*</span></label>
+          <input type="text" id="f-cnpj" placeholder="e.g., International Tax ID" oninput="checkLojista()">
         </div>
       </div>
       <div class="form-grid">
         <div class="field">
-          <label>País <span class="req">*</span></label>
-          <input type="text" id="f-pais" placeholder="País de origem da loja" oninput="checkLojista()">
+          <label>Country <span class="req">*</span></label>
+          <input type="text" id="f-pais" placeholder="Store's country of origin" oninput="checkLojista()">
         </div>
         <div class="field">
-          <label>Telefone <span class="req">*</span></label>
+          <label>Phone <span class="req">*</span></label>
           <input type="text" id="f-tel" placeholder="+00 000 000 0000" oninput="checkLojista()">
         </div>
       </div>
       <div class="form-grid">
         <div class="field">
-          <label>E-mail de Contato <span class="req">*</span></label>
-          <input type="email" id="f-email" placeholder="email@empresa.com" oninput="checkLojista()">
-          <span class="hint">Este e-mail receberá todas as tratativas — verifique com atenção</span>
+          <label>Contact Email <span class="req">*</span></label>
+          <input type="email" id="f-email" placeholder="email@company.com" oninput="checkLojista()">
+          <span class="hint">This email will receive all communications — please verify carefully</span>
         </div>
         <div class="field">
-          <label>Nome do Responsável <span class="req">*</span></label>
-          <input type="text" id="f-resp" placeholder="Nome completo" oninput="checkLojista()">
+          <label>Contact Person <span class="req">*</span></label>
+          <input type="text" id="f-resp" placeholder="Full name" oninput="checkLojista()">
         </div>
       </div>
     </div>
   </div>
 
-  <!-- ── Datas + Contador ── -->
-  <div class="section-divider">📅 Datas e Prazo de Garantia</div>
+  <div class="section-divider">📅 Dates and Warranty Period</div>
   <div class="card" id="c-datas">
     <div class="card-header">
-      <span>Datas da Invoice e Recebimento</span>
-      <span class="card-status">✓ Preenchido</span>
+      <span>Invoice and Receipt Dates</span>
+      <span class="card-status">✓ Completed</span>
     </div>
     <div class="date-fields">
       <div class="date-field">
-        <label>Data da Fatura (Invoice) <span class="req">*</span></label>
+        <label>Invoice Date <span class="req">*</span></label>
         <input type="date" id="invoiceDate" onchange="updateCounter();checkDatas()">
-        <span class="hint">Data de emissão da fatura comercial</span>
+        <span class="hint">Issue date of the commercial invoice</span>
       </div>
       <div class="date-field">
-        <label>Data de Recebimento da Mercadoria <span class="req">*</span></label>
+        <label>Date of Goods Receipt <span class="req">*</span></label>
         <input type="date" id="receiptDate" onchange="updateCounter();checkDatas()">
-        <span class="hint">Data em que o contêiner foi recebido no destino</span>
+        <span class="hint">Date the container was received at destination</span>
       </div>
     </div>
     <div class="counter-row">
       <div class="counter-badge">
         <div class="counter-num empty" id="counterNum">—</div>
         <div class="counter-info">
-          <div class="counter-lbl">Dias desde o recebimento</div>
-          <div class="counter-st" id="counterSt" style="color:var(--brand-light);">Preencha a data de recebimento para calcular</div>
+          <div class="counter-lbl">Days since receipt</div>
+          <div class="counter-st" id="counterSt" style="color:var(--brand-light);">Enter receipt date to calculate</div>
         </div>
       </div>
       <div class="bar-wrap">
         <div class="bar-track"><div class="bar-fill" id="barFill"></div></div>
-        <div class="bar-labels"><span>0 dias</span><span>6 meses</span><span>1 ano (limite)</span></div>
+        <div class="bar-labels"><span>0 days</span><span>6 months</span><span>1 year (limit)</span></div>
       </div>
-      <button class="btn-recalc" onclick="updateCounter()">↺ Recalcular</button>
+      <button class="btn-recalc" onclick="updateCounter()">↺ Recalculate</button>
     </div>
     <div class="warranty-alert" id="warrantyAlert">
-      ⛔ <strong>Fora do prazo de garantia de 1 ano.</strong> A assistência técnica padrão não é aplicável. Apenas danos estruturais comprovados podem ser avaliados em caráter excepcional, mediante aprovação técnica da Sohome.
+      ⛔ <strong>Out of 1-year warranty period.</strong> Standard technical assistance does not apply. Only proven structural damage can be evaluated as an exception, subject to Sohome's technical approval.
     </div>
   </div>
 
-  <!-- Avançar -->
   <div class="advance-wrap">
-    <p class="advance-note">Todos os campos marcados com <span class="req">*</span> são obrigatórios.</p>
-    <button class="btn-advance" onclick="validateStep1()">Avançar para o Registro →</button>
+    <p class="advance-note">All fields marked with <span class="req">*</span> are required.</p>
+    <button class="btn-advance" onclick="validateStep1()">Advance to Registration →</button>
   </div>
-  <div class="err-hint" id="err-step1">Preencha todos os campos obrigatórios antes de avançar.</div>
+  <div class="err-hint" id="err-step1">Please complete all required fields before proceeding.</div>
 
-</div><!-- /main-content -->
-
-<div class="page-footer-note">
-  <p><strong style="color:var(--brand-dark);font-weight:600;">Referência de cobertura:</strong>
-  São procedentes de AT defeitos de fabricação comprovados, reincidências, componentes faltantes ou incorretos, reclamações dentro do prazo de 1 ano.
-  Não são procedentes variações naturais de mármore, madeira ou textura, divergências de até 2cm em produtos artesanais, e reclamações após 1 ano.</p>
+</div><div class="page-footer-note">
+  <p><strong style="color:var(--brand-dark);font-weight:600;">Coverage Reference:</strong>
+  Technical assistance is applicable for proven manufacturing defects, recurrences, or missing/incorrect components within 1 year.
+  Natural variations in marble, wood, or texture, discrepancies of up to 2cm in artisanal products, and claims made after 1 year are not covered.</p>
 </div>
-</div><!-- /panel-id -->
+</div><div class="panel" id="panel-reg">
 
+  <div class="confirmation" id="confScreen">
+    <div class="conf-icon">✅</div>
+    <div class="conf-title">Claim Registered!</div>
+    <div class="conf-sub">Your request has been submitted successfully.</div>
+    <div class="conf-ticket">
+      <div class="conf-ticket-lbl">Case Number</div>
+      <div class="conf-ticket-num" id="ticketNum">—</div>
+    </div>
+    <div class="conf-info">
+      Please save this number to track your technical assistance process.<br>
+      Our team will contact you at the registered email address within <strong>24 hours</strong>.<br><br>
+      For questions, please provide this number to your Sohome sales representative.
+    </div>
+    <button class="btn-new" onclick="resetAll()">+ Open New Case</button>
+  </div>
 
-<!-- ══════════════════════════════════════════════════
-     ETAPA 2 — REGISTRO
-══════════════════════════════════════════════════════ -->
-<div class="panel" id="panel-reg">
-
-  <!-- Formulário de registro -->
   <div class="main-content" id="regContent">
 
-    <div class="page-title">Registro da Ocorrência</div>
-    <p class="page-desc">Informe os produtos com defeito e responda às perguntas abaixo. Você pode adicionar quantos produtos precisar.</p>
+    <div class="page-title">Issue Registration</div>
+    <p class="page-desc">Report the defective products and answer the questions. you can add as many products as needed.</p>
 
-    <!-- PRODUCT BLOCKS CONTAINER -->
-    <div class="section-divider" style="margin-top:0;">🛋️ Produto e Defeito</div>
+    <div class="section-divider" style="margin-top:0;">🛋️ Product and Defect</div>
     <div id="prod-blocks-container"></div>
 
-    <!-- Add product button -->
     <button class="btn-add-prod" onclick="addProdBlock()">
-      <span style="font-size:20px;">＋</span> Adicionar outro produto
+      <span style="font-size:20px;">＋</span> Add another product
     </button>
 
-    <div class="err-hint" id="err-step2">Preencha todos os campos obrigatórios de pelo menos um produto e envie antes de salvar.</div>
-    <button class="btn-salvar" onclick="salvarInformacoes()">💾 Salvar as Informações</button>
+    <div class="err-hint" id="err-step2">Please complete all required fields before submitting.</div>
+    <button class="btn-submit" onclick="submitForm()">Submit Technical Assistance →</button>
 
-  </div><!-- /regContent -->
-</div><!-- /panel-reg -->
-
-<!-- ══ RECEIPT OVERLAY ═══════════════════════════════════ -->
-<div class="receipt-overlay" id="receiptOverlay">
-  <div class="receipt-box">
-    <div class="receipt-header">
-      <h2>📋 Resumo da Assistência Técnica</h2>
-      <button class="receipt-close" onclick="closeReceipt()">✕ Fechar</button>
-    </div>
-    <div class="receipt-body" id="receiptBody"></div>
-    <div class="receipt-actions">
-      <button class="btn-print" onclick="window.print()">🖨️ Imprimir / Salvar PDF</button>
-      <button class="btn-copy-receipt" onclick="copyReceipt()">📋 Copiar Texto</button>
-    </div>
-  </div>
-</div>
-
-
-<!-- ══ SITE FOOTER ══════════════════════════════════════ -->
-<footer class="site-footer">
-  <span class="ft-text">Grupo Sohome — Assistência Técnica Exportação</span>
+  </div></div><footer class="site-footer">
+  <span class="ft-text">Sohome Group — Export Technical Assistance</span>
   <img src="LOGO GRUPO SOHOME-60.png" alt="Logo" class="ico-h">
 </footer>
 
@@ -484,67 +431,10 @@ input:checked+.slider:before{transform:translateX(20px);}
 .prod-reparo.show{display:block;}
 .prod-reparo-warn{display:none;margin-top:12px;padding:12px 16px;border-radius:3px;font-size:13px;line-height:1.6;background:#fdf0ee;border:1px solid #f5d5d0;color:var(--danger);}
 .prod-reparo-warn.show{display:block;}
-
-/* ══ ENVIAR BUTTON (per product) ════════════════════ */
-.btn-enviar-block{background:rgba(46,125,94,.85);border:1px solid rgba(46,125,94,.9);color:#fff;border-radius:3px;padding:5px 15px;font-size:11px;font-family:'DM Sans',sans-serif;cursor:pointer;transition:all .15s;display:inline-flex;align-items:center;gap:5px;white-space:nowrap;letter-spacing:.04em;text-transform:uppercase;font-weight:600;}
-.btn-enviar-block:hover{background:rgba(46,125,94,1);}
-.btn-enviar-block.sent{background:rgba(255,255,255,.13);border-color:rgba(255,255,255,.22);color:rgba(255,255,255,.5);cursor:default;pointer-events:none;}
-
-/* registration badge in header */
-.reg-badge{display:none;align-items:center;gap:6px;background:rgba(46,125,94,.18);border:1px solid rgba(46,125,94,.35);border-radius:3px;padding:4px 12px;font-size:11px;color:#9fceb5;font-weight:600;letter-spacing:.04em;white-space:nowrap;}
-.reg-badge.show{display:inline-flex;}
-.reg-badge .reg-icon{font-size:13px;}
-
-/* ══ SALVAR / RECEIPT SUMMARY ═══════════════════════ */
-.btn-salvar{width:100%;padding:16px;background:var(--brand);color:#fff;border:none;border-radius:3px;font-size:13px;letter-spacing:.14em;text-transform:uppercase;font-family:'DM Sans',sans-serif;cursor:pointer;transition:background .2s;margin-top:10px;}
-.btn-salvar:hover{background:var(--brand-dark);}
-
-.receipt-overlay{display:none;position:fixed;inset:0;z-index:9999;background:rgba(0,0,0,.55);backdrop-filter:blur(4px);align-items:center;justify-content:center;padding:20px;}
-.receipt-overlay.show{display:flex;}
-.receipt-box{background:var(--white);border-radius:6px;max-width:720px;width:100%;max-height:90vh;overflow-y:auto;box-shadow:0 20px 60px rgba(0,0,0,.25);animation:receiptIn .3s ease;}
-@keyframes receiptIn{from{opacity:0;transform:translateY(20px);}to{opacity:1;transform:translateY(0);}}
-.receipt-header{background:var(--brand);padding:22px 28px;display:flex;align-items:center;justify-content:space-between;border-radius:6px 6px 0 0;}
-.receipt-header h2{font-size:16px;font-weight:600;color:#fff;letter-spacing:.08em;text-transform:uppercase;margin:0;}
-.receipt-close{background:rgba(255,255,255,.15);border:1px solid rgba(255,255,255,.25);color:#fff;border-radius:3px;padding:6px 14px;font-size:12px;cursor:pointer;font-family:'DM Sans',sans-serif;transition:background .15s;}
-.receipt-close:hover{background:rgba(255,255,255,.3);}
-.receipt-body{padding:28px;}
-.receipt-section{margin-bottom:24px;}
-.receipt-section-title{font-size:10px;letter-spacing:.14em;text-transform:uppercase;font-weight:700;color:var(--brand);margin-bottom:12px;padding-bottom:6px;border-bottom:2px solid var(--brand-pale);}
-.receipt-row{display:flex;padding:6px 0;font-size:14px;line-height:1.5;}
-.receipt-row .r-label{color:var(--brand-light);min-width:160px;flex-shrink:0;font-weight:500;}
-.receipt-row .r-value{color:var(--text);flex:1;word-break:break-word;}
-.receipt-prod-card{background:var(--brand-pale);border:1px solid var(--border);border-radius:4px;padding:16px 20px;margin-bottom:12px;}
-.receipt-prod-card h4{font-size:13px;font-weight:700;color:var(--brand-dark);margin-bottom:10px;display:flex;align-items:center;gap:8px;flex-wrap:wrap;}
-.receipt-prod-card .reg-num{font-size:12px;color:var(--success);font-weight:600;background:rgba(46,125,94,.1);padding:2px 10px;border-radius:10px;}
-.receipt-actions{display:flex;gap:10px;padding:20px 28px;border-top:1px solid var(--border);}
-.btn-print{flex:1;padding:13px;background:var(--brand);color:#fff;border:none;border-radius:3px;font-size:12px;letter-spacing:.1em;text-transform:uppercase;font-family:'DM Sans',sans-serif;cursor:pointer;transition:background .15s;}
-.btn-print:hover{background:var(--brand-dark);}
-.btn-copy-receipt{flex:1;padding:13px;background:var(--white);color:var(--brand);border:1px solid var(--border);border-radius:3px;font-size:12px;letter-spacing:.1em;text-transform:uppercase;font-family:'DM Sans',sans-serif;cursor:pointer;transition:all .15s;}
-.btn-copy-receipt:hover{border-color:var(--brand);background:var(--brand-pale);}
-
-.no-products-hint{text-align:center;padding:20px;color:var(--brand-light);font-size:14px;}
-
-@media print{
-  .receipt-overlay{position:static;background:none;backdrop-filter:none;padding:0;}
-  .receipt-box{max-height:none;box-shadow:none;max-width:100%;}
-  .receipt-header{background:var(--brand) !important;-webkit-print-color-adjust:exact;print-color-adjust:exact;}
-  .receipt-actions,.receipt-close{display:none !important;}
-  body>*:not(.receipt-overlay){display:none !important;}
-}
-
-@media(max-width:768px){
-  .receipt-body{padding:20px 16px;}
-  .receipt-row{flex-direction:column;gap:2px;}
-  .receipt-row .r-label{min-width:auto;}
-  .receipt-actions{flex-direction:column;}
-  .prod-block-header-right{flex-wrap:wrap;gap:4px;}
-  .reg-badge{font-size:10px;padding:3px 8px;}
-  .btn-enviar-block{padding:5px 10px;font-size:10px;}
-}
 </style>
 
 <script>
-/* ══ Produtos ═══════════════════════════════════════════ */
+/* ══ Products ═══════════════════════════════════════════ */
 const PRODUCTS = [
   "ABACO","ACCORD","ACLIVE","ADANA","AERIS","AGHATA PLUS","AGREABLE","ALAVA","ALCALA","ALESSI","ALEXANDRIA","ALENTO","ALLADRO","ALMERIA","AME","AMARNA","AMBER","AMELIA","ANCONA","ANDROS","ANNE","ARAD","ARCADIA","ARLO","ARTTIS BED","ASSUNCAO","ASTRO","ATLAS","ATTO","AURIC","AURORA","AVANT","AXIS","BANAT","BANCO ONIROS","BANCO POMME","BARCELONA","BARDOT","BAUEN","BEEH","BELGA","BELLE","BERAT","BERLIN","BILBAU","BLUMEN","BOEMI","BOLD","BONHEUR","BONOBO","BRADAN","BRAMANTE","BRASS","BRICK","BRIDGE","BUENOS AIRES","CALIN","CALYX","CANTABYA","CARTAGENA","CARTIER","CATALUNIA","CATALUNIA BED","CECILE","CELLINI BED","CHARMANT","CHERI","CLIFF","CLARTE","CODE","COBAIN","COCON","COLONNA","CORSO","CRES","CROMIE","CUORE","DALI","DEL FIORE","DESSAU","DESIR","DESIREE","DESMOND","DEVA","DEZZA","DIDOT","DOM","DOMIA","DUBAI","DUO CAR BAR","DUNE","ECLAT","ECLIPSE","EDESSA","EDGE","EDIFIANTE","EILEEN","ELAN","ELLIE","ELLIOT","ELLIS","ELYSIAN","EPURE BED","ESPOIR","ESQUEL","ETERIUM","ETHER BED","ETTORE","EVIE","FEVER","FIDDA","FIER","FINN","FITZ","FLAMME","FLEURIR","FLOGE","FLORA","FLORENTINE","FLOW","FORTALEZA","GATSBY","GAUDI","GEM","GENOVA","GIORNATTA","GIORNATTA OFFICE","GIZA","GRACE BED","GRID","GRAZ","GROOVE","GUADALAJARA","HALO","HARPER","HAZEL","HENRI","INTIMITE","IRIS","ISLA","IVY","JENNY","JOHNNY","JOPLIN","JOIE","JULIAN","KAVAJI","KIEDIS","KLEE","KLARIS","KLIMT","KONA","KOVAK","LAGO","LA PAZ","LAUTREC","LEE","LIESEL","LIGURE","LINEA","LINARES","LINA","LIOR","LITERATTO","LIZZ","LIZZA","LOUISE","MADELEINE","MALFATTI","MALIQ","MANIFOLD","MANTOVA","MARBELLA","MARIA","MARY","MAUI BED","MEDELIN","MEHEDINTI BED","METRO","MIYA","MINISTRAL I","MINISTRAL II","MINOS","MIRAGE","MODENA","MODISTE","MODUM","MONOLITH","MONTERIA","MONTERREY","MONTEVIDEO","MOON","MOSER","MUNTENIA","MUSH","NAEVA","NARCISO","NAVARRA","NAVY","NEA","NEW ARAGON","NEW ARROYOS","NEW ASIA","NEW BEDFORD","NEW BLAKE","NEW CARUZO","NEW CHATEAU","NEW ETTORE","NEW HARRY","NEW LIVORNO","NEW MESSINA","NEW NORMANDIA","NEW ROMANO","NEW SAN LUIS","NEW VERSATO","NEW VISCAIA","NEW YANG","NEW ZEFIRO","NICAIA 24","NICEIA","NICKS","NIMBUS","NOIR","NORAH","NUIT","NUVIA","OASI","ODISSEIA","OLTENIA","ONDINA","ORBE","ORBIT","ORIS","ORLY","OTOPENI","OTOPENI BED","OTTE","PAISIBLE","PALERMO PLUS","PARIS","PARMA","PASS","PATOU","PEBBLE","PERRY","PETALA","PETRA","PICASSO","PIERRE","PISAC","PISTACHE","PITESTI 25","PLI","POLARA","POMME","POMME BED","POSITANO","PRESLEY","PRIME","PROUVÉ","QUATTRO","QUILL","REFUGE","RENASCENCE","REPOSE","REINO","RIALTO","RIO DE JANEIRO","ROMAN","ROUND","SABRE","SAKAI","SAMMY","SAN ANDRES","SAN CARLOS","SAN CRISTOBAL","SAN MIGUEL","SAN PIETRO","SAN SEBASTIAN","SANTA MARTA","SANTIAGO","SANTE","SANZIO","SAO PAULO","SAPPHIR","SATURNIA","SENSE","SERENITE","SERVIA","SEY","SIENNA","SILLAGE","SOFT","SOLEIL","SONA","SONETTO","SPAZIO","SPLENDEUR","SPUR","ST MARTIN","STARE","STOLZ","SUBLIME","SUCRE","SUONO","SYSTEM","TAIJIN","TARANTO","TASSEL","TAOS","TER","TESS","THAI","TICIANO","TRESSA","TULUA","TURA","TURIN","UCCELLI","UFO","UMFELD","URBAN","URSOVA","VALEA","VENTURI","VERATO","VERNASA BED","VIENNA","VIE","VILLA LOBOS","VILLACH","VISCRI","VITALITE","VOLPI","VOLTIGE","WASS","WEG","YOKO","YOTT","ZENITH","ZEST","ZIMER"
 ].sort();
@@ -553,7 +443,6 @@ const PRODUCTS = [
 let blockCount = 0;
 
 /* ══ Per-block file stores ════════════════════════════════ */
-// files[id] = { prod: [], orc: [] }
 const blockFiles = {};
 
 /* ══ Build a product block HTML ══════════════════════════ */
@@ -562,65 +451,59 @@ function buildBlock(id) {
 <div class="prod-block" id="pb-${id}">
   <div class="prod-block-header">
     <div class="prod-block-header-left">
-      <span class="prod-block-title" id="pb-title-${id}">Produto ${id}</span>
+      <span class="prod-block-title" id="pb-title-${id}">Product ${id}</span>
       <span class="prod-block-summary" id="pb-summary-${id}">—</span>
     </div>
     <div class="prod-block-header-right">
-      <span class="reg-badge" id="pb-reg-${id}"><span class="reg-icon">✓</span> <span id="pb-reg-num-${id}"></span></span>
-      <button class="btn-enviar-block" id="pb-enviar-${id}" onclick="enviarProdBlock(${id})">📤 Enviar</button>
       <button class="btn-toggle-block" id="pb-tog-${id}" onclick="toggleBlock(${id})">
-        <span id="pb-tog-icon-${id}">▲</span> Minimizar
+        <span id="pb-tog-icon-${id}">▲</span> Minimize
       </button>
-      <button class="btn-rm" id="pb-rm-${id}" onclick="removeProdBlock(${id})">✕ Remover</button>
+      <button class="btn-rm" id="pb-rm-${id}" onclick="removeProdBlock(${id})">✕ Remove</button>
     </div>
   </div>
   <div class="prod-block-body">
 
-    <!-- Produto + Quantidade -->
     <div class="form-grid" style="margin-bottom:16px;">
       <div class="field">
-        <label>Produto <span class="req">*</span></label>
+        <label>Product <span class="req">*</span></label>
         <div class="product-wrap">
-          <input type="text" id="pb-prod-input-${id}" placeholder="Digite para pesquisar..." oninput="filterProd(${id});updateSummary(${id})" autocomplete="off">
+          <input type="text" id="pb-prod-input-${id}" placeholder="Type to search..." oninput="filterProd(${id});updateSummary(${id})" autocomplete="off">
           <input type="hidden" id="pb-prod-value-${id}">
           <div class="product-dropdown" id="pb-dd-${id}"></div>
         </div>
       </div>
       <div class="field">
-        <label>Qtd. de Módulos <span class="req">*</span></label>
-        <input type="number" id="pb-mod-${id}" min="1" max="99" placeholder="Ex: 1" oninput="updateSummary(${id})">
-        <span class="hint">Apenas os módulos afetados</span>
+        <label>Qty of Modules <span class="req">*</span></label>
+        <input type="number" id="pb-mod-${id}" min="1" max="99" placeholder="e.g., 1" oninput="updateSummary(${id})">
+        <span class="hint">Affected modules only</span>
       </div>
     </div>
 
-    <!-- Descrição -->
     <div class="field" style="margin-bottom:16px;">
-      <label>Descrição do Defeito <span class="req">*</span></label>
-      <textarea id="pb-desc-${id}" placeholder="Descreva: o que ocorreu, como ocorreu e quando foi identificado. Quanto mais detalhes, mais assertiva será a análise."></textarea>
+      <label>Issue Description <span class="req">*</span></label>
+      <textarea id="pb-desc-${id}" placeholder="Describe: what happened, how it happened, and when it was identified. More details ensure better analysis."></textarea>
     </div>
 
-    <!-- Q1: embalagem avariada — antes das fotos -->
     <div class="q-row" style="margin-bottom:16px;border-bottom:none;">
       <div class="q-label">
-        A embalagem apresentava avaria externa visível? <span class="req">*</span>
-        <span class="note">Amassados, rasgos, umidade ou sinais de impacto</span>
+        Did the packaging show visible external damage? <span class="req">*</span>
+        <span class="note">Dents, tears, moisture, or signs of impact</span>
       </div>
       <div class="tg" id="pb-q1-${id}">
-        <button class="tb yes" onclick="togB(this,'pb-q1-${id}')">Sim</button>
-        <button class="tb no"  onclick="togB(this,'pb-q1-${id}')">Não</button>
+        <button class="tb yes" onclick="togB(this,'pb-q1-${id}')">Yes</button>
+        <button class="tb no"  onclick="togB(this,'pb-q1-${id}')">No</button>
       </div>
     </div>
 
-    <!-- Fotos e vídeos -->
     <div class="field" style="margin-bottom:18px;">
-      <label>Fotos e Vídeos do Produto <span class="req">*</span></label>
-      <span class="hint" style="margin-bottom:10px;display:block;">1 foto do produto completo · 1 foto do defeito · 1 foto no ambiente · 1 vídeo demonstrando o problema</span>
+      <label>Product Photos and Videos <span class="req">*</span></label>
+      <span class="hint" style="margin-bottom:10px;display:block;">1 photo of the complete product · 1 photo of the defect · 1 photo in environment · 1 video demonstrating the problem</span>
       <div class="upload-zone" id="pb-uz-${id}"
         onclick="document.getElementById('pb-fi-${id}').click()"
         ondragover="dzB(${id},'prod',true,event)" ondragleave="dzB(${id},'prod',false)" ondrop="dropB(${id},'prod',event)">
         <div class="up-icon">📎</div>
-        <strong>Clique ou arraste arquivos aqui</strong>
-        <p>Imagens (JPG, PNG) e vídeos (MP4, MOV)</p>
+        <strong>Click or drag files here</strong>
+        <p>Images (JPG, PNG) and videos (MP4, MOV)</p>
         <input type="file" id="pb-fi-${id}" multiple accept="image/*,video/*" style="display:none" onchange="addBlockFiles(${id},'prod',this.files)">
       </div>
       <div class="file-list" id="pb-fl-${id}"></div>
@@ -628,59 +511,55 @@ function buildBlock(id) {
 
     <hr class="prod-sep">
 
-    <!-- Q2: impede o uso -->
     <div class="q-row">
-      <div class="q-label">O defeito <strong>impede o uso</strong> do produto? <span class="req">*</span></div>
+      <div class="q-label">Does this defect <strong>prevent the use</strong> of the product? <span class="req">*</span></div>
       <div class="tg" id="pb-q2-${id}">
-        <button class="tb yes" onclick="togB(this,'pb-q2-${id}')">Sim</button>
-        <button class="tb no"  onclick="togB(this,'pb-q2-${id}')">Não</button>
+        <button class="tb yes" onclick="togB(this,'pb-q2-${id}')">Yes</button>
+        <button class="tb no"  onclick="togB(this,'pb-q2-${id}')">No</button>
       </div>
     </div>
 
-    <!-- Q3: reparo local -->
     <div class="q-row" style="border-bottom:none;">
       <div class="q-label">
-        <strong>Este defeito pode ser reparado localmente no destino?</strong> <span class="req">*</span>
-        <span class="note">Considere a disponibilidade de prestadores e peças na região do cliente</span>
+        <strong>Can this defect be repaired locally at the destination?</strong> <span class="req">*</span>
+        <span class="note">Consider the availability of providers and parts in the customer's region</span>
       </div>
       <div class="tg" id="pb-q3-${id}">
-        <button class="tb yes" onclick="togReparo(${id},this,'sim')">Sim</button>
-        <button class="tb no"  onclick="togReparo(${id},this,'nao')">Não</button>
+        <button class="tb yes" onclick="togReparo(${id},this,'sim')">Yes</button>
+        <button class="tb no"  onclick="togReparo(${id},this,'nao')">No</button>
       </div>
     </div>
 
-    <!-- Reparo SIM: valor + orçamento -->
     <div class="prod-reparo" id="pb-reparo-${id}">
-      <p style="font-size:13px;color:var(--success);font-weight:700;margin-bottom:14px;">✓ Reparo local viável — preencha os dados:</p>
+      <p style="font-size:13px;color:var(--success);font-weight:700;margin-bottom:14px;">✓ Local repair viable — please complete details:</p>
       <div class="form-grid" style="margin-bottom:14px;">
         <div class="field">
-          <label>Valor Estimado do Reparo <span class="req">*</span></label>
-          <input type="text" id="pb-rv-${id}" placeholder="Ex: U$ 150,00">
-          <span class="hint">Em moeda local ou dólares (U$)</span>
+          <label>Estimated Repair Cost <span class="req">*</span></label>
+          <input type="text" id="pb-rv-${id}" placeholder="e.g., U$ 150.00">
+          <span class="hint">In local currency or US Dollars (U$)</span>
         </div>
         <div class="field">
-          <label>Prestador de Serviço</label>
-          <input type="text" id="pb-rp-${id}" placeholder="Nome da empresa ou profissional">
+          <label>Service Provider</label>
+          <input type="text" id="pb-rp-${id}" placeholder="Name of company or professional">
         </div>
       </div>
       <div class="field">
-        <label>Orçamento do Prestador <span class="req">*</span></label>
-        <span class="hint" style="margin-bottom:10px;display:block;">Nenhum pagamento é realizado sem orçamento aprovado previamente pela Sohome</span>
+        <label>Provider Quote <span class="req">*</span></label>
+        <span class="hint" style="margin-bottom:10px;display:block;">No payment will be made without a quote previously approved by Sohome</span>
         <div class="upload-zone" id="pb-ouz-${id}"
           onclick="document.getElementById('pb-ofi-${id}').click()"
           ondragover="dzB(${id},'orc',true,event)" ondragleave="dzB(${id},'orc',false)" ondrop="dropB(${id},'orc',event)">
           <div class="up-icon">📄</div>
-          <strong>Clique ou arraste o orçamento</strong>
-          <p>PDF, imagem ou documento</p>
+          <strong>Click or drag the quote</strong>
+          <p>PDF, image, or document</p>
           <input type="file" id="pb-ofi-${id}" multiple accept="image/*,.pdf,.doc,.docx" style="display:none" onchange="addBlockFiles(${id},'orc',this.files)">
         </div>
         <div class="file-list" id="pb-ofl-${id}"></div>
       </div>
     </div>
 
-    <!-- Reparo NÃO -->
     <div class="prod-reparo-warn" id="pb-reparo-nao-${id}">
-      ✗ <strong>Reparo local inviável.</strong> A Sohome avaliará a decisão final após análise das evidências enviadas.
+      ✗ <strong>Local repair not viable.</strong> Sohome will evaluate the final decision after analyzing the evidence submitted.
     </div>
 
   </div>
@@ -695,7 +574,6 @@ function addProdBlock() {
   const container = document.getElementById('prod-blocks-container');
   container.insertAdjacentHTML('beforeend', buildBlock(id));
   updateBlockTitlesAndButtons();
-  // close dropdowns when clicking outside
   document.getElementById(`pb-dd-${id}`).addEventListener('mousedown', e => e.stopPropagation());
 }
 
@@ -713,13 +591,12 @@ function updateBlockTitlesAndButtons() {
     const bid = b.id.replace('pb-', '');
     const titleEl = document.getElementById('pb-title-' + bid);
     const rmEl    = document.getElementById('pb-rm-' + bid);
-    if (titleEl) titleEl.textContent = 'Produto ' + n;
+    if (titleEl) titleEl.textContent = 'Product ' + n;
     if (rmEl)    rmEl.style.display  = blocks.length > 1 ? 'inline-flex' : 'none';
     updateSummary(bid);
   });
 }
 
-/* ══ Minimize / Maximize block ════════════════════════════ */
 function toggleBlock(id) {
   const block   = document.getElementById('pb-' + id);
   const btn     = document.getElementById('pb-tog-' + id);
@@ -727,15 +604,14 @@ function toggleBlock(id) {
   const minimized = block.classList.toggle('minimized');
   if (minimized) {
     icon.textContent = '▼';
-    btn.innerHTML    = '<span id="pb-tog-icon-'+id+'">▼</span> Expandir';
+    btn.innerHTML    = '<span id="pb-tog-icon-'+id+'">▼</span> Expand';
   } else {
     icon.textContent = '▲';
-    btn.innerHTML    = '<span id="pb-tog-icon-'+id+'">▲</span> Minimizar';
+    btn.innerHTML    = '<span id="pb-tog-icon-'+id+'">▲</span> Minimize';
   }
   updateSummary(id);
 }
 
-/* ══ Update summary text shown when minimized ════════════ */
 function updateSummary(id) {
   const summaryEl = document.getElementById('pb-summary-' + id);
   if (!summaryEl) return;
@@ -744,13 +620,12 @@ function updateSummary(id) {
   const prodVal = prod ? prod.value.trim() : '';
   const modVal  = mod  ? mod.value.trim()  : '';
   if (prodVal) {
-    summaryEl.textContent = prodVal + (modVal ? ' · ' + modVal + ' módulo(s)' : '');
+    summaryEl.textContent = prodVal + (modVal ? ' · ' + modVal + ' module(s)' : '');
   } else {
-    summaryEl.textContent = 'Não preenchido';
+    summaryEl.textContent = 'Not completed';
   }
 }
 
-/* ══ Product search per block ═════════════════════════════ */
 function filterProd(id) {
   const q  = document.getElementById('pb-prod-input-' + id).value.trim().toUpperCase();
   const dd = document.getElementById('pb-dd-' + id);
@@ -758,7 +633,7 @@ function filterProd(id) {
   if (!q) { dd.classList.remove('open'); return; }
   const m = PRODUCTS.filter(p => p.includes(q)).slice(0, 30);
   if (!m.length) {
-    dd.innerHTML = '<div class="pd-item" style="color:var(--brand-light);">Nenhum produto encontrado</div>';
+    dd.innerHTML = '<div class="pd-item" style="color:var(--brand-light);">No products found</div>';
     dd.classList.add('open'); return;
   }
   dd.innerHTML = m.map(p =>
@@ -774,14 +649,12 @@ function selProdB(id, name) {
   updateSummary(id);
 }
 
-// Close all dropdowns on outside click
 document.addEventListener('click', e => {
   document.querySelectorAll('.product-dropdown.open').forEach(dd => {
     if (!e.target.closest('.product-wrap')) dd.classList.remove('open');
   });
 });
 
-/* ══ Toggle helpers ═══════════════════════════════════════ */
 function togB(btn, groupId) {
   document.getElementById(groupId).querySelectorAll('.tb').forEach(b => b.classList.remove('on'));
   btn.classList.add('on');
@@ -794,7 +667,6 @@ function togReparo(id, btn, val) {
   document.getElementById('pb-reparo-nao-' + id).classList.toggle('show', val === 'nao');
 }
 
-/* ══ Per-block file uploads ═══════════════════════════════ */
 function addBlockFiles(id, key, flist) {
   Array.from(flist).forEach(f => {
     if (!blockFiles[id][key].find(u => u.name === f.name && u.size === f.size))
@@ -809,7 +681,7 @@ function renderBlockFiles(id, key) {
   if (!list) return;
   list.innerHTML = blockFiles[id][key].map((f, i) => {
     const icon = key === 'orc' ? '📄' : (f.type.startsWith('video') ? '🎥' : '📷');
-    return `<div class="chip"><span>${icon} ${f.name}</span><button onclick="removeBlockFile(${id},'${key}',${i})" title="Remover">×</button></div>`;
+    return `<div class="chip"><span>${icon} ${f.name}</span><button onclick="removeBlockFile(${id},'${key}',${i})" title="Remove">×</button></div>`;
   }).join('');
 }
 
@@ -828,7 +700,6 @@ function dropB(id, key, e) {
   addBlockFiles(id, key, e.dataTransfer.files);
 }
 
-/* ══ Navigation ══════════════════════════════════════════ */
 function goTo(panel) {
   document.querySelectorAll('.panel').forEach(p => p.classList.remove('active'));
   document.getElementById('panel-' + panel).classList.add('active');
@@ -844,7 +715,6 @@ document.getElementById('s1').addEventListener('click', () => {
   }
 });
 
-/* ══ ETAPA 1 validation ══════════════════════════════════ */
 function validateStep1(){
   let ok=true;
   const err=document.getElementById('err-step1');
@@ -865,7 +735,6 @@ function validateStep1(){
     if(!el.value.trim()) ok=false;
   });
 
-  // datas
   const iv=document.getElementById('invoiceDate').value;
   const rv=document.getElementById('receiptDate').value;
   document.getElementById('invoiceDate').classList.toggle('err',!iv);
@@ -879,12 +748,10 @@ function validateStep1(){
     return;
   }
   err.classList.remove('show');
-  // ensure at least one product block exists
   if(document.querySelectorAll('.prod-block').length===0) addProdBlock();
   goTo('reg'); setSteps(2);
 }
 
-/* ══ Card completion indicators (etapa 1) ════════════════ */
 function checkInvoiceCard(){
   document.getElementById('c-invoice').classList.toggle('complete', !!document.getElementById('f-invoice').value.trim());
 }
@@ -897,7 +764,6 @@ function checkDatas(){
   document.getElementById('c-datas').classList.toggle('complete',ok);
 }
 
-/* ══ Counter ═════════════════════════════════════════════ */
 function updateCounter(){
   const rv=document.getElementById('receiptDate').value;
   const ne=document.getElementById('counterNum');
@@ -906,7 +772,7 @@ function updateCounter(){
   const wa=document.getElementById('warrantyAlert');
   if(!rv){
     ne.textContent='—';ne.className='counter-num empty';
-    se.textContent='Preencha a data de recebimento para calcular';se.style.color='var(--brand-light)';
+    se.textContent='Enter receipt date to calculate';se.style.color='var(--brand-light)';
     bf.style.width='0%';bf.style.background='var(--border)';
     wa.classList.remove('show');checkDatas();return;
   }
@@ -917,24 +783,83 @@ function updateCounter(){
   const pct=Math.min(100,Math.max(0,(days/365)*100));
   ne.textContent=Math.max(0,days);
   let bc,st,sc;
-  if(days<0){bc='var(--border)';st='Data no futuro — verifique o preenchimento';sc='var(--brand-light)';ne.className='counter-num empty';wa.classList.remove('show');}
-  else if(days<=270){bc='var(--success)';st='✓ Dentro do prazo — faltam '+rem+' dias para o limite de 1 ano';sc='var(--success)';ne.className='counter-num ok';wa.classList.remove('show');}
-  else if(days<=365){bc='var(--warning)';st='⚠ Próximo do limite — faltam apenas '+rem+' dia(s)';sc='var(--warning)';ne.className='counter-num warn';wa.classList.remove('show');}
-  else{bc='var(--danger)';st='✗ Fora do prazo — '+Math.abs(rem)+' dias além do limite';sc='var(--danger)';ne.className='counter-num over';wa.classList.add('show');}
+  if(days<0){bc='var(--border)';st='Date in the future — please check field';sc='var(--brand-light)';ne.className='counter-num empty';wa.classList.remove('show');}
+  else if(days<=270){bc='var(--success)';st='✓ Within period — '+rem+' days left before 1-year limit';sc='var(--success)';ne.className='counter-num ok';wa.classList.remove('show');}
+  else if(days<=365){bc='var(--warning)';st='⚠ Near limit — only '+rem+' day(s) remaining';sc='var(--warning)';ne.className='counter-num warn';wa.classList.remove('show');}
+  else{bc='var(--danger)';st='✗ Out of period — '+Math.abs(rem)+' days exceeded';sc='var(--danger)';ne.className='counter-num over';wa.classList.add('show');}
   se.textContent=st;se.style.color=sc;
   bf.style.width=pct+'%';bf.style.background=bc;
   checkDatas();
 }
 
-/* ══ Reincidência ════════════════════════════════════════ */
 function toggleReincidencia(){
   document.getElementById('reincidencia-extra').style.display=
     document.getElementById('f-reincidencia').checked?'block':'none';
 }
 
-/* ══ Reset ═══════════════════════════════════════════════ */
+function submitForm(){
+  const err=document.getElementById('err-step2');
+  let ok=true;
+
+  const blocks=document.querySelectorAll('.prod-block');
+  if(blocks.length===0){ ok=false; }
+
+  blocks.forEach(block=>{
+    const id=block.id.replace('pb-','');
+
+    const pv=document.getElementById('pb-prod-value-'+id);
+    const pvEmpty=!pv||!pv.value.trim();
+    if(pv) pv.classList.toggle('err',pvEmpty);
+    const pi=document.getElementById('pb-prod-input-'+id);
+    if(pi) pi.classList.toggle('err',pvEmpty);
+    if(pvEmpty) ok=false;
+
+    const mod=document.getElementById('pb-mod-'+id);
+    const modEmpty=!mod||!mod.value.trim();
+    if(mod) mod.classList.toggle('err',modEmpty);
+    if(modEmpty) ok=false;
+
+    const desc=document.getElementById('pb-desc-'+id);
+    const descEmpty=!desc||!desc.value.trim();
+    if(desc) desc.classList.toggle('err',descEmpty);
+    if(descEmpty) ok=false;
+
+    if(!blockFiles[id]||blockFiles[id].prod.length===0){
+      const uz=document.getElementById('pb-uz-'+id);
+      if(uz) uz.style.borderColor='var(--danger)';
+      ok=false;
+    } else {
+      const uz=document.getElementById('pb-uz-'+id);
+      if(uz) uz.style.borderColor='';
+    }
+
+    const q1=document.getElementById('pb-q1-'+id);
+    if(!q1||!q1.querySelector('.on')){ block.classList.add('invalid'); ok=false; }
+
+    const q2=document.getElementById('pb-q2-'+id);
+    if(!q2||!q2.querySelector('.on')){ block.classList.add('invalid'); ok=false; }
+
+    const q3=document.getElementById('pb-q3-'+id);
+    if(!q3||!q3.querySelector('.on')){ block.classList.add('invalid'); ok=false; }
+    else if(q3.querySelector('.yes.on')){
+      const rv=document.getElementById('pb-rv-'+id);
+      const rvEmpty=!rv||!rv.value.trim();
+      if(rv) rv.classList.toggle('err',rvEmpty);
+      if(rvEmpty) ok=false;
+    }
+  });
+
+  if(!ok){ err.classList.add('show'); err.scrollIntoView({behavior:'smooth',block:'center'}); return; }
+  err.classList.remove('show');
+
+  const ticket='AT-'+new Date().getFullYear()+'-'+String(Math.floor(10000+Math.random()*90000));
+  document.getElementById('ticketNum').textContent=ticket;
+  document.getElementById('regContent').style.display='none';
+  document.getElementById('confScreen').classList.add('show');
+  window.scrollTo({top:0,behavior:'smooth'});
+}
+
 function resetAll(){
-  // etapa 1
   ['f-invoice','f-invoice-orig','f-razao','f-cnpj','f-pais','f-tel','f-email','f-resp'].forEach(id=>{
     const el=document.getElementById(id);
     if(el){el.value='';el.classList.remove('err');}
@@ -949,260 +874,16 @@ function resetAll(){
   document.getElementById('warrantyAlert').classList.remove('show');
   updateCounter();
 
-  // etapa 2: remove all product blocks and reset
   document.getElementById('prod-blocks-container').innerHTML='';
   Object.keys(blockFiles).forEach(k=>delete blockFiles[k]);
-  Object.keys(blockRegs).forEach(k=>delete blockRegs[k]);
   blockCount=0;
   document.getElementById('regContent').style.display='block';
+  document.getElementById('confScreen').classList.remove('show');
   document.getElementById('err-step2').classList.remove('show');
 
   goTo('id'); setSteps(1);
 }
 
-/* ══ Per-block registration store ════════════════════════ */
-const blockRegs = {}; // blockRegs[id] = { ticket, timestamp }
-
-/* ══ Enviar individual product block ═════════════════════ */
-function enviarProdBlock(id) {
-  const block = document.getElementById('pb-' + id);
-  if (!block) return;
-  let ok = true;
-
-  // produto
-  const pv = document.getElementById('pb-prod-value-' + id);
-  const pvEmpty = !pv || !pv.value.trim();
-  if (pv) pv.classList.toggle('err', pvEmpty);
-  const pi = document.getElementById('pb-prod-input-' + id);
-  if (pi) pi.classList.toggle('err', pvEmpty);
-  if (pvEmpty) ok = false;
-
-  // módulos
-  const mod = document.getElementById('pb-mod-' + id);
-  const modEmpty = !mod || !mod.value.trim();
-  if (mod) mod.classList.toggle('err', modEmpty);
-  if (modEmpty) ok = false;
-
-  // descrição
-  const desc = document.getElementById('pb-desc-' + id);
-  const descEmpty = !desc || !desc.value.trim();
-  if (desc) desc.classList.toggle('err', descEmpty);
-  if (descEmpty) ok = false;
-
-  // fotos
-  if (!blockFiles[id] || blockFiles[id].prod.length === 0) {
-    const uz = document.getElementById('pb-uz-' + id);
-    if (uz) uz.style.borderColor = 'var(--danger)';
-    ok = false;
-  } else {
-    const uz = document.getElementById('pb-uz-' + id);
-    if (uz) uz.style.borderColor = '';
-  }
-
-  // Q1 embalagem
-  const q1 = document.getElementById('pb-q1-' + id);
-  if (!q1 || !q1.querySelector('.on')) { ok = false; }
-
-  // Q2 impede uso
-  const q2 = document.getElementById('pb-q2-' + id);
-  if (!q2 || !q2.querySelector('.on')) { ok = false; }
-
-  // Q3 reparo
-  const q3 = document.getElementById('pb-q3-' + id);
-  if (!q3 || !q3.querySelector('.on')) { ok = false; }
-  else if (q3.querySelector('.yes.on')) {
-    const rv = document.getElementById('pb-rv-' + id);
-    const rvEmpty = !rv || !rv.value.trim();
-    if (rv) rv.classList.toggle('err', rvEmpty);
-    if (rvEmpty) ok = false;
-  }
-
-  if (!ok) {
-    block.classList.add('invalid');
-    block.scrollIntoView({ behavior: 'smooth', block: 'center' });
-    return;
-  }
-
-  block.classList.remove('invalid');
-
-  // Generate unique registration number
-  const now = new Date();
-  const seq = String(Math.floor(10000 + Math.random() * 90000));
-  const ticket = 'REC-' + now.getFullYear() + '-' + seq;
-
-  blockRegs[id] = {
-    ticket: ticket,
-    timestamp: now.toLocaleString('pt-BR')
-  };
-
-  // Show badge
-  const badge = document.getElementById('pb-reg-' + id);
-  const badgeNum = document.getElementById('pb-reg-num-' + id);
-  if (badge) badge.classList.add('show');
-  if (badgeNum) badgeNum.textContent = ticket;
-
-  // Mark button as sent
-  const btn = document.getElementById('pb-enviar-' + id);
-  if (btn) {
-    btn.classList.add('sent');
-    btn.innerHTML = '✓ Enviado';
-  }
-
-  // Auto-minimize
-  if (!block.classList.contains('minimized')) {
-    toggleBlock(id);
-  }
-
-  // Mark block as complete
-  block.style.borderColor = '#9fceb5';
-}
-
-/* ══ Salvar Informações (receipt/summary) ════════════════ */
-function salvarInformacoes() {
-  const err = document.getElementById('err-step2');
-  
-  // Check if at least one block was sent
-  const sentIds = Object.keys(blockRegs);
-  if (sentIds.length === 0) {
-    err.textContent = 'Envie pelo menos um produto antes de salvar as informações.';
-    err.classList.add('show');
-    err.scrollIntoView({ behavior: 'smooth', block: 'center' });
-    return;
-  }
-  err.classList.remove('show');
-
-  // Build receipt HTML
-  let html = '';
-
-  // Section: Client info
-  html += '<div class="receipt-section">';
-  html += '<div class="receipt-section-title">🧾 Dados da Invoice e Cliente</div>';
-  html += receiptRow('Invoice', document.getElementById('f-invoice').value || '—');
-  if (document.getElementById('f-reincidencia').checked) {
-    html += receiptRow('Invoice Origem (Reincidência)', document.getElementById('f-invoice-orig').value || '—');
-  }
-  html += receiptRow('Razão Social', document.getElementById('f-razao').value || '—');
-  html += receiptRow('CNPJ / Tax ID', document.getElementById('f-cnpj').value || '—');
-  html += receiptRow('País', document.getElementById('f-pais').value || '—');
-  html += receiptRow('Telefone', document.getElementById('f-tel').value || '—');
-  html += receiptRow('E-mail', document.getElementById('f-email').value || '—');
-  html += receiptRow('Responsável', document.getElementById('f-resp').value || '—');
-  html += receiptRow('Data da Fatura', formatDate(document.getElementById('invoiceDate').value));
-  html += receiptRow('Data de Recebimento', formatDate(document.getElementById('receiptDate').value));
-  html += '</div>';
-
-  // Section: Products
-  html += '<div class="receipt-section">';
-  html += '<div class="receipt-section-title">🛋️ Produtos Registrados</div>';
-
-  const blocks = document.querySelectorAll('.prod-block');
-  let prodIndex = 0;
-  blocks.forEach(b => {
-    const bid = b.id.replace('pb-', '');
-    prodIndex++;
-    const reg = blockRegs[bid];
-    const prodName = (document.getElementById('pb-prod-input-' + bid) || {}).value || '—';
-    const modulos = (document.getElementById('pb-mod-' + bid) || {}).value || '—';
-    const descricao = (document.getElementById('pb-desc-' + bid) || {}).value || '—';
-
-    // Q1
-    const q1El = document.getElementById('pb-q1-' + bid);
-    const q1 = q1El && q1El.querySelector('.yes.on') ? 'Sim' : (q1El && q1El.querySelector('.no.on') ? 'Não' : '—');
-
-    // Q2
-    const q2El = document.getElementById('pb-q2-' + bid);
-    const q2 = q2El && q2El.querySelector('.yes.on') ? 'Sim' : (q2El && q2El.querySelector('.no.on') ? 'Não' : '—');
-
-    // Q3
-    const q3El = document.getElementById('pb-q3-' + bid);
-    const q3 = q3El && q3El.querySelector('.yes.on') ? 'Sim' : (q3El && q3El.querySelector('.no.on') ? 'Não' : '—');
-
-    const valorReparo = (document.getElementById('pb-rv-' + bid) || {}).value || '';
-    const prestador = (document.getElementById('pb-rp-' + bid) || {}).value || '';
-    const fotos = blockFiles[bid] ? blockFiles[bid].prod.length : 0;
-    const orcs = blockFiles[bid] ? blockFiles[bid].orc.length : 0;
-
-    html += '<div class="receipt-prod-card">';
-    html += '<h4>Produto ' + prodIndex + ': ' + prodName;
-    if (reg) {
-      html += ' <span class="reg-num">✓ ' + reg.ticket + '</span>';
-    } else {
-      html += ' <span style="font-size:12px;color:var(--danger);font-weight:500;">(não enviado)</span>';
-    }
-    html += '</h4>';
-    html += receiptRow('Módulos Afetados', modulos);
-    html += receiptRow('Descrição do Defeito', descricao);
-    html += receiptRow('Embalagem Avariada', q1);
-    html += receiptRow('Impede o Uso', q2);
-    html += receiptRow('Reparo Local Possível', q3);
-    if (q3 === 'Sim') {
-      html += receiptRow('Valor do Reparo', valorReparo || '—');
-      html += receiptRow('Prestador', prestador || '—');
-      html += receiptRow('Arquivos Orçamento', orcs + ' arquivo(s)');
-    }
-    html += receiptRow('Fotos/Vídeos', fotos + ' arquivo(s)');
-    if (reg) {
-      html += receiptRow('Registrado em', reg.timestamp);
-    }
-    html += '</div>';
-  });
-
-  html += '</div>';
-
-  // Footer note
-  html += '<div style="text-align:center;font-size:12px;color:var(--brand-light);padding-top:12px;border-top:1px solid var(--border);">';
-  html += 'Grupo Sohome — Assistência Técnica Exportação<br>Documento gerado em ' + new Date().toLocaleString('pt-BR');
-  html += '</div>';
-
-  document.getElementById('receiptBody').innerHTML = html;
-  document.getElementById('receiptOverlay').classList.add('show');
-  document.body.style.overflow = 'hidden';
-}
-
-function receiptRow(label, value) {
-  return '<div class="receipt-row"><span class="r-label">' + label + '</span><span class="r-value">' + (value || '—') + '</span></div>';
-}
-
-function formatDate(val) {
-  if (!val) return '—';
-  const d = new Date(val + 'T00:00:00');
-  return d.toLocaleDateString('pt-BR');
-}
-
-function closeReceipt() {
-  document.getElementById('receiptOverlay').classList.remove('show');
-  document.body.style.overflow = '';
-}
-
-function copyReceipt() {
-  const body = document.getElementById('receiptBody');
-  const text = body.innerText;
-  navigator.clipboard.writeText(text).then(() => {
-    const btn = document.querySelector('.btn-copy-receipt');
-    const orig = btn.textContent;
-    btn.textContent = '✓ Copiado!';
-    setTimeout(() => btn.textContent = orig, 2000);
-  }).catch(() => {
-    // fallback
-    const ta = document.createElement('textarea');
-    ta.value = body.innerText;
-    document.body.appendChild(ta);
-    ta.select();
-    document.execCommand('copy');
-    document.body.removeChild(ta);
-    const btn = document.querySelector('.btn-copy-receipt');
-    btn.textContent = '✓ Copiado!';
-    setTimeout(() => btn.textContent = '📋 Copiar Texto', 2000);
-  });
-}
-
-// Close receipt on overlay click
-document.addEventListener('click', function(e) {
-  const overlay = document.getElementById('receiptOverlay');
-  if (e.target === overlay) closeReceipt();
-});
-
-/* ══ Init: add first product block on load ════════════════ */
 addProdBlock();
 </script>
 </body>
