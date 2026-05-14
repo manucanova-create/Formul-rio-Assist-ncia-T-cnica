@@ -2,20 +2,11 @@
 <html lang="pt-BR">
 <head>
 <meta charset="UTF-8">
-<script>
-  const lang = navigator.language || navigator.userLanguage;
-  if (lang.startsWith('es')) {
-    window.location.href = "INDEX.ES.html";
-  } else if (lang.startsWith('en')) {
-    window.location.href = "INDEX.EN.html";
-  }
-  // Se for PT, ele apenas continua carregando o index.html atual
-</script>
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Assistência Técnica — Grupo Sohome</title>
+<title>Assistência Técnica — SOHOME</title>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Assistência Técnica — Grupo Sohome</title>
+<title>Assistência Técnica — SOHOME</title>
 <link rel="icon" href="LOGO H.png" type="image/svg+xml">
 <style>
 @import url('https://fonts.googleapis.com/css2?family=DM+Sans:ital,wght@0,300;0,400;0,500;0,600;1,300&display=swap');
@@ -338,7 +329,7 @@ input:checked+.slider:before{transform:translateX(20px);}
       <div class="form-grid">
         <div class="field">
           <label>País <span class="req">*</span></label>
-          <input type="text" id="f-pais" placeholder="País de origem da loja" oninput="checkLojista()">
+          <input type="text" id="f-pais" placeholder="País de origem da loja" oninput="checkLojista();applyLanguageFromCountry()">
         </div>
         <div class="field">
           <label>Telefone <span class="req">*</span></label>
@@ -354,6 +345,14 @@ input:checked+.slider:before{transform:translateX(20px);}
         <div class="field">
           <label>Nome do Responsável <span class="req">*</span></label>
           <input type="text" id="f-resp" placeholder="Nome completo" oninput="checkLojista()">
+        </div>
+      </div>
+      <div class="form-full">
+        <div class="field">
+          <label id="extraEmailsLabel">E-mails adicionais</label>
+          <span class="hint" id="extraEmailsHint">Opcional. Use para copiar outras pessoas no acompanhamento.</span>
+          <div class="extra-email-wrap" id="extraEmailsWrap"></div>
+          <button type="button" class="btn-extra-email" id="btnAddExtraEmail" onclick="addExtraEmail()">＋ Adicionar e-mail</button>
         </div>
       </div>
     </div>
@@ -393,7 +392,7 @@ input:checked+.slider:before{transform:translateX(20px);}
       <button class="btn-recalc" onclick="updateCounter()">↺ Recalcular</button>
     </div>
     <div class="warranty-alert" id="warrantyAlert">
-      ⛔ <strong>Fora do prazo de garantia de 1 ano.</strong> A assistência técnica padrão não é aplicável. Apenas danos estruturais comprovados podem ser avaliados em caráter excepcional, mediante aprovação técnica da Sohome.
+      ⛔ <strong>Fora do prazo de garantia de 1 ano.</strong> A assistência técnica padrão não é aplicável. Apenas danos estruturais comprovados podem ser avaliados em caráter excepcional, mediante aprovação técnica da SOHOME.
     </div>
   </div>
 
@@ -430,35 +429,22 @@ input:checked+.slider:before{transform:translateX(20px);}
     <div id="prod-blocks-container"></div>
 
     <!-- Add product button -->
-    <button class="btn-add-prod" onclick="addProdBlock()">
+    <button type="button" class="btn-add-prod" onclick="addProdBlock()">
       <span style="font-size:20px;">＋</span> Adicionar outro produto
     </button>
 
     <div class="err-hint" id="err-step2">Preencha todos os campos obrigatórios de pelo menos um produto e envie antes de salvar.</div>
-    <button class="btn-salvar" onclick="salvarInformacoes()">💾 Salvar as Informações</button>
+    <button type="button" class="btn-salvar" onclick="salvarInformacoes()">💾 Salvar as Informações</button>
 
   </div><!-- /regContent -->
 </div><!-- /panel-reg -->
 
-<!-- ══ RECEIPT OVERLAY ═══════════════════════════════════ -->
-<div class="receipt-overlay" id="receiptOverlay">
-  <div class="receipt-box">
-    <div class="receipt-header">
-      <h2>📋 Resumo da Assistência Técnica</h2>
-      <button class="receipt-close" onclick="closeReceipt()">✕ Fechar</button>
-    </div>
-    <div class="receipt-body" id="receiptBody"></div>
-    <div class="receipt-actions">
-      <button class="btn-print" onclick="window.print()">🖨️ Imprimir / Salvar PDF</button>
-      <button class="btn-copy-receipt" onclick="copyReceipt()">📋 Copiar Texto</button>
-    </div>
-  </div>
-</div>
+
 
 
 <!-- ══ SITE FOOTER ══════════════════════════════════════ -->
 <footer class="site-footer">
-  <span class="ft-text">Grupo Sohome — Assistência Técnica Exportação</span>
+  <span class="ft-text">SOHOME — Assistência Técnica Exportação</span>
   <img src="LOGO GRUPO SOHOME-60.png" alt="Logo" class="ico-h">
 </footer>
 
@@ -516,6 +502,25 @@ input:checked+.slider:before{transform:translateX(20px);}
 .receipt-prod-card{background:var(--brand-pale);border:1px solid var(--border);border-radius:4px;padding:16px 20px;margin-bottom:12px;}
 .receipt-prod-card h4{font-size:13px;font-weight:700;color:var(--brand-dark);margin-bottom:10px;display:flex;align-items:center;gap:8px;flex-wrap:wrap;}
 .receipt-prod-card .reg-num{font-size:12px;color:var(--success);font-weight:600;background:rgba(46,125,94,.1);padding:2px 10px;border-radius:10px;}
+.receipt-doc{background:var(--white);border:1px solid var(--border);border-radius:6px;max-width:760px;width:100%;box-shadow:0 10px 28px rgba(62,61,57,.08);overflow:hidden;}
+.receipt-doc-head{background:var(--brand);padding:22px 28px;display:flex;align-items:center;justify-content:space-between;gap:18px;}
+.receipt-doc-head h2{font-size:15px;font-weight:700;color:#fff;letter-spacing:.08em;text-transform:uppercase;margin:0;}
+.receipt-doc-head span{font-size:11px;color:rgba(255,255,255,.7);white-space:nowrap;}
+.receipt-doc-body{padding:30px 28px 24px;background:#fff;}
+.receipt-prod-head{display:flex;align-items:flex-start;justify-content:space-between;gap:14px;margin-bottom:14px;}
+.receipt-prod-kicker{font-size:10px;letter-spacing:.12em;text-transform:uppercase;color:var(--brand-light);font-weight:700;margin-bottom:3px;}
+.receipt-prod-head h4{font-size:15px;font-weight:700;color:var(--text);margin:0;line-height:1.35;}
+.receipt-prod-head .reg-num{font-size:12px;color:var(--success);font-weight:700;background:rgba(46,125,94,.12);padding:5px 11px;border-radius:14px;white-space:nowrap;}
+.receipt-footer-note{text-align:center;font-size:12px;color:var(--brand-light);padding-top:16px;border-top:1px solid var(--border);line-height:1.5;}
+.receipt-actions-confirm{display:flex;gap:10px;padding:20px 28px;border-top:1px solid var(--border);background:#fff;}
+.receipt-actions-confirm button{flex:1;padding:13px;border-radius:3px;font-size:12px;letter-spacing:.1em;text-transform:uppercase;font-family:'DM Sans',sans-serif;cursor:pointer;}
+.extra-email-wrap{display:flex;flex-direction:column;gap:8px;margin-top:10px;}
+.extra-email-row{display:flex;gap:8px;align-items:center;}
+.extra-email-row input{flex:1;}
+.btn-extra-email,.btn-remove-email{border:1px solid var(--border);border-radius:3px;background:var(--white);color:var(--brand);font-family:'DM Sans',sans-serif;cursor:pointer;transition:all .15s;}
+.btn-extra-email{padding:9px 12px;font-size:12px;letter-spacing:.06em;text-transform:uppercase;align-self:flex-start;}
+.btn-extra-email:hover,.btn-remove-email:hover{border-color:var(--brand);background:var(--brand-pale);}
+.btn-remove-email{width:36px;height:36px;font-size:18px;line-height:1;flex-shrink:0;}
 .receipt-actions{display:flex;gap:10px;padding:20px 28px;border-top:1px solid var(--border);}
 .btn-print{flex:1;padding:13px;background:var(--brand);color:#fff;border:none;border-radius:3px;font-size:12px;letter-spacing:.1em;text-transform:uppercase;font-family:'DM Sans',sans-serif;cursor:pointer;transition:background .15s;}
 .btn-print:hover{background:var(--brand-dark);}
@@ -524,12 +529,67 @@ input:checked+.slider:before{transform:translateX(20px);}
 
 .no-products-hint{text-align:center;padding:20px;color:var(--brand-light);font-size:14px;}
 
+/* ══ CONFIRMATION PAGE (injected via JS) ════════════════ */
+.receipt-section{margin-bottom:24px;}
+.receipt-section-title{font-size:10px;letter-spacing:.14em;text-transform:uppercase;font-weight:700;color:var(--brand);margin-bottom:12px;padding-bottom:6px;border-bottom:2px solid var(--brand-pale);}
+.receipt-row{display:flex;padding:6px 0;font-size:14px;line-height:1.5;}
+.receipt-row .r-label{color:var(--brand-light);min-width:180px;flex-shrink:0;font-weight:500;}
+.receipt-row .r-value{color:var(--text);flex:1;word-break:break-word;}
+.receipt-prod-card{background:var(--brand-pale);border:1px solid var(--border);border-radius:4px;padding:16px 20px;margin-bottom:12px;}
+.receipt-prod-card h4{font-size:13px;font-weight:700;color:var(--brand-dark);margin-bottom:10px;display:flex;align-items:center;gap:8px;flex-wrap:wrap;}
+.receipt-prod-card .reg-num{font-size:12px;color:var(--success);font-weight:600;background:rgba(46,125,94,.1);padding:2px 10px;border-radius:10px;}
 @media print{
-  .receipt-overlay{position:static;background:none;backdrop-filter:none;padding:0;}
-  .receipt-box{max-height:none;box-shadow:none;max-width:100%;}
-  .receipt-header{background:var(--brand) !important;-webkit-print-color-adjust:exact;print-color-adjust:exact;}
-  .receipt-actions,.receipt-close{display:none !important;}
-  body>*:not(.receipt-overlay){display:none !important;}
+  #confirmation-page header + div > :last-child { display:none!important; }
+}
+
+/* ══ SUCCESS CONFIRMATION BANNER ═══════════════════════ */
+.receipt-success-banner{
+  background: linear-gradient(135deg, #eef6f2 0%, #d9f0e5 100%);
+  border: 1px solid #9fceb5;
+  border-left: 5px solid var(--success);
+  border-radius: 5px;
+  padding: 22px 24px;
+  margin-bottom: 24px;
+  display: flex;
+  align-items: flex-start;
+  gap: 16px;
+}
+.receipt-success-banner .sb-icon{font-size: 36px; flex-shrink: 0; line-height: 1;}
+.receipt-success-banner .sb-text{}
+.receipt-success-banner .sb-title{font-size: 17px; font-weight: 600; color: var(--success); margin-bottom: 5px;}
+.receipt-success-banner .sb-sub{font-size: 14px; color: #3a6b54; line-height: 1.6;}
+
+@page{size:A4;margin:7mm;}
+@media print{
+  html,body{background:#fff!important;display:block!important;min-height:auto!important;margin:0!important;font-size:12px!important;}
+  body>*:not(#confirmation-page){display:none!important;}
+  #confirmation-page{display:block!important;min-height:auto!important;background:#fff!important;padding:0!important;}
+  #confirmation-page>header,#confirmation-page>footer{display:none!important;}
+  #confirmation-page>div{display:block!important;max-width:720px!important;width:100%!important;margin:0 auto!important;padding:0!important;}
+  #confirmation-page>div>:first-child,
+  #confirmation-page>div>button{display:none!important;}
+  #confirmation-page>div>div{max-width:720px!important;width:100%!important;background:var(--white)!important;border:1px solid var(--border)!important;border-radius:4px!important;box-shadow:none!important;overflow:hidden!important;margin:0 auto!important;}
+  .receipt-doc-head{display:flex!important;background:var(--brand)!important;padding:13px 20px!important;-webkit-print-color-adjust:exact;print-color-adjust:exact;}
+  .receipt-doc-head h2{font-size:12px!important;letter-spacing:.07em!important;}
+  .receipt-doc-head span{font-size:9px!important;}
+  #conf-receipt-body,.receipt-doc-body{padding:18px 20px 14px!important;background:var(--white)!important;}
+  #conf-receipt-body + div,.receipt-actions-confirm{display:none!important;}
+  #confirmation-page [onclick*="print"],
+  #confirmation-page #btn-conf-copy{display:none!important;}
+  #confirmation-page [onclick*="print"]{background:var(--brand)!important;color:#fff!important;border:0!important;}
+  #confirmation-page #btn-conf-copy{background:var(--white)!important;color:var(--brand)!important;border:1px solid var(--border)!important;}
+  .receipt-section{margin-bottom:13px!important;}
+  .receipt-section-title{font-size:8.5px!important;letter-spacing:.12em!important;text-transform:uppercase!important;font-weight:700!important;color:var(--brand)!important;margin-bottom:7px!important;padding-bottom:4px!important;border-bottom:1px solid var(--border)!important;}
+  .receipt-row{display:flex!important;padding:2.5px 0!important;font-size:11px!important;line-height:1.28!important;}
+  .receipt-row .r-label{min-width:140px!important;color:var(--brand-light)!important;font-weight:500!important;}
+  .receipt-row .r-value{color:var(--text)!important;}
+  .receipt-prod-card{background:var(--brand-pale)!important;border:1px solid var(--border)!important;border-radius:3px!important;padding:10px 12px!important;margin-bottom:8px!important;break-inside:avoid;page-break-inside:avoid;-webkit-print-color-adjust:exact;print-color-adjust:exact;}
+  .receipt-prod-head{display:flex!important;align-items:flex-start!important;justify-content:space-between!important;gap:10px!important;margin-bottom:7px!important;}
+  .receipt-prod-kicker{font-size:8px!important;margin-bottom:1px!important;}
+  .receipt-prod-card h4,.receipt-prod-head h4{font-size:12px!important;margin:0!important;color:var(--text)!important;line-height:1.2!important;}
+  .receipt-prod-card .reg-num{background:rgba(46,125,94,.1)!important;color:var(--success)!important;-webkit-print-color-adjust:exact;print-color-adjust:exact;}
+  .receipt-prod-head .reg-num{font-size:9.5px!important;padding:3px 8px!important;border-radius:10px!important;}
+  .receipt-footer-note{font-size:9.5px!important;line-height:1.25!important;padding-top:8px!important;margin-top:4px!important;}
 }
 
 @media(max-width:768px){
@@ -544,6 +604,518 @@ input:checked+.slider:before{transform:translateX(20px);}
 </style>
 
 <script>
+/* ══ Idiomas por país do cliente ═══════════════════════ */
+let currentLang = 'pt';
+
+const I18N = {
+  pt: {
+    pageTitle: 'Assistência Técnica — SOHOME',
+    appTitle: 'Assistência Técnica',
+    appTag: 'Sistema de Registro — Exportação',
+    idTitle: 'Identificação',
+    idDesc: 'Informe o número da invoice, os dados do lojista e as datas antes de prosseguir.',
+    invoiceSection: '🧾 Número da Invoice',
+    filled: '✓ Preenchido',
+    invoiceLabel: 'Número da Invoice',
+    invoicePlaceholder: 'Número exato da invoice do produto reclamado',
+    invoiceHint: '⚠ Invoice errada trava o processo — não inserir número genérico',
+    recurrence: 'Reincidência?',
+    recurrenceQuestion: 'Já houve assistência anterior para este mesmo produto/invoice?',
+    originalInvoice: 'Invoice de Origem (1ª ocorrência)',
+    originalInvoicePlaceholder: 'Número da invoice da primeira assistência',
+    clientSection: 'Dados do Lojista / Importador',
+    company: 'Razão Social',
+    companyPlaceholder: 'Nome completo da empresa',
+    taxId: 'CNPJ / Tax ID',
+    country: 'País',
+    countryPlaceholder: 'País de origem da loja',
+    phone: 'Telefone',
+    email: 'E-mail de Contato',
+    emailHint: 'Este e-mail receberá todas as tratativas — verifique com atenção',
+    extraEmails: 'E-mails adicionais',
+    extraEmailsHint: 'Opcional. Use para copiar outras pessoas no acompanhamento.',
+    extraEmailPlaceholder: 'email.adicional@empresa.com',
+    addEmail: '＋ Adicionar e-mail',
+    removeEmail: 'Remover e-mail',
+    extraEmailsRow: 'E-mails adicionais',
+    responsible: 'Nome do Responsável',
+    responsiblePlaceholder: 'Nome completo',
+    datesSection: 'Datas da Garantia',
+    datesHeader: 'Datas da Invoice e Recebimento',
+    invoiceDate: 'Data da Fatura (Invoice)',
+    invoiceDateHint: 'Data de emissão da fatura comercial',
+    receiptDate: 'Data de Recebimento da Mercadoria',
+    receiptDateHint: 'Data em que o cliente recebeu o produto',
+    daysAfterReceipt: 'DIAS APÓS RECEBIMENTO',
+    fillReceiptDate: 'Preencha a data de recebimento para calcular',
+    warrantyFuture: 'Data no futuro — verifique o preenchimento',
+    warrantyOk: days => '✓ Dentro do prazo — faltam ' + days + ' dias para o limite de 1 ano',
+    warrantyWarn: days => '⚠ Próximo do limite — faltam apenas ' + days + ' dia(s)',
+    warrantyOver: days => '✗ Fora do prazo — ' + days + ' dias além do limite',
+    recalc: '↺ Recalcular',
+    warrantyAlert: '⛔ <strong>Fora do prazo de garantia de 1 ano.</strong> A assistência técnica padrão não é aplicável. Apenas danos estruturais comprovados podem ser avaliados em caráter excepcional, mediante aprovação técnica da SOHOME.',
+    advanceNote: 'Todos os campos marcados com <span class="req">*</span> são obrigatórios.',
+    advance: 'Avançar para o Registro →',
+    errStep1: 'Preencha todos os campos obrigatórios antes de avançar.',
+    regTitle: 'Registro da Assistência',
+    regDesc: 'Adicione um ou mais produtos reclamados. Cada produto precisa ser enviado individualmente antes de salvar o extrato.',
+    addProduct: '＋ Adicionar outro produto',
+    errStep2: 'Preencha todos os campos obrigatórios de pelo menos um produto e envie antes de salvar.',
+    saveInfo: '💾 Salvar as Informações',
+    sendBeforeSave: 'Envie pelo menos um produto antes de salvar as informações.',
+    footer: 'SOHOME — Assistência Técnica Exportação',
+    product: 'Produto',
+    send: '📤 Enviar',
+    sent: '✓ Enviado',
+    minimize: '▲ Minimizar',
+    expand: '▼ Expandir',
+    remove: '✕ Remover',
+    productLabel: 'Produto',
+    productPlaceholder: 'Digite para pesquisar...',
+    modules: 'Qtd. de Módulos',
+    modulesHint: 'Apenas os módulos afetados',
+    defect: 'Descrição do Defeito',
+    defectPlaceholder: 'Descreva: o que ocorreu, como ocorreu e quando foi identificado. Quanto mais detalhes, mais assertiva será a análise.',
+    damagedPackage: 'A embalagem chegou avariada?',
+    damagedPackageNote: 'Amassados, rasgos, umidade ou sinais de impacto',
+    photos: 'Fotos e Vídeos do Produto',
+    photosHint: '1 foto do produto completo · 1 foto do defeito · 1 foto no ambiente · 1 vídeo demonstrando o problema',
+    clickFiles: 'Clique ou arraste arquivos aqui',
+    imageVideo: 'Imagens (JPG, PNG) e vídeos (MP4, MOV)',
+    usageBlocked: 'O defeito impede o uso do produto?',
+    repairPossible: 'É possível realizar reparo local?',
+    repairNote: 'Considere a disponibilidade de prestadores e peças na região do cliente',
+    repairValue: 'Valor estimado do Reparo',
+    serviceProvider: 'Prestador de Serviço',
+    providerPlaceholder: 'Nome da empresa ou profissional',
+    repairBudget: 'Orçamento do Prestador',
+    budgetHint: 'Nenhum pagamento é realizado sem orçamento aprovado previamente pela SOHOME',
+    clickBudget: 'Clique ou arraste o orçamento',
+    budgetFileTypes: 'PDF, imagem ou documento',
+    repairNo: '✗ <strong>Reparo local inviável.</strong> A SOHOME avaliará a decisão final após análise das evidências enviadas.',
+    yes: 'Sim',
+    no: 'Não',
+    noProduct: 'Nenhum produto encontrado',
+    receiptClient: '🧾 Dados da Invoice e Cliente',
+    receiptProducts: '🛋️ Produtos Registrados',
+    originInvoice: 'Invoice Origem (Reincidência)',
+    invoiceDateRow: 'Data da Fatura',
+    receiptDateRow: 'Data de Recebimento',
+    modulesRow: 'Quantidade de Módulos',
+    defectRow: 'Descrição do Defeito',
+    damagedPackageRow: 'Embalagem Avariada',
+    usageBlockedRow: 'Impede o Uso',
+    repairPossibleRow: 'Reparo Local Possível',
+    repairValueRow: 'Valor do Reparo',
+    providerRow: 'Prestador',
+    budgetFilesRow: 'Arquivos Orçamento',
+    budgetNamesRow: 'Nome(s) Orçamento',
+    mediaFilesRow: 'Fotos/Vídeos',
+    mediaNamesRow: 'Nome(s) Arquivos',
+    registeredAt: 'Registrado em',
+    fileCount: n => n + ' arquivo(s)',
+    receiptFooter: date => 'SOHOME — Assistência Técnica Exportação<br>Documento gerado em ' + date,
+    successTitle: 'Assistência registrada com sucesso!',
+    successText: 'Obrigado por nos enviar o seu feedback. Nossa equipe analisará as informações e entrará em contato em breve. Abaixo está o extrato completo do seu registro — guarde-o para referência.',
+    receiptTitle: '📋 Extrato da Assistência Técnica',
+    printPdf: '🖨️ Imprimir / Salvar PDF',
+    copyText: '📋 Copiar Texto',
+    copied: '✓ Copiado!',
+    newRecord: '＋ Iniciar novo registro'
+  },
+  es: {
+    pageTitle: 'Asistencia Técnica — SOHOME',
+    appTitle: 'Asistencia Técnica',
+    appTag: 'Sistema de Registro — Exportación',
+    idTitle: 'Identificación',
+    idDesc: 'Indique el número de invoice, los datos del distribuidor y las fechas antes de continuar.',
+    invoiceSection: '🧾 Número de Invoice',
+    filled: '✓ Completado',
+    invoiceLabel: 'Número de Invoice',
+    invoicePlaceholder: 'Número exacto de la invoice del producto reclamado',
+    invoiceHint: '⚠ Una invoice incorrecta bloquea el proceso — no introduzca un número genérico',
+    recurrence: '¿Reincidencia?',
+    recurrenceQuestion: '¿Ya hubo asistencia anterior para este mismo producto/invoice?',
+    originalInvoice: 'Invoice de Origen (1ª incidencia)',
+    originalInvoicePlaceholder: 'Número de la invoice de la primera asistencia',
+    clientSection: 'Datos del Distribuidor / Importador',
+    company: 'Razón Social',
+    companyPlaceholder: 'Nombre completo de la empresa',
+    taxId: 'CNPJ / Tax ID',
+    country: 'País',
+    countryPlaceholder: 'País de origen de la tienda',
+    phone: 'Teléfono',
+    email: 'E-mail de Contacto',
+    emailHint: 'Este e-mail recibirá todas las comunicaciones — revíselo con atención',
+    extraEmails: 'E-mails adicionales',
+    extraEmailsHint: 'Opcional. Úselo para copiar a otras personas en el seguimiento.',
+    extraEmailPlaceholder: 'email.adicional@empresa.com',
+    addEmail: '＋ Añadir e-mail',
+    removeEmail: 'Eliminar e-mail',
+    extraEmailsRow: 'E-mails adicionales',
+    responsible: 'Nombre del Responsable',
+    responsiblePlaceholder: 'Nombre completo',
+    datesSection: 'Fechas de Garantía',
+    datesHeader: 'Fechas de Invoice y Recepción',
+    invoiceDate: 'Fecha de la Factura (Invoice)',
+    invoiceDateHint: 'Fecha de emisión de la factura comercial',
+    receiptDate: 'Fecha de Recepción de la Mercancía',
+    receiptDateHint: 'Fecha en que el cliente recibió el producto',
+    daysAfterReceipt: 'DÍAS DESDE LA RECEPCIÓN',
+    fillReceiptDate: 'Complete la fecha de recepción para calcular',
+    warrantyFuture: 'Fecha futura — revise el dato introducido',
+    warrantyOk: days => '✓ Dentro del plazo — faltan ' + days + ' días para el límite de 1 año',
+    warrantyWarn: days => '⚠ Cerca del límite — faltan solo ' + days + ' día(s)',
+    warrantyOver: days => '✗ Fuera del plazo — ' + days + ' días por encima del límite',
+    recalc: '↺ Recalcular',
+    warrantyAlert: '⛔ <strong>Fuera del plazo de garantía de 1 año.</strong> La asistencia técnica estándar no es aplicable. Solo daños estructurales comprobados podrán evaluarse de forma excepcional, previa aprobación técnica de SOHOME.',
+    advanceNote: 'Todos los campos marcados con <span class="req">*</span> son obligatorios.',
+    advance: 'Avanzar al Registro →',
+    errStep1: 'Complete todos los campos obligatorios antes de continuar.',
+    regTitle: 'Registro de Asistencia',
+    regDesc: 'Añada uno o más productos reclamados. Cada producto debe enviarse individualmente antes de guardar el extracto.',
+    addProduct: '＋ Añadir otro producto',
+    errStep2: 'Complete todos los campos obligatorios de al menos un producto y envíelo antes de guardar.',
+    saveInfo: '💾 Guardar Información',
+    sendBeforeSave: 'Envíe al menos un producto antes de guardar la información.',
+    footer: 'SOHOME — Asistencia Técnica Exportación',
+    product: 'Producto',
+    send: '📤 Enviar',
+    sent: '✓ Enviado',
+    minimize: '▲ Minimizar',
+    expand: '▼ Expandir',
+    remove: '✕ Eliminar',
+    productLabel: 'Producto',
+    productPlaceholder: 'Escriba para buscar...',
+    modules: 'Cant. de Módulos',
+    modulesHint: 'Solo los módulos afectados',
+    defect: 'Descripción del Defecto',
+    defectPlaceholder: 'Describa: qué ocurrió, cómo ocurrió y cuándo se identificó. Cuantos más detalles, más precisa será la evaluación.',
+    damagedPackage: '¿El embalaje llegó dañado?',
+    damagedPackageNote: 'Abolladuras, roturas, humedad o señales de impacto',
+    photos: 'Fotos y Vídeos del Producto',
+    photosHint: '1 foto del producto completo · 1 foto del defecto · 1 foto en el ambiente · 1 vídeo demostrando el problema',
+    clickFiles: 'Haga clic o arrastre archivos aquí',
+    imageVideo: 'Imágenes (JPG, PNG) y vídeos (MP4, MOV)',
+    usageBlocked: '¿El defecto impide el uso del producto?',
+    repairPossible: '¿Es posible realizar reparación local?',
+    repairNote: 'Considere la disponibilidad de proveedores y piezas en la región del cliente',
+    repairValue: 'Valor estimado de la Reparación',
+    serviceProvider: 'Proveedor de Servicio',
+    providerPlaceholder: 'Nombre de la empresa o profesional',
+    repairBudget: 'Presupuesto del Proveedor',
+    budgetHint: 'No se realiza ningún pago sin presupuesto previamente aprobado por SOHOME',
+    clickBudget: 'Haga clic o arrastre el presupuesto',
+    budgetFileTypes: 'PDF, imagen o documento',
+    repairNo: '✗ <strong>Reparación local inviable.</strong> SOHOME evaluará la decisión final tras analizar las evidencias enviadas.',
+    yes: 'Sí',
+    no: 'No',
+    noProduct: 'No se encontró ningún producto',
+    receiptClient: '🧾 Datos de Invoice y Cliente',
+    receiptProducts: '🛋️ Productos Registrados',
+    originInvoice: 'Invoice Origen (Reincidencia)',
+    invoiceDateRow: 'Fecha de la Factura',
+    receiptDateRow: 'Fecha de Recepción',
+    modulesRow: 'Cantidad de Módulos',
+    defectRow: 'Descripción del Defecto',
+    damagedPackageRow: 'Embalaje Dañado',
+    usageBlockedRow: 'Impide el Uso',
+    repairPossibleRow: 'Reparación Local Posible',
+    repairValueRow: 'Valor de la Reparación',
+    providerRow: 'Proveedor',
+    budgetFilesRow: 'Archivos Presupuesto',
+    budgetNamesRow: 'Nombre(s) Presupuesto',
+    mediaFilesRow: 'Fotos/Vídeos',
+    mediaNamesRow: 'Nombre(s) Archivos',
+    registeredAt: 'Registrado el',
+    fileCount: n => n + ' archivo(s)',
+    receiptFooter: date => 'SOHOME — Asistencia Técnica Exportación<br>Documento generado el ' + date,
+    successTitle: '¡Asistencia registrada correctamente!',
+    successText: 'Gracias por enviarnos su feedback. Nuestro equipo analizará la información y se pondrá en contacto en breve. A continuación está el extracto completo de su registro — guárdelo como referencia.',
+    receiptTitle: '📋 Extracto de Asistencia Técnica',
+    printPdf: '🖨️ Imprimir / Guardar PDF',
+    copyText: '📋 Copiar Texto',
+    copied: '✓ Copiado!',
+    newRecord: '＋ Iniciar nuevo registro'
+  },
+  en: {
+    pageTitle: 'Technical Assistance — SOHOME',
+    appTitle: 'Technical Assistance',
+    appTag: 'Registration System — Export',
+    idTitle: 'Identification',
+    idDesc: 'Enter the invoice number, retailer details, and dates before continuing.',
+    invoiceSection: '🧾 Invoice Number',
+    filled: '✓ Completed',
+    invoiceLabel: 'Invoice Number',
+    invoicePlaceholder: 'Exact invoice number for the claimed product',
+    invoiceHint: '⚠ Wrong invoice blocks the process — do not enter a generic number',
+    recurrence: 'Repeat case?',
+    recurrenceQuestion: 'Has there already been prior assistance for this same product/invoice?',
+    originalInvoice: 'Original Invoice (1st occurrence)',
+    originalInvoicePlaceholder: 'Invoice number from the first assistance request',
+    clientSection: 'Retailer / Importer Details',
+    company: 'Company Name',
+    companyPlaceholder: 'Full company name',
+    taxId: 'Tax ID',
+    country: 'Country',
+    countryPlaceholder: 'Store country of origin',
+    phone: 'Phone',
+    email: 'Contact E-mail',
+    emailHint: 'This e-mail will receive all follow-ups — please check carefully',
+    extraEmails: 'Additional e-mails',
+    extraEmailsHint: 'Optional. Use this to copy other people on follow-up messages.',
+    extraEmailPlaceholder: 'additional.email@company.com',
+    addEmail: '＋ Add e-mail',
+    removeEmail: 'Remove e-mail',
+    extraEmailsRow: 'Additional e-mails',
+    responsible: 'Contact Person',
+    responsiblePlaceholder: 'Full name',
+    datesSection: 'Warranty Dates',
+    datesHeader: 'Invoice and Receipt Dates',
+    invoiceDate: 'Invoice Date',
+    invoiceDateHint: 'Commercial invoice issue date',
+    receiptDate: 'Goods Receipt Date',
+    receiptDateHint: 'Date when the customer received the product',
+    daysAfterReceipt: 'DAYS AFTER RECEIPT',
+    fillReceiptDate: 'Fill in the receipt date to calculate',
+    warrantyFuture: 'Future date — please check the entry',
+    warrantyOk: days => '✓ Within warranty — ' + days + ' days left until the 1-year limit',
+    warrantyWarn: days => '⚠ Close to the limit — only ' + days + ' day(s) left',
+    warrantyOver: days => '✗ Out of warranty — ' + days + ' days past the limit',
+    recalc: '↺ Recalculate',
+    warrantyAlert: '⛔ <strong>Outside the 1-year warranty period.</strong> Standard technical assistance does not apply. Only proven structural damage may be reviewed as an exception, subject to SOHOME technical approval.',
+    advanceNote: 'All fields marked with <span class="req">*</span> are required.',
+    advance: 'Continue to Registration →',
+    errStep1: 'Fill in all required fields before continuing.',
+    regTitle: 'Assistance Registration',
+    regDesc: 'Add one or more claimed products. Each product must be submitted individually before saving the statement.',
+    addProduct: '＋ Add another product',
+    errStep2: 'Fill in all required fields for at least one product and submit it before saving.',
+    saveInfo: '💾 Save Information',
+    sendBeforeSave: 'Submit at least one product before saving the information.',
+    footer: 'SOHOME — Export Technical Assistance',
+    product: 'Product',
+    send: '📤 Submit',
+    sent: '✓ Submitted',
+    minimize: '▲ Minimize',
+    expand: '▼ Expand',
+    remove: '✕ Remove',
+    productLabel: 'Product',
+    productPlaceholder: 'Type to search...',
+    modules: 'No. of Modules',
+    modulesHint: 'Affected modules only',
+    defect: 'Defect Description',
+    defectPlaceholder: 'Describe what happened, how it happened, and when it was identified. More details help make the review more accurate.',
+    damagedPackage: 'Did the packaging arrive damaged?',
+    damagedPackageNote: 'Dents, tears, moisture, or signs of impact',
+    photos: 'Product Photos and Videos',
+    photosHint: '1 photo of the full product · 1 photo of the defect · 1 photo in the room · 1 video showing the problem',
+    clickFiles: 'Click or drag files here',
+    imageVideo: 'Images (JPG, PNG) and videos (MP4, MOV)',
+    usageBlocked: 'Does the defect prevent use of the product?',
+    repairPossible: 'Is local repair possible?',
+    repairNote: 'Consider availability of service providers and parts in the customer region',
+    repairValue: 'Estimated Repair Cost',
+    serviceProvider: 'Service Provider',
+    providerPlaceholder: 'Company or professional name',
+    repairBudget: 'Provider Quote',
+    budgetHint: 'No payment is made without a quote previously approved by SOHOME',
+    clickBudget: 'Click or drag the quote',
+    budgetFileTypes: 'PDF, image, or document',
+    repairNo: '✗ <strong>Local repair is not feasible.</strong> SOHOME will make the final decision after reviewing the evidence submitted.',
+    yes: 'Yes',
+    no: 'No',
+    noProduct: 'No product found',
+    receiptClient: '🧾 Invoice and Customer Details',
+    receiptProducts: '🛋️ Registered Products',
+    originInvoice: 'Original Invoice (Repeat Case)',
+    invoiceDateRow: 'Invoice Date',
+    receiptDateRow: 'Receipt Date',
+    modulesRow: 'Number of Modules',
+    defectRow: 'Defect Description',
+    damagedPackageRow: 'Damaged Packaging',
+    usageBlockedRow: 'Prevents Use',
+    repairPossibleRow: 'Local Repair Possible',
+    repairValueRow: 'Repair Cost',
+    providerRow: 'Provider',
+    budgetFilesRow: 'Quote Files',
+    budgetNamesRow: 'Quote File Name(s)',
+    mediaFilesRow: 'Photos/Videos',
+    mediaNamesRow: 'File Name(s)',
+    registeredAt: 'Registered at',
+    fileCount: n => n + ' file(s)',
+    receiptFooter: date => 'SOHOME — Export Technical Assistance<br>Document generated on ' + date,
+    successTitle: 'Assistance registered successfully!',
+    successText: 'Thank you for sending your feedback. Our team will review the information and contact you soon. The full statement for your registration is below — keep it for reference.',
+    receiptTitle: '📋 Technical Assistance Statement',
+    printPdf: '🖨️ Print / Save PDF',
+    copyText: '📋 Copy Text',
+    copied: '✓ Copied!',
+    newRecord: '＋ Start new registration'
+  }
+};
+
+function t(key, ...args) {
+  const value = (I18N[currentLang] && I18N[currentLang][key]) || I18N.pt[key] || key;
+  return typeof value === 'function' ? value(...args) : value;
+}
+
+function languageFromCountry(country) {
+  const value = (country || '').normalize('NFD').replace(/[\u0300-\u036f]/g, '').toLowerCase();
+  const spanishCountries = ['espana','spain','argentina','chile','uruguay','paraguay','bolivia','peru','colombia','ecuador','venezuela','mexico','panama','costa rica','guatemala','honduras','el salvador','nicaragua','republica dominicana','dominican republic'];
+  const englishCountries = ['estados unidos','united states','usa','eua','us','canada','united kingdom','reino unido','england','inglaterra'];
+  if (spanishCountries.some(c => value.includes(c))) return 'es';
+  if (englishCountries.some(c => value.includes(c))) return 'en';
+  return 'pt';
+}
+
+function applyLanguageFromCountry() {
+  const next = languageFromCountry(document.getElementById('f-pais')?.value || '');
+  if (next === currentLang) return;
+  currentLang = next;
+  document.documentElement.lang = currentLang === 'pt' ? 'pt-BR' : (currentLang === 'es' ? 'es-ES' : 'en-US');
+  applyTranslations();
+}
+
+function req(text) { return text + ' <span class="req">*</span>'; }
+function setText(selector, value) { const el = document.querySelector(selector); if (el) el.textContent = value; }
+function setHtml(selector, value) { const el = document.querySelector(selector); if (el) el.innerHTML = value; }
+function setPlaceholder(id, value) { const el = document.getElementById(id); if (el) el.placeholder = value; }
+function setFieldLabel(id, value, required = true) {
+  const el = document.getElementById(id);
+  const label = el && el.closest('.field') ? el.closest('.field').querySelector('label') : null;
+  if (label) label.innerHTML = required ? req(value) : value;
+}
+
+function applyTranslations() {
+  document.title = t('pageTitle');
+  setText('.hdr-meta .sub', t('appTitle'));
+  setText('.hdr-meta .tag', t('appTag'));
+  setText('#panel-id .page-title', t('idTitle'));
+  setText('#panel-id .page-desc', t('idDesc'));
+  const dividers = document.querySelectorAll('#panel-id .section-divider');
+  if (dividers[0]) dividers[0].textContent = t('invoiceSection');
+  if (dividers[1]) dividers[1].textContent = t('clientSection');
+  if (dividers[2]) dividers[2].textContent = t('datesSection');
+  document.querySelectorAll('.card-status').forEach(el => el.textContent = t('filled'));
+  setFieldLabel('f-invoice', t('invoiceLabel'));
+  setPlaceholder('f-invoice', t('invoicePlaceholder'));
+  setText('#f-invoice + .hint', t('invoiceHint'));
+  setFieldLabel('f-invoice-orig', t('originalInvoice'));
+  setPlaceholder('f-invoice-orig', t('originalInvoicePlaceholder'));
+  setText('#c-invoice .switch-row .switch-label', t('recurrenceQuestion'));
+  const recurrenceLabel = document.querySelector('#c-invoice .form-grid>.field:nth-child(2)>label');
+  if (recurrenceLabel) recurrenceLabel.textContent = t('recurrence');
+  setFieldLabel('f-razao', t('company'));
+  setPlaceholder('f-razao', t('companyPlaceholder'));
+  setFieldLabel('f-cnpj', t('taxId'));
+  setFieldLabel('f-pais', t('country'));
+  setPlaceholder('f-pais', t('countryPlaceholder'));
+  setFieldLabel('f-tel', t('phone'));
+  setFieldLabel('f-email', t('email'));
+  setText('#f-email + .hint', t('emailHint'));
+  setText('#extraEmailsLabel', t('extraEmails'));
+  setText('#extraEmailsHint', t('extraEmailsHint'));
+  setText('#btnAddExtraEmail', t('addEmail'));
+  document.querySelectorAll('.extra-email').forEach(input => input.placeholder = t('extraEmailPlaceholder'));
+  document.querySelectorAll('.btn-remove-email').forEach(btn => {
+    btn.title = t('removeEmail');
+    btn.setAttribute('aria-label', t('removeEmail'));
+  });
+  setFieldLabel('f-resp', t('responsible'));
+  setPlaceholder('f-resp', t('responsiblePlaceholder'));
+  const datesHeader = document.querySelector('#c-datas .card-header span:first-child');
+  if (datesHeader) datesHeader.textContent = t('datesHeader');
+  setHtml('#invoiceDate ~ .hint', t('invoiceDateHint'));
+  setHtml('#receiptDate ~ .hint', t('receiptDateHint'));
+  const dateLabels = document.querySelectorAll('#c-datas .date-field label');
+  if (dateLabels[0]) dateLabels[0].innerHTML = req(t('invoiceDate'));
+  if (dateLabels[1]) dateLabels[1].innerHTML = req(t('receiptDate'));
+  setText('.counter-lbl', t('daysAfterReceipt'));
+  setText('.btn-recalc', t('recalc'));
+  setHtml('#warrantyAlert', t('warrantyAlert'));
+  setHtml('.advance-note', t('advanceNote'));
+  setText('.btn-advance', t('advance'));
+  setText('#err-step1', t('errStep1'));
+  setText('#panel-reg .page-title', t('regTitle'));
+  setText('#panel-reg .page-desc', t('regDesc'));
+  const addBtn = document.querySelector('.btn-add-prod');
+  if (addBtn) addBtn.innerHTML = '<span style="font-size:20px;">＋</span> ' + t('addProduct').replace('＋ ', '');
+  setText('#err-step2', t('errStep2'));
+  setText('.btn-salvar', t('saveInfo'));
+  setText('.site-footer .ft-text', t('footer'));
+  translateProductBlocks();
+  updateCounter();
+}
+
+function translateProductBlocks() {
+  document.querySelectorAll('.prod-block').forEach(block => {
+    const id = block.id.replace('pb-', '');
+    const title = document.getElementById('pb-title-' + id);
+    if (title && title.textContent.match(/^Produto|^Producto|^Product/)) title.textContent = t('product') + ' ' + id;
+    const sendBtn = document.getElementById('pb-enviar-' + id);
+    if (sendBtn && !sendBtn.classList.contains('sent')) sendBtn.textContent = t('send');
+    if (sendBtn && sendBtn.classList.contains('sent')) sendBtn.textContent = t('sent');
+    const tog = document.getElementById('pb-tog-' + id);
+    if (tog) tog.innerHTML = block.classList.contains('minimized') ? '<span id="pb-tog-icon-'+id+'">▼</span> ' + t('expand').replace('▼ ', '') : '<span id="pb-tog-icon-'+id+'">▲</span> ' + t('minimize').replace('▲ ', '');
+    const rm = document.getElementById('pb-rm-' + id);
+    if (rm) rm.textContent = t('remove');
+    setFieldLabel('pb-prod-input-' + id, t('productLabel'));
+    setPlaceholder('pb-prod-input-' + id, t('productPlaceholder'));
+    setFieldLabel('pb-mod-' + id, t('modules'));
+    setText('#pb-mod-' + id + ' + .hint', t('modulesHint'));
+    setFieldLabel('pb-desc-' + id, t('defect'));
+    setPlaceholder('pb-desc-' + id, t('defectPlaceholder'));
+    const qRows = block.querySelectorAll('.q-row');
+    if (qRows[0]) qRows[0].querySelector('.q-label').innerHTML = t('damagedPackage') + ' <span class="req">*</span><span class="note">' + t('damagedPackageNote') + '</span>';
+    if (qRows[1]) qRows[1].querySelector('.q-label').innerHTML = t('usageBlocked') + ' <span class="req">*</span>';
+    if (qRows[2]) qRows[2].querySelector('.q-label').innerHTML = t('repairPossible') + ' <span class="req">*</span><span class="note">' + t('repairNote') + '</span>';
+    block.querySelectorAll('.tb.yes').forEach(btn => btn.textContent = t('yes'));
+    block.querySelectorAll('.tb.no').forEach(btn => btn.textContent = t('no'));
+    const photoField = document.getElementById('pb-uz-' + id)?.closest('.field');
+    if (photoField) {
+      photoField.querySelector('label').innerHTML = req(t('photos'));
+      photoField.querySelector('.hint').textContent = t('photosHint');
+      photoField.querySelector('strong').textContent = t('clickFiles');
+      photoField.querySelector('p').textContent = t('imageVideo');
+    }
+    setFieldLabel('pb-rv-' + id, t('repairValue'));
+    setFieldLabel('pb-rp-' + id, t('serviceProvider'), false);
+    setPlaceholder('pb-rp-' + id, t('providerPlaceholder'));
+    const budgetField = document.getElementById('pb-ouz-' + id)?.closest('.field');
+    if (budgetField) {
+      budgetField.querySelector('label').innerHTML = req(t('repairBudget'));
+      budgetField.querySelector('.hint').textContent = t('budgetHint');
+      budgetField.querySelector('strong').textContent = t('clickBudget');
+      budgetField.querySelector('p').textContent = t('budgetFileTypes');
+    }
+    const repairNo = document.getElementById('pb-reparo-nao-' + id);
+    if (repairNo) repairNo.innerHTML = t('repairNo');
+  });
+}
+
+function addExtraEmail(value) {
+  const wrap = document.getElementById('extraEmailsWrap');
+  if (!wrap) return;
+  const row = document.createElement('div');
+  row.className = 'extra-email-row';
+  row.innerHTML =
+    '<input type="email" class="extra-email" placeholder="' + escapeHtml(t('extraEmailPlaceholder')) + '" value="' + escapeHtml(value || '') + '">' +
+    '<button type="button" class="btn-remove-email" title="' + escapeHtml(t('removeEmail')) + '" aria-label="' + escapeHtml(t('removeEmail')) + '" onclick="removeExtraEmail(this)">×</button>';
+  wrap.appendChild(row);
+}
+
+function removeExtraEmail(btn) {
+  const row = btn && btn.closest('.extra-email-row');
+  if (row) row.remove();
+}
+
+function getExtraEmails() {
+  return Array.from(document.querySelectorAll('.extra-email'))
+    .map(input => input.value.trim())
+    .filter(Boolean);
+}
+
 /* ══ Produtos ═══════════════════════════════════════════ */
 const PRODUCTS = [
   "ABACO","ACCORD","ACLIVE","ADANA","AERIS","AGHATA PLUS","AGREABLE","ALAVA","ALCALA","ALESSI","ALEXANDRIA","ALENTO","ALLADRO","ALMERIA","AME","AMARNA","AMBER","AMELIA","ANCONA","ANDROS","ANNE","ARAD","ARCADIA","ARLO","ARTTIS BED","ASSUNCAO","ASTRO","ATLAS","ATTO","AURIC","AURORA","AVANT","AXIS","BANAT","BANCO ONIROS","BANCO POMME","BARCELONA","BARDOT","BAUEN","BEEH","BELGA","BELLE","BERAT","BERLIN","BILBAU","BLUMEN","BOEMI","BOLD","BONHEUR","BONOBO","BRADAN","BRAMANTE","BRASS","BRICK","BRIDGE","BUENOS AIRES","CALIN","CALYX","CANTABYA","CARTAGENA","CARTIER","CATALUNIA","CATALUNIA BED","CECILE","CELLINI BED","CHARMANT","CHERI","CLIFF","CLARTE","CODE","COBAIN","COCON","COLONNA","CORSO","CRES","CROMIE","CUORE","DALI","DEL FIORE","DESSAU","DESIR","DESIREE","DESMOND","DEVA","DEZZA","DIDOT","DOM","DOMIA","DUBAI","DUO CAR BAR","DUNE","ECLAT","ECLIPSE","EDESSA","EDGE","EDIFIANTE","EILEEN","ELAN","ELLIE","ELLIOT","ELLIS","ELYSIAN","EPURE BED","ESPOIR","ESQUEL","ETERIUM","ETHER BED","ETTORE","EVIE","FEVER","FIDDA","FIER","FINN","FITZ","FLAMME","FLEURIR","FLOGE","FLORA","FLORENTINE","FLOW","FORTALEZA","GATSBY","GAUDI","GEM","GENOVA","GIORNATTA","GIORNATTA OFFICE","GIZA","GRACE BED","GRID","GRAZ","GROOVE","GUADALAJARA","HALO","HARPER","HAZEL","HENRI","INTIMITE","IRIS","ISLA","IVY","JENNY","JOHNNY","JOPLIN","JOIE","JULIAN","KAVAJI","KIEDIS","KLEE","KLARIS","KLIMT","KONA","KOVAK","LAGO","LA PAZ","LAUTREC","LEE","LIESEL","LIGURE","LINEA","LINARES","LINA","LIOR","LITERATTO","LIZZ","LIZZA","LOUISE","MADELEINE","MALFATTI","MALIQ","MANIFOLD","MANTOVA","MARBELLA","MARIA","MARY","MAUI BED","MEDELIN","MEHEDINTI BED","METRO","MIYA","MINISTRAL I","MINISTRAL II","MINOS","MIRAGE","MODENA","MODISTE","MODUM","MONOLITH","MONTERIA","MONTERREY","MONTEVIDEO","MOON","MOSER","MUNTENIA","MUSH","NAEVA","NARCISO","NAVARRA","NAVY","NEA","NEW ARAGON","NEW ARROYOS","NEW ASIA","NEW BEDFORD","NEW BLAKE","NEW CARUZO","NEW CHATEAU","NEW ETTORE","NEW HARRY","NEW LIVORNO","NEW MESSINA","NEW NORMANDIA","NEW ROMANO","NEW SAN LUIS","NEW VERSATO","NEW VISCAIA","NEW YANG","NEW ZEFIRO","NICAIA 24","NICEIA","NICKS","NIMBUS","NOIR","NORAH","NUIT","NUVIA","OASI","ODISSEIA","OLTENIA","ONDINA","ORBE","ORBIT","ORIS","ORLY","OTOPENI","OTOPENI BED","OTTE","PAISIBLE","PALERMO PLUS","PARIS","PARMA","PASS","PATOU","PEBBLE","PERRY","PETALA","PETRA","PICASSO","PIERRE","PISAC","PISTACHE","PITESTI 25","PLI","POLARA","POMME","POMME BED","POSITANO","PRESLEY","PRIME","PROUVÉ","QUATTRO","QUILL","REFUGE","RENASCENCE","REPOSE","REINO","RIALTO","RIO DE JANEIRO","ROMAN","ROUND","SABRE","SAKAI","SAMMY","SAN ANDRES","SAN CARLOS","SAN CRISTOBAL","SAN MIGUEL","SAN PIETRO","SAN SEBASTIAN","SANTA MARTA","SANTIAGO","SANTE","SANZIO","SAO PAULO","SAPPHIR","SATURNIA","SENSE","SERENITE","SERVIA","SEY","SIENNA","SILLAGE","SOFT","SOLEIL","SONA","SONETTO","SPAZIO","SPLENDEUR","SPUR","ST MARTIN","STARE","STOLZ","SUBLIME","SUCRE","SUONO","SYSTEM","TAIJIN","TARANTO","TASSEL","TAOS","TER","TESS","THAI","TICIANO","TRESSA","TULUA","TURA","TURIN","UCCELLI","UFO","UMFELD","URBAN","URSOVA","VALEA","VENTURI","VERATO","VERNASA BED","VIENNA","VIE","VILLA LOBOS","VILLACH","VISCRI","VITALITE","VOLPI","VOLTIGE","WASS","WEG","YOKO","YOTT","ZENITH","ZEST","ZIMER"
@@ -665,7 +1237,7 @@ function buildBlock(id) {
       </div>
       <div class="field">
         <label>Orçamento do Prestador <span class="req">*</span></label>
-        <span class="hint" style="margin-bottom:10px;display:block;">Nenhum pagamento é realizado sem orçamento aprovado previamente pela Sohome</span>
+        <span class="hint" style="margin-bottom:10px;display:block;">Nenhum pagamento é realizado sem orçamento aprovado previamente pela SOHOME</span>
         <div class="upload-zone" id="pb-ouz-${id}"
           onclick="document.getElementById('pb-ofi-${id}').click()"
           ondragover="dzB(${id},'orc',true,event)" ondragleave="dzB(${id},'orc',false)" ondrop="dropB(${id},'orc',event)">
@@ -680,7 +1252,7 @@ function buildBlock(id) {
 
     <!-- Reparo NÃO -->
     <div class="prod-reparo-warn" id="pb-reparo-nao-${id}">
-      ✗ <strong>Reparo local inviável.</strong> A Sohome avaliará a decisão final após análise das evidências enviadas.
+      ✗ <strong>Reparo local inviável.</strong> A SOHOME avaliará a decisão final após análise das evidências enviadas.
     </div>
 
   </div>
@@ -695,6 +1267,7 @@ function addProdBlock() {
   const container = document.getElementById('prod-blocks-container');
   container.insertAdjacentHTML('beforeend', buildBlock(id));
   updateBlockTitlesAndButtons();
+  translateProductBlocks();
   // close dropdowns when clicking outside
   document.getElementById(`pb-dd-${id}`).addEventListener('mousedown', e => e.stopPropagation());
 }
@@ -727,10 +1300,10 @@ function toggleBlock(id) {
   const minimized = block.classList.toggle('minimized');
   if (minimized) {
     icon.textContent = '▼';
-    btn.innerHTML    = '<span id="pb-tog-icon-'+id+'">▼</span> Expandir';
+    btn.innerHTML    = '<span id="pb-tog-icon-'+id+'">▼</span> ' + t('expand').replace('▼ ', '');
   } else {
     icon.textContent = '▲';
-    btn.innerHTML    = '<span id="pb-tog-icon-'+id+'">▲</span> Minimizar';
+    btn.innerHTML    = '<span id="pb-tog-icon-'+id+'">▲</span> ' + t('minimize').replace('▲ ', '');
   }
   updateSummary(id);
 }
@@ -758,7 +1331,7 @@ function filterProd(id) {
   if (!q) { dd.classList.remove('open'); return; }
   const m = PRODUCTS.filter(p => p.includes(q)).slice(0, 30);
   if (!m.length) {
-    dd.innerHTML = '<div class="pd-item" style="color:var(--brand-light);">Nenhum produto encontrado</div>';
+    dd.innerHTML = '<div class="pd-item" style="color:var(--brand-light);">' + t('noProduct') + '</div>';
     dd.classList.add('open'); return;
   }
   dd.innerHTML = m.map(p =>
@@ -941,6 +1514,7 @@ function resetAll(){
   });
   document.getElementById('f-reincidencia').checked=false;
   document.getElementById('reincidencia-extra').style.display='none';
+  document.getElementById('extraEmailsWrap').innerHTML='';
   document.getElementById('invoiceDate').value='';
   document.getElementById('receiptDate').value='';
   ['invoiceDate','receiptDate'].forEach(id=>document.getElementById(id).classList.remove('err'));
@@ -1020,7 +1594,7 @@ function enviarProdBlock(id) {
   if (!ok) {
     block.classList.add('invalid');
     block.scrollIntoView({ behavior: 'smooth', block: 'center' });
-    return;
+    return false;
   }
 
   block.classList.remove('invalid');
@@ -1045,7 +1619,7 @@ function enviarProdBlock(id) {
   const btn = document.getElementById('pb-enviar-' + id);
   if (btn) {
     btn.classList.add('sent');
-    btn.innerHTML = '✓ Enviado';
+    btn.innerHTML = t('sent');
   }
 
   // Auto-minimize
@@ -1055,6 +1629,7 @@ function enviarProdBlock(id) {
 
   // Mark block as complete
   block.style.borderColor = '#9fceb5';
+  return true;
 }
 
 /* ══ Salvar Informações (receipt/summary) ════════════════ */
@@ -1064,7 +1639,7 @@ function salvarInformacoes() {
   // Check if at least one block was sent
   const sentIds = Object.keys(blockRegs);
   if (sentIds.length === 0) {
-    err.textContent = 'Envie pelo menos um produto antes de salvar as informações.';
+    err.textContent = t('sendBeforeSave');
     err.classList.add('show');
     err.scrollIntoView({ behavior: 'smooth', block: 'center' });
     return;
@@ -1076,91 +1651,190 @@ function salvarInformacoes() {
 
   // Section: Client info
   html += '<div class="receipt-section">';
-  html += '<div class="receipt-section-title">🧾 Dados da Invoice e Cliente</div>';
+  html += '<div class="receipt-section-title">' + t('receiptClient') + '</div>';
   html += receiptRow('Invoice', document.getElementById('f-invoice').value || '—');
   if (document.getElementById('f-reincidencia').checked) {
-    html += receiptRow('Invoice Origem (Reincidência)', document.getElementById('f-invoice-orig').value || '—');
+    html += receiptRow(t('originInvoice'), document.getElementById('f-invoice-orig').value || '—');
   }
-  html += receiptRow('Razão Social', document.getElementById('f-razao').value || '—');
-  html += receiptRow('CNPJ / Tax ID', document.getElementById('f-cnpj').value || '—');
-  html += receiptRow('País', document.getElementById('f-pais').value || '—');
-  html += receiptRow('Telefone', document.getElementById('f-tel').value || '—');
-  html += receiptRow('E-mail', document.getElementById('f-email').value || '—');
-  html += receiptRow('Responsável', document.getElementById('f-resp').value || '—');
-  html += receiptRow('Data da Fatura', formatDate(document.getElementById('invoiceDate').value));
-  html += receiptRow('Data de Recebimento', formatDate(document.getElementById('receiptDate').value));
+  html += receiptRow(t('company'), document.getElementById('f-razao').value || '—');
+  html += receiptRow(t('taxId'), document.getElementById('f-cnpj').value || '—');
+  html += receiptRow(t('country'), document.getElementById('f-pais').value || '—');
+  html += receiptRow(t('phone'), document.getElementById('f-tel').value || '—');
+  html += receiptRow(t('email'), document.getElementById('f-email').value || '—');
+  const extraEmails = getExtraEmails();
+  if (extraEmails.length) {
+    html += receiptRow(t('extraEmailsRow'), extraEmails.join(', '));
+  }
+  html += receiptRow(t('responsible'), document.getElementById('f-resp').value || '—');
+  html += receiptRow(t('invoiceDateRow'), formatDate(document.getElementById('invoiceDate').value));
+  html += receiptRow(t('receiptDateRow'), formatDate(document.getElementById('receiptDate').value));
   html += '</div>';
 
   // Section: Products
   html += '<div class="receipt-section">';
-  html += '<div class="receipt-section-title">🛋️ Produtos Registrados</div>';
+  html += '<div class="receipt-section-title">' + t('receiptProducts') + '</div>';
 
   const blocks = document.querySelectorAll('.prod-block');
   let prodIndex = 0;
   blocks.forEach(b => {
     const bid = b.id.replace('pb-', '');
-    prodIndex++;
     const reg = blockRegs[bid];
+    if (!reg) return;
+    prodIndex++;
     const prodName = (document.getElementById('pb-prod-input-' + bid) || {}).value || '—';
     const modulos = (document.getElementById('pb-mod-' + bid) || {}).value || '—';
     const descricao = (document.getElementById('pb-desc-' + bid) || {}).value || '—';
 
     // Q1
     const q1El = document.getElementById('pb-q1-' + bid);
-    const q1 = q1El && q1El.querySelector('.yes.on') ? 'Sim' : (q1El && q1El.querySelector('.no.on') ? 'Não' : '—');
+    const q1 = q1El && q1El.querySelector('.yes.on') ? t('yes') : (q1El && q1El.querySelector('.no.on') ? t('no') : '—');
 
     // Q2
     const q2El = document.getElementById('pb-q2-' + bid);
-    const q2 = q2El && q2El.querySelector('.yes.on') ? 'Sim' : (q2El && q2El.querySelector('.no.on') ? 'Não' : '—');
+    const q2 = q2El && q2El.querySelector('.yes.on') ? t('yes') : (q2El && q2El.querySelector('.no.on') ? t('no') : '—');
 
     // Q3
     const q3El = document.getElementById('pb-q3-' + bid);
-    const q3 = q3El && q3El.querySelector('.yes.on') ? 'Sim' : (q3El && q3El.querySelector('.no.on') ? 'Não' : '—');
+    const repairIsYes = q3El && q3El.querySelector('.yes.on');
+    const q3 = repairIsYes ? t('yes') : (q3El && q3El.querySelector('.no.on') ? t('no') : '—');
 
     const valorReparo = (document.getElementById('pb-rv-' + bid) || {}).value || '';
     const prestador = (document.getElementById('pb-rp-' + bid) || {}).value || '';
     const fotos = blockFiles[bid] ? blockFiles[bid].prod.length : 0;
     const orcs = blockFiles[bid] ? blockFiles[bid].orc.length : 0;
+    const fotosNomes = blockFiles[bid] ? blockFiles[bid].prod.map(f => f.name).join(', ') : '';
+    const orcsNomes = blockFiles[bid] ? blockFiles[bid].orc.map(f => f.name).join(', ') : '';
 
     html += '<div class="receipt-prod-card">';
-    html += '<h4>Produto ' + prodIndex + ': ' + prodName;
-    if (reg) {
-      html += ' <span class="reg-num">✓ ' + reg.ticket + '</span>';
-    } else {
-      html += ' <span style="font-size:12px;color:var(--danger);font-weight:500;">(não enviado)</span>';
+    html += '<div class="receipt-prod-head">';
+    html += '<div><div class="receipt-prod-kicker">' + t('product') + ' ' + prodIndex + '</div><h4>' + escapeHtml(prodName) + '</h4></div>';
+    html += '<span class="reg-num">✓ ' + escapeHtml(reg.ticket) + '</span>';
+    html += '</div>';
+    html += receiptRow(t('modulesRow'), modulos);
+    html += receiptRow(t('defectRow'), descricao);
+    html += receiptRow(t('damagedPackageRow'), q1);
+    html += receiptRow(t('usageBlockedRow'), q2);
+    html += receiptRow(t('repairPossibleRow'), q3);
+    if (repairIsYes) {
+      html += receiptRow(t('repairValueRow'), valorReparo || '—');
+      html += receiptRow(t('providerRow'), prestador || '—');
+      html += receiptRow(t('budgetFilesRow'), t('fileCount', orcs));
+      if (orcsNomes) html += receiptRow(t('budgetNamesRow'), orcsNomes);
     }
-    html += '</h4>';
-    html += receiptRow('Módulos Afetados', modulos);
-    html += receiptRow('Descrição do Defeito', descricao);
-    html += receiptRow('Embalagem Avariada', q1);
-    html += receiptRow('Impede o Uso', q2);
-    html += receiptRow('Reparo Local Possível', q3);
-    if (q3 === 'Sim') {
-      html += receiptRow('Valor do Reparo', valorReparo || '—');
-      html += receiptRow('Prestador', prestador || '—');
-      html += receiptRow('Arquivos Orçamento', orcs + ' arquivo(s)');
-    }
-    html += receiptRow('Fotos/Vídeos', fotos + ' arquivo(s)');
-    if (reg) {
-      html += receiptRow('Registrado em', reg.timestamp);
-    }
+    html += receiptRow(t('mediaFilesRow'), t('fileCount', fotos));
+    if (fotosNomes) html += receiptRow(t('mediaNamesRow'), fotosNomes);
+    html += receiptRow(t('registeredAt'), reg.timestamp);
     html += '</div>';
   });
 
   html += '</div>';
 
   // Footer note
-  html += '<div style="text-align:center;font-size:12px;color:var(--brand-light);padding-top:12px;border-top:1px solid var(--border);">';
-  html += 'Grupo Sohome — Assistência Técnica Exportação<br>Documento gerado em ' + new Date().toLocaleString('pt-BR');
+  html += '<div class="receipt-footer-note">';
+  html += t('receiptFooter', new Date().toLocaleString(currentLang === 'en' ? 'en-US' : (currentLang === 'es' ? 'es-ES' : 'pt-BR')));
   html += '</div>';
 
-  document.getElementById('receiptBody').innerHTML = html;
-  document.getElementById('receiptOverlay').classList.add('show');
-  document.body.style.overflow = 'hidden';
+  // Save receipt HTML when available and switch to confirmation view.
+  try {
+    sessionStorage.setItem('sohome_receipt', html);
+  } catch (e) {}
+  showConfirmationPage(html);
+}
+
+function showConfirmationPage(receiptHtml) {
+  let html = receiptHtml || '';
+  if (!html) {
+    try {
+      html = sessionStorage.getItem('sohome_receipt') || '';
+    } catch (e) {
+      html = '';
+    }
+  }
+
+  // Hide all normal page content
+  document.querySelector('header').style.display = 'none';
+  document.querySelector('.step-bar').style.display = 'none';
+  document.getElementById('panel-id').style.display = 'none';
+  document.getElementById('panel-reg').style.display = 'none';
+  document.querySelector('.site-footer').style.display = 'none';
+
+  // Build and inject confirmation page
+  const oldPage = document.getElementById('confirmation-page');
+  if (oldPage) oldPage.remove();
+  const page = document.createElement('div');
+  page.id = 'confirmation-page';
+  page.style.cssText = 'min-height:100vh;display:flex;flex-direction:column;background:var(--cream);';
+  page.innerHTML =
+    '<header style="background:var(--brand);padding:0 48px;display:flex;align-items:stretch;justify-content:space-between;min-height:78px;flex-shrink:0;">' +
+      '<div style="display:flex;align-items:center;gap:28px;">' +
+        '<img src="LOGO GRUPO SOHOME-56.png" style="height:16px;width:auto;">' +
+        '<div style="width:1px;background:rgba(255,255,255,.2);align-self:stretch;margin:14px 0;"></div>' +
+        '<div style="display:flex;flex-direction:column;justify-content:center;">' +
+          '<div style="font-size:16px;font-weight:bold;color:rgba(255,255,255,.9);">' + t('appTitle') + '</div>' +
+          '<div style="font-size:12px;color:rgba(255,255,255,.5);margin-top:4px;">' + t('appTag') + '</div>' +
+        '</div>' +
+      '</div>' +
+      '<div style="display:flex;align-items:center;"><img src="LOGO GRUPO SOHOME-60.png" style="width:44px;"></div>' +
+    '</header>' +
+    '<div style="flex:1;display:flex;flex-direction:column;align-items:center;padding:40px 24px;">' +
+      '<div style="background:linear-gradient(135deg,#eef6f2,#d9f0e5);border:1px solid #9fceb5;border-left:6px solid var(--success);border-radius:6px;padding:26px 28px;margin-bottom:28px;display:flex;align-items:flex-start;gap:18px;max-width:760px;width:100%;">' +
+        '<div style="font-size:42px;flex-shrink:0;line-height:1;">✅</div>' +
+        '<div>' +
+          '<div style="font-size:18px;font-weight:600;color:var(--success);margin-bottom:6px;">' + t('successTitle') + '</div>' +
+          '<div style="font-size:14px;color:#3a6b54;line-height:1.7;">' + t('successText') + '</div>' +
+        '</div>' +
+      '</div>' +
+      '<div class="receipt-doc">' +
+        '<div class="receipt-doc-head">' +
+          '<h2>' + t('receiptTitle') + '</h2>' +
+          '<span>SOHOME</span>' +
+        '</div>' +
+        '<div id="conf-receipt-body" class="receipt-doc-body">' + html + '</div>' +
+        '<div class="receipt-actions-confirm">' +
+          '<button onclick="window.print()" style="flex:1;padding:13px;background:var(--brand);color:#fff;border:none;border-radius:3px;font-size:12px;letter-spacing:.1em;text-transform:uppercase;font-family:\'DM Sans\',sans-serif;cursor:pointer;">' + t('printPdf') + '</button>' +
+          '<button onclick="copyConfReceipt()" id="btn-conf-copy" style="flex:1;padding:13px;background:var(--white);color:var(--brand);border:1px solid var(--border);border-radius:3px;font-size:12px;letter-spacing:.1em;text-transform:uppercase;font-family:\'DM Sans\',sans-serif;cursor:pointer;">' + t('copyText') + '</button>' +
+        '</div>' +
+      '</div>' +
+      '<button onclick="sessionStorage.removeItem(\'sohome_receipt\');window.location.reload();" style="width:100%;max-width:760px;margin-top:16px;padding:14px;background:transparent;border:2px dashed var(--border);border-radius:4px;color:var(--brand);font-size:14px;font-family:\'DM Sans\',sans-serif;cursor:pointer;">' + t('newRecord') + '</button>' +
+    '</div>' +
+    '<footer style="background:var(--brand);padding:18px 48px;display:flex;align-items:center;justify-content:space-between;">' +
+      '<span style="font-size:12px;letter-spacing:.12em;text-transform:uppercase;color:rgba(255,255,255,.5);">' + t('footer') + '</span>' +
+      '<img src="LOGO GRUPO SOHOME-60.png" style="width:44px;">' +
+    '</footer>';
+
+  document.body.appendChild(page);
+  window.scrollTo({ top: 0, behavior: 'smooth' });
+}
+
+function copyConfReceipt() {
+  const body = document.getElementById('conf-receipt-body');
+  const btn = document.getElementById('btn-conf-copy');
+  navigator.clipboard.writeText(body.innerText).then(() => {
+    btn.textContent = t('copied');
+    setTimeout(() => btn.textContent = t('copyText'), 2000);
+  }).catch(() => {
+    const ta = document.createElement('textarea');
+    ta.value = body.innerText;
+    document.body.appendChild(ta);
+    ta.select();
+    document.execCommand('copy');
+    document.body.removeChild(ta);
+    btn.textContent = t('copied');
+    setTimeout(() => btn.textContent = t('copyText'), 2000);
+  });
+}
+
+function escapeHtml(value) {
+  return String(value || '—')
+    .replace(/&/g, '&amp;')
+    .replace(/</g, '&lt;')
+    .replace(/>/g, '&gt;')
+    .replace(/"/g, '&quot;')
+    .replace(/'/g, '&#039;');
 }
 
 function receiptRow(label, value) {
-  return '<div class="receipt-row"><span class="r-label">' + label + '</span><span class="r-value">' + (value || '—') + '</span></div>';
+  return '<div class="receipt-row"><span class="r-label">' + escapeHtml(label) + '</span><span class="r-value">' + escapeHtml(value) + '</span></div>';
 }
 
 function formatDate(val) {
@@ -1169,41 +1843,9 @@ function formatDate(val) {
   return d.toLocaleDateString('pt-BR');
 }
 
-function closeReceipt() {
-  document.getElementById('receiptOverlay').classList.remove('show');
-  document.body.style.overflow = '';
-}
-
-function copyReceipt() {
-  const body = document.getElementById('receiptBody');
-  const text = body.innerText;
-  navigator.clipboard.writeText(text).then(() => {
-    const btn = document.querySelector('.btn-copy-receipt');
-    const orig = btn.textContent;
-    btn.textContent = '✓ Copiado!';
-    setTimeout(() => btn.textContent = orig, 2000);
-  }).catch(() => {
-    // fallback
-    const ta = document.createElement('textarea');
-    ta.value = body.innerText;
-    document.body.appendChild(ta);
-    ta.select();
-    document.execCommand('copy');
-    document.body.removeChild(ta);
-    const btn = document.querySelector('.btn-copy-receipt');
-    btn.textContent = '✓ Copiado!';
-    setTimeout(() => btn.textContent = '📋 Copiar Texto', 2000);
-  });
-}
-
-// Close receipt on overlay click
-document.addEventListener('click', function(e) {
-  const overlay = document.getElementById('receiptOverlay');
-  if (e.target === overlay) closeReceipt();
-});
-
 /* ══ Init: add first product block on load ════════════════ */
 addProdBlock();
+applyTranslations();
 </script>
 </body>
 </html>
