@@ -80,6 +80,8 @@ header{background:var(--brand);padding:0 48px;display:flex;align-items:stretch;j
 .form-grid{display:grid;grid-template-columns:1fr 1fr;gap:16px;margin-bottom:16px;}
 .form-grid-3{display:grid;grid-template-columns:2fr 1fr 1fr;gap:16px;margin-bottom:16px;}
 .form-full{margin-bottom:16px;}
+.client-info-grid{display:grid;grid-template-columns:1.15fr .85fr;gap:16px;margin-bottom:16px;}
+.client-info-grid .span-full{grid-column:1/-1;}
 .field{display:flex;flex-direction:column;gap:6px;}
 .field label{font-size:11px;letter-spacing:.1em;text-transform:uppercase;color:var(--brand-light);font-weight:600;}
 .field input,.field select,.field textarea{
@@ -93,6 +95,31 @@ header{background:var(--brand);padding:0 48px;display:flex;align-items:stretch;j
 .field .hint{font-size:12px;color:var(--brand-light);line-height:1.4;}
 .field input.err,.field textarea.err{border-color:var(--danger)!important;}
 .req{color:var(--danger);margin-left:1px;}
+
+/* ══ CLIENT LOOKUP (LGPD) ════════════════════════════ */
+.client-lookup-row{grid-column:1/-1;background:var(--brand-pale);border:1px solid var(--border);border-radius:4px;padding:16px 18px;margin-bottom:4px;display:flex;flex-direction:column;gap:10px;}
+.client-lookup-row .field{margin:0;}
+.client-lookup-btn{height:42px;padding:0 20px;background:var(--brand);color:#fff;border:none;border-radius:3px;font-family:'DM Sans',sans-serif;font-size:12px;letter-spacing:.08em;text-transform:uppercase;cursor:pointer;transition:background .15s;white-space:nowrap;}
+.client-lookup-btn:hover{background:var(--brand-dark);}
+.client-lookup-hint{grid-column:1/-1;font-size:12px;color:var(--brand-light);display:flex;align-items:center;gap:5px;margin-top:-2px;}
+.client-lookup-err{display:none;grid-column:1/-1;font-size:13px;color:var(--danger);background:#fdf0ee;border:1px solid #f5d5d0;border-radius:3px;padding:8px 12px;}
+.client-lookup-err.show{display:block;}
+/* filled badge */
+.client-filled-badge{display:none;align-items:center;gap:12px;background:rgba(46,125,94,.07);border:1px solid #9fceb5;border-radius:4px;padding:11px 16px;grid-column:1/-1;}
+.client-filled-badge.show{display:flex;}
+.client-filled-badge .cfb-icon{font-size:18px;flex-shrink:0;}
+.client-filled-badge .cfb-info{flex:1;min-width:0;}
+.client-filled-badge .cfb-name{font-weight:600;color:var(--text);font-size:14px;}
+.client-filled-badge .cfb-sub{font-size:12px;color:var(--brand-light);margin-top:2px;}
+.client-filled-badge .cfb-clear{background:none;border:1px solid var(--border);border-radius:3px;cursor:pointer;color:var(--brand);font-family:'DM Sans',sans-serif;font-size:11px;letter-spacing:.06em;text-transform:uppercase;padding:5px 12px;transition:all .15s;white-space:nowrap;flex-shrink:0;}
+.client-filled-badge .cfb-clear:hover{border-color:var(--danger);color:var(--danger);}
+/* contact groups */
+.contact-group{display:flex;flex-direction:column;gap:5px;margin-top:6px;}
+.contact-item{display:flex;align-items:center;gap:8px;padding:7px 11px;border-radius:3px;font-size:13px;color:var(--text);background:var(--cream);border:1px solid var(--border);}
+.contact-item.primary{background:var(--white);border-color:var(--brand-light);}
+.contact-item .ci-icon{font-size:12px;color:var(--brand-light);flex-shrink:0;width:14px;text-align:center;}
+.contact-item .ci-val{flex:1;word-break:break-all;line-height:1.3;}
+.contact-item .ci-badge{font-size:9px;letter-spacing:.08em;text-transform:uppercase;color:var(--brand);background:var(--brand-pale);padding:2px 6px;border-radius:8px;flex-shrink:0;font-weight:700;}
 
 /* product search */
 .product-wrap{position:relative;}
@@ -224,7 +251,8 @@ input:checked+.slider:before{transform:translateX(20px);}
   header,.site-footer,.page-footer-note{padding:0 20px;}
   .step-bar{padding:0 20px;}
   .main-content{padding:28px 20px;}
-  .form-grid,.form-grid-3,.class-grid,.date-fields{grid-template-columns:1fr;}
+  .form-grid,.form-grid-3,.class-grid,.date-fields,.client-info-grid{grid-template-columns:1fr;}
+  .client-info-grid .span-full{grid-column:auto;}
   .date-field{border-right:none;border-bottom:1px solid var(--border);}
   .date-field:last-of-type{border-bottom:none;}
   .advance-wrap{flex-direction:column;gap:16px;align-items:flex-start;}
@@ -316,43 +344,59 @@ input:checked+.slider:before{transform:translateX(20px);}
       <span class="card-status">✓ Preenchido</span>
     </div>
     <div class="card-body">
-      <div class="form-grid">
+      <div class="client-info-grid">
+
+        <!-- Consulta por e-mail (LGPD) -->
+        <div class="client-lookup-row">
+          <div class="field" style="grid-column:1/-1;">
+            <label id="clientLookupLabel">E-mail cadastrado <span class="req">*</span></label>
+            <div style="display:flex;gap:10px;align-items:center;">
+              <input type="email" id="f-client-email-lookup" placeholder="Digite o e-mail que consta em sua Invoice" autocomplete="off" style="flex:1;" onkeydown="if(event.key==='Enter')clientLookup()">
+              <button class="client-lookup-btn" id="clientLookupBtn" onclick="clientLookup()">Consultar</button>
+            </div>
+            <span class="hint" id="clientLookupHint" style="margin-top:6px;display:block;">🔒 Apenas o titular do e-mail tem acesso aos seus próprios dados.</span>
+          </div>
+          <div class="client-lookup-err" id="client-lookup-err" style="grid-column:1/-1;"></div>
+        </div>
+
+        <!-- Badge de confirmação -->
+        <div class="client-filled-badge" id="client-filled-badge">
+          <span class="cfb-icon">✓</span>
+          <div class="cfb-info">
+            <div class="cfb-name" id="cfb-name-text"></div>
+            <div class="cfb-sub" id="cfb-sub-text"></div>
+          </div>
+          <button class="cfb-clear" id="clientClearBtn" onclick="clientSearchClear()">✕ Limpar</button>
+        </div>
+
         <div class="field">
           <label>Razão Social <span class="req">*</span></label>
-          <input type="text" id="f-razao" placeholder="Nome completo da empresa" oninput="checkLojista()">
+          <input type="text" id="f-razao" placeholder="Nome completo da empresa" oninput="checkLojista()" readonly>
         </div>
-        <div class="field">
-          <label>CNPJ / Tax ID <span class="req">*</span></label>
-          <input type="text" id="f-cnpj" placeholder="Ex: 00.000.000/0001-00" oninput="checkLojista()">
-        </div>
-      </div>
-      <div class="form-grid">
         <div class="field">
           <label>País <span class="req">*</span></label>
-          <input type="text" id="f-pais" placeholder="País de origem da loja" oninput="checkLojista();applyLanguageFromCountry()">
-        </div>
-        <div class="field">
-          <label>Telefone <span class="req">*</span></label>
-          <input type="text" id="f-tel" placeholder="+00 000 000 0000" oninput="checkLojista()">
-        </div>
-      </div>
-      <div class="form-grid">
-        <div class="field">
-          <label>E-mail de Contato <span class="req">*</span></label>
-          <input type="email" id="f-email" placeholder="email@empresa.com" oninput="checkLojista()">
-          <span class="hint">Este e-mail receberá todas as tratativas — verifique com atenção</span>
+          <input type="text" id="f-pais" placeholder="País de origem da loja" oninput="checkLojista()" readonly>
         </div>
         <div class="field">
           <label>Nome do Responsável <span class="req">*</span></label>
-          <input type="text" id="f-resp" placeholder="Nome completo" oninput="checkLojista()">
+          <input type="text" id="f-resp" placeholder="Nome completo" oninput="checkLojista()" readonly>
         </div>
-      </div>
-      <div class="form-full">
         <div class="field">
+          <label>Telefone(s) <span class="req">*</span></label>
+          <input type="text" id="f-tel" placeholder="+00 000 000 0000" oninput="checkLojista()" readonly>
+          <div class="contact-group" id="extraPhonesWrap"></div>
+        </div>
+        <div class="field span-full">
+          <label>E-mail de Contato <span class="req">*</span></label>
+          <input type="email" id="f-email" placeholder="email@empresa.com" oninput="checkLojista()" readonly>
+          <span class="hint">Este e-mail receberá todas as tratativas — verifique com atenção</span>
+          <div class="contact-group" id="extraEmailsContactGroup"></div>
+        </div>
+        <div class="field span-full">
           <label id="extraEmailsLabel">E-mails adicionais</label>
+          <button type="button" class="btn-extra-email" id="btnAddExtraEmail" onclick="addExtraEmail()">＋ Adicionar e-mail</button>
           <span class="hint" id="extraEmailsHint">Opcional. Use para copiar outras pessoas no acompanhamento.</span>
           <div class="extra-email-wrap" id="extraEmailsWrap"></div>
-          <button type="button" class="btn-extra-email" id="btnAddExtraEmail" onclick="addExtraEmail()">＋ Adicionar e-mail</button>
         </div>
       </div>
     </div>
@@ -387,7 +431,7 @@ input:checked+.slider:before{transform:translateX(20px);}
       </div>
       <div class="bar-wrap">
         <div class="bar-track"><div class="bar-fill" id="barFill"></div></div>
-        <div class="bar-labels"><span>0 dias</span><span>6 meses</span><span>1 ano (limite)</span></div>
+        <div class="bar-labels"><span id="barStart">0 dias</span><span id="barMiddle">6 meses</span><span id="barEnd">1 ano (limite)</span></div>
       </div>
       <button class="btn-recalc" onclick="updateCounter()">↺ Recalcular</button>
     </div>
@@ -406,7 +450,7 @@ input:checked+.slider:before{transform:translateX(20px);}
 </div><!-- /main-content -->
 
 <div class="page-footer-note">
-  <p><strong style="color:var(--brand-dark);font-weight:600;">Referência de cobertura:</strong>
+  <p id="coverageNote"><strong style="color:var(--brand-dark);font-weight:600;">Referência de cobertura:</strong>
   São procedentes de AT defeitos de fabricação comprovados, reincidências, componentes faltantes ou incorretos, reclamações dentro do prazo de 1 ano.
   Não são procedentes variações naturais de mármore, madeira ou textura, divergências de até 2cm em produtos artesanais, e reclamações após 1 ano.</p>
 </div>
@@ -515,6 +559,9 @@ input:checked+.slider:before{transform:translateX(20px);}
 .receipt-actions-confirm{display:flex;gap:10px;padding:20px 28px;border-top:1px solid var(--border);background:#fff;}
 .receipt-actions-confirm button{flex:1;padding:13px;border-radius:3px;font-size:12px;letter-spacing:.1em;text-transform:uppercase;font-family:'DM Sans',sans-serif;cursor:pointer;}
 .extra-email-wrap{display:flex;flex-direction:column;gap:8px;margin-top:10px;}
+.extra-phone-wrap{display:none;}
+.extra-email-row{display:flex;gap:8px;align-items:center;}
+.extra-email-row input{flex:1;}
 .extra-email-row{display:flex;gap:8px;align-items:center;}
 .extra-email-row input{flex:1;}
 .btn-extra-email,.btn-remove-email{border:1px solid var(--border);border-radius:3px;background:var(--white);color:var(--brand);font-family:'DM Sans',sans-serif;cursor:pointer;transition:all .15s;}
@@ -604,7 +651,7 @@ input:checked+.slider:before{transform:translateX(20px);}
 </style>
 
 <script>
-/* ══ Idiomas por país do cliente ═══════════════════════ */
+/* ══ Idioma pelo navegador do cliente ══════════════════ */
 let currentLang = initialLanguageFromBrowser();
 
 const I18N = {
@@ -623,10 +670,16 @@ const I18N = {
     recurrenceQuestion: 'Já houve assistência anterior para este mesmo produto/invoice?',
     originalInvoice: 'Invoice de Origem (1ª ocorrência)',
     originalInvoicePlaceholder: 'Número da invoice da primeira assistência',
+    clientLookupLabel: 'E-mail cadastrado',
+    clientLookupPlaceholder: 'Digite o e-mail que consta em sua Invoice',
+    clientLookupButton: 'Consultar',
+    clientLookupHint: '🔒 Apenas o titular do e-mail tem acesso aos seus próprios dados.',
+    clientLookupRequired: 'Informe o e-mail cadastrado na Invoice.',
+    clientLookupNotFound: 'E-mail não encontrado. Verifique se digitou corretamente o e-mail que consta em sua Invoice.',
+    clientClear: '✕ Limpar',
     clientSection: 'Dados do Lojista / Importador',
     company: 'Razão Social',
     companyPlaceholder: 'Nome completo da empresa',
-    taxId: 'CNPJ / Tax ID',
     country: 'País',
     countryPlaceholder: 'País de origem da loja',
     phone: 'Telefone',
@@ -652,6 +705,10 @@ const I18N = {
     warrantyOk: days => '✓ Dentro do prazo — faltam ' + days + ' dias para o limite de 1 ano',
     warrantyWarn: days => '⚠ Próximo do limite — faltam apenas ' + days + ' dia(s)',
     warrantyOver: days => '✗ Fora do prazo — ' + days + ' dias além do limite',
+    barStart: '0 dias',
+    barMiddle: '6 meses',
+    barEnd: '1 ano (limite)',
+    coverageNote: '<strong style="color:var(--brand-dark);font-weight:600;">Referência de cobertura:</strong> São procedentes de AT defeitos de fabricação comprovados, reincidências, componentes faltantes ou incorretos, reclamações dentro do prazo de 1 ano. Não são procedentes variações naturais de mármore, madeira ou textura, divergências de até 2cm em produtos artesanais, e reclamações após 1 ano.',
     recalc: '↺ Recalcular',
     warrantyAlert: '⛔ <strong>Fora do prazo de garantia de 1 ano.</strong> A assistência técnica padrão não é aplicável. Apenas danos estruturais comprovados podem ser avaliados em caráter excepcional, mediante aprovação técnica da SOHOME.',
     advanceNote: 'Todos os campos marcados com <span class="req">*</span> são obrigatórios.',
@@ -696,6 +753,7 @@ const I18N = {
     yes: 'Sim',
     no: 'Não',
     noProduct: 'Nenhum produto encontrado',
+    productInvalid: 'Selecione um produto da lista.',
     receiptClient: '🧾 Dados da Invoice e Cliente',
     receiptProducts: '🛋️ Produtos Registrados',
     originInvoice: 'Invoice Origem (Reincidência)',
@@ -738,10 +796,16 @@ const I18N = {
     recurrenceQuestion: '¿Ya hubo asistencia anterior para este mismo producto/invoice?',
     originalInvoice: 'Invoice de Origen (1ª incidencia)',
     originalInvoicePlaceholder: 'Número de la invoice de la primera asistencia',
+    clientLookupLabel: 'E-mail registrado',
+    clientLookupPlaceholder: 'Escriba el e-mail que figura en su Invoice',
+    clientLookupButton: 'Consultar',
+    clientLookupHint: '🔒 Solo el titular del e-mail tiene acceso a sus propios datos.',
+    clientLookupRequired: 'Informe el e-mail registrado en la Invoice.',
+    clientLookupNotFound: 'E-mail no encontrado. Verifique si escribió correctamente el e-mail que figura en su Invoice.',
+    clientClear: '✕ Limpiar',
     clientSection: 'Datos del Distribuidor / Importador',
     company: 'Razón Social',
     companyPlaceholder: 'Nombre completo de la empresa',
-    taxId: 'CNPJ / Tax ID',
     country: 'País',
     countryPlaceholder: 'País de origen de la tienda',
     phone: 'Teléfono',
@@ -767,6 +831,10 @@ const I18N = {
     warrantyOk: days => '✓ Dentro del plazo — faltan ' + days + ' días para el límite de 1 año',
     warrantyWarn: days => '⚠ Cerca del límite — faltan solo ' + days + ' día(s)',
     warrantyOver: days => '✗ Fuera del plazo — ' + days + ' días por encima del límite',
+    barStart: '0 días',
+    barMiddle: '6 meses',
+    barEnd: '1 año (límite)',
+    coverageNote: '<strong style="color:var(--brand-dark);font-weight:600;">Referencia de cobertura:</strong> Son procedentes las asistencias por defectos de fabricación comprobados, reincidencias, componentes faltantes o incorrectos, y reclamos dentro del plazo de 1 año. No son procedentes las variaciones naturales de mármol, madera o textura, diferencias de hasta 2 cm en productos artesanales, ni reclamos después de 1 año.',
     recalc: '↺ Recalcular',
     warrantyAlert: '⛔ <strong>Fuera del plazo de garantía de 1 año.</strong> La asistencia técnica estándar no es aplicable. Solo daños estructurales comprobados podrán evaluarse de forma excepcional, previa aprobación técnica de SOHOME.',
     advanceNote: 'Todos los campos marcados con <span class="req">*</span> son obligatorios.',
@@ -811,6 +879,7 @@ const I18N = {
     yes: 'Sí',
     no: 'No',
     noProduct: 'No se encontró ningún producto',
+    productInvalid: 'Seleccione un producto de la lista.',
     receiptClient: '🧾 Datos de Invoice y Cliente',
     receiptProducts: '🛋️ Productos Registrados',
     originInvoice: 'Invoice Origen (Reincidencia)',
@@ -853,10 +922,16 @@ const I18N = {
     recurrenceQuestion: 'Has there already been prior assistance for this same product/invoice?',
     originalInvoice: 'Original Invoice (1st occurrence)',
     originalInvoicePlaceholder: 'Invoice number from the first assistance request',
+    clientLookupLabel: 'Registered e-mail',
+    clientLookupPlaceholder: 'Enter the e-mail shown on your Invoice',
+    clientLookupButton: 'Search',
+    clientLookupHint: '🔒 Only the e-mail owner can access their own data.',
+    clientLookupRequired: 'Enter the e-mail registered on the Invoice.',
+    clientLookupNotFound: 'E-mail not found. Please check that you typed the e-mail shown on your Invoice correctly.',
+    clientClear: '✕ Clear',
     clientSection: 'Retailer / Importer Details',
     company: 'Company Name',
     companyPlaceholder: 'Full company name',
-    taxId: 'Tax ID',
     country: 'Country',
     countryPlaceholder: 'Store country of origin',
     phone: 'Phone',
@@ -882,6 +957,10 @@ const I18N = {
     warrantyOk: days => '✓ Within warranty — ' + days + ' days left until the 1-year limit',
     warrantyWarn: days => '⚠ Close to the limit — only ' + days + ' day(s) left',
     warrantyOver: days => '✗ Out of warranty — ' + days + ' days past the limit',
+    barStart: '0 days',
+    barMiddle: '6 months',
+    barEnd: '1 year (limit)',
+    coverageNote: '<strong style="color:var(--brand-dark);font-weight:600;">Coverage reference:</strong> Technical assistance applies to proven manufacturing defects, repeat cases, missing or incorrect components, and claims within the 1-year period. Natural variations in marble, wood, or texture, differences of up to 2 cm in handcrafted products, and claims after 1 year are not eligible.',
     recalc: '↺ Recalculate',
     warrantyAlert: '⛔ <strong>Outside the 1-year warranty period.</strong> Standard technical assistance does not apply. Only proven structural damage may be reviewed as an exception, subject to SOHOME technical approval.',
     advanceNote: 'All fields marked with <span class="req">*</span> are required.',
@@ -926,6 +1005,7 @@ const I18N = {
     yes: 'Yes',
     no: 'No',
     noProduct: 'No product found',
+    productInvalid: 'Select a product from the list.',
     receiptClient: '🧾 Invoice and Customer Details',
     receiptProducts: '🛋️ Registered Products',
     originInvoice: 'Original Invoice (Repeat Case)',
@@ -960,15 +1040,6 @@ function t(key, ...args) {
   return typeof value === 'function' ? value(...args) : value;
 }
 
-function languageFromCountry(country) {
-  const value = (country || '').normalize('NFD').replace(/[\u0300-\u036f]/g, '').toLowerCase();
-  const spanishCountries = ['espana','spain','argentina','chile','uruguay','paraguay','bolivia','peru','colombia','ecuador','venezuela','mexico','panama','costa rica','guatemala','honduras','el salvador','nicaragua','republica dominicana','dominican republic'];
-  const englishCountries = ['estados unidos','united states','usa','eua','us','canada','united kingdom','reino unido','england','inglaterra'];
-  if (spanishCountries.some(c => value.includes(c))) return 'es';
-  if (englishCountries.some(c => value.includes(c))) return 'en';
-  return 'pt';
-}
-
 function initialLanguageFromBrowser() {
   const browserLangs = (navigator.languages && navigator.languages.length ? navigator.languages : [navigator.language || navigator.userLanguage || ''])
     .map(lang => String(lang).toLowerCase());
@@ -979,14 +1050,6 @@ function initialLanguageFromBrowser() {
 
 function setDocumentLanguage() {
   document.documentElement.lang = currentLang === 'pt' ? 'pt-BR' : (currentLang === 'es' ? 'es-ES' : 'en-US');
-}
-
-function applyLanguageFromCountry() {
-  const next = languageFromCountry(document.getElementById('f-pais')?.value || '');
-  if (next === currentLang) return;
-  currentLang = next;
-  setDocumentLanguage();
-  applyTranslations();
 }
 
 function req(text) { return text + ' <span class="req">*</span>'; }
@@ -1011,6 +1074,11 @@ function applyTranslations() {
   if (dividers[1]) dividers[1].textContent = t('clientSection');
   if (dividers[2]) dividers[2].textContent = t('datesSection');
   document.querySelectorAll('.card-status').forEach(el => el.textContent = t('filled'));
+  setHtml('#clientLookupLabel', t('clientLookupLabel') + ' <span class="req">*</span>');
+  setPlaceholder('f-client-email-lookup', t('clientLookupPlaceholder'));
+  setText('#clientLookupBtn', t('clientLookupButton'));
+  setText('#clientLookupHint', t('clientLookupHint'));
+  setText('#clientClearBtn', t('clientClear'));
   setFieldLabel('f-invoice', t('invoiceLabel'));
   setPlaceholder('f-invoice', t('invoicePlaceholder'));
   setText('#f-invoice + .hint', t('invoiceHint'));
@@ -1021,7 +1089,6 @@ function applyTranslations() {
   if (recurrenceLabel) recurrenceLabel.textContent = t('recurrence');
   setFieldLabel('f-razao', t('company'));
   setPlaceholder('f-razao', t('companyPlaceholder'));
-  setFieldLabel('f-cnpj', t('taxId'));
   setFieldLabel('f-pais', t('country'));
   setPlaceholder('f-pais', t('countryPlaceholder'));
   setFieldLabel('f-tel', t('phone'));
@@ -1045,8 +1112,12 @@ function applyTranslations() {
   if (dateLabels[0]) dateLabels[0].innerHTML = req(t('invoiceDate'));
   if (dateLabels[1]) dateLabels[1].innerHTML = req(t('receiptDate'));
   setText('.counter-lbl', t('daysAfterReceipt'));
+  setText('#barStart', t('barStart'));
+  setText('#barMiddle', t('barMiddle'));
+  setText('#barEnd', t('barEnd'));
   setText('.btn-recalc', t('recalc'));
   setHtml('#warrantyAlert', t('warrantyAlert'));
+  setHtml('#coverageNote', t('coverageNote'));
   setHtml('.advance-note', t('advanceNote'));
   setText('.btn-advance', t('advance'));
   setText('#err-step1', t('errStep1'));
@@ -1148,7 +1219,7 @@ function buildBlock(id) {
   <div class="prod-block-header">
     <div class="prod-block-header-left">
       <span class="prod-block-title" id="pb-title-${id}">Produto ${id}</span>
-      <span class="prod-block-summary" id="pb-summary-${id}">—</span>
+      <span class="prod-block-summary notranslate" translate="no" lang="und" id="pb-summary-${id}">—</span>
     </div>
     <div class="prod-block-header-right">
       <span class="reg-badge" id="pb-reg-${id}"><span class="reg-icon">✓</span> <span id="pb-reg-num-${id}"></span></span>
@@ -1166,9 +1237,9 @@ function buildBlock(id) {
       <div class="field">
         <label>Produto <span class="req">*</span></label>
         <div class="product-wrap">
-          <input type="text" id="pb-prod-input-${id}" placeholder="Digite para pesquisar..." oninput="filterProd(${id});updateSummary(${id})" autocomplete="off">
+          <input type="text" id="pb-prod-input-${id}" class="notranslate" translate="no" lang="und" placeholder="Digite para pesquisar..." oninput="filterProd(${id});updateSummary(${id})" onblur="setTimeout(() => { syncProductSelection(${id}); updateSummary(${id}); }, 120)" autocomplete="off">
           <input type="hidden" id="pb-prod-value-${id}">
-          <div class="product-dropdown" id="pb-dd-${id}"></div>
+          <div class="product-dropdown notranslate" translate="no" lang="und" id="pb-dd-${id}"></div>
         </div>
       </div>
       <div class="field">
@@ -1337,18 +1408,42 @@ function updateSummary(id) {
 }
 
 /* ══ Product search per block ═════════════════════════════ */
-function filterProd(id) {
-  const q  = document.getElementById('pb-prod-input-' + id).value.trim().toUpperCase();
+function escapeRegExp(value) {
+  return String(value).replace(/[.*+?^${}()|[\]\\]/g, '\\$&');
+}
+
+function syncProductSelection(id) {
+  const input = document.getElementById('pb-prod-input-' + id);
+  const value = document.getElementById('pb-prod-value-' + id);
   const dd = document.getElementById('pb-dd-' + id);
-  document.getElementById('pb-prod-value-' + id).value = '';
+  if (!input || !value) return false;
+
+  const typed = input.value.trim().toUpperCase();
+  const exact = PRODUCTS.find(p => p.toUpperCase() === typed);
+  value.value = exact || '';
+  input.classList.toggle('err', !!typed && !exact);
+  if (dd) dd.classList.remove('open');
+  return !!exact;
+}
+
+function filterProd(id) {
+  const input = document.getElementById('pb-prod-input-' + id);
+  const value = document.getElementById('pb-prod-value-' + id);
+  const q  = input.value.trim().toUpperCase();
+  const dd = document.getElementById('pb-dd-' + id);
+  if (value) value.value = '';
+  input.classList.remove('err');
   if (!q) { dd.classList.remove('open'); return; }
   const m = PRODUCTS.filter(p => p.includes(q)).slice(0, 30);
   if (!m.length) {
     dd.innerHTML = '<div class="pd-item" style="color:var(--brand-light);">' + t('noProduct') + '</div>';
     dd.classList.add('open'); return;
   }
+  const exact = PRODUCTS.find(p => p.toUpperCase() === q);
+  if (value && exact) value.value = exact;
+  const rx = new RegExp(escapeRegExp(q),'g');
   dd.innerHTML = m.map(p =>
-    `<div class="pd-item" onclick="selProdB(${id},'${p}')">${p.replace(new RegExp(q,'g'),'<strong>'+q+'</strong>')}</div>`
+    `<div class="pd-item notranslate" translate="no" lang="und" onclick="selProdB(${id},'${p}')">${p.replace(rx,'<strong>'+q+'</strong>')}</div>`
   ).join('');
   dd.classList.add('open');
 }
@@ -1445,7 +1540,7 @@ function validateStep1(){
     if(!orig.value.trim()) ok=false;
   }
 
-  ['f-razao','f-cnpj','f-pais','f-tel','f-email','f-resp'].forEach(id=>{
+  ['f-razao','f-pais','f-tel','f-email','f-resp'].forEach(id=>{
     const el=document.getElementById(id);
     el.classList.toggle('err',!el.value.trim());
     if(!el.value.trim()) ok=false;
@@ -1475,7 +1570,7 @@ function checkInvoiceCard(){
   document.getElementById('c-invoice').classList.toggle('complete', !!document.getElementById('f-invoice').value.trim());
 }
 function checkLojista(){
-  const ok=['f-razao','f-cnpj','f-pais','f-tel','f-email','f-resp'].every(id=>document.getElementById(id).value.trim());
+  const ok=['f-razao','f-pais','f-tel','f-email','f-resp'].every(id=>document.getElementById(id).value.trim());
   document.getElementById('c-lojista').classList.toggle('complete',ok);
 }
 function checkDatas(){
@@ -1492,7 +1587,7 @@ function updateCounter(){
   const wa=document.getElementById('warrantyAlert');
   if(!rv){
     ne.textContent='—';ne.className='counter-num empty';
-    se.textContent='Preencha a data de recebimento para calcular';se.style.color='var(--brand-light)';
+    se.textContent=t('fillReceiptDate');se.style.color='var(--brand-light)';
     bf.style.width='0%';bf.style.background='var(--border)';
     wa.classList.remove('show');checkDatas();return;
   }
@@ -1503,10 +1598,10 @@ function updateCounter(){
   const pct=Math.min(100,Math.max(0,(days/365)*100));
   ne.textContent=Math.max(0,days);
   let bc,st,sc;
-  if(days<0){bc='var(--border)';st='Data no futuro — verifique o preenchimento';sc='var(--brand-light)';ne.className='counter-num empty';wa.classList.remove('show');}
-  else if(days<=270){bc='var(--success)';st='✓ Dentro do prazo — faltam '+rem+' dias para o limite de 1 ano';sc='var(--success)';ne.className='counter-num ok';wa.classList.remove('show');}
-  else if(days<=365){bc='var(--warning)';st='⚠ Próximo do limite — faltam apenas '+rem+' dia(s)';sc='var(--warning)';ne.className='counter-num warn';wa.classList.remove('show');}
-  else{bc='var(--danger)';st='✗ Fora do prazo — '+Math.abs(rem)+' dias além do limite';sc='var(--danger)';ne.className='counter-num over';wa.classList.add('show');}
+  if(days<0){bc='var(--border)';st=t('warrantyFuture');sc='var(--brand-light)';ne.className='counter-num empty';wa.classList.remove('show');}
+  else if(days<=270){bc='var(--success)';st=t('warrantyOk',rem);sc='var(--success)';ne.className='counter-num ok';wa.classList.remove('show');}
+  else if(days<=365){bc='var(--warning)';st=t('warrantyWarn',rem);sc='var(--warning)';ne.className='counter-num warn';wa.classList.remove('show');}
+  else{bc='var(--danger)';st=t('warrantyOver',Math.abs(rem));sc='var(--danger)';ne.className='counter-num over';wa.classList.add('show');}
   se.textContent=st;se.style.color=sc;
   bf.style.width=pct+'%';bf.style.background=bc;
   checkDatas();
@@ -1521,7 +1616,7 @@ function toggleReincidencia(){
 /* ══ Reset ═══════════════════════════════════════════════ */
 function resetAll(){
   // etapa 1
-  ['f-invoice','f-invoice-orig','f-razao','f-cnpj','f-pais','f-tel','f-email','f-resp'].forEach(id=>{
+  ['f-invoice','f-invoice-orig','f-razao','f-pais','f-tel','f-email','f-resp'].forEach(id=>{
     const el=document.getElementById(id);
     if(el){el.value='';el.classList.remove('err');}
   });
@@ -1558,11 +1653,14 @@ function enviarProdBlock(id) {
 
   // produto
   const pv = document.getElementById('pb-prod-value-' + id);
-  const pvEmpty = !pv || !pv.value.trim();
-  if (pv) pv.classList.toggle('err', pvEmpty);
   const pi = document.getElementById('pb-prod-input-' + id);
-  if (pi) pi.classList.toggle('err', pvEmpty);
-  if (pvEmpty) ok = false;
+  const productOk = syncProductSelection(id);
+  if (pv) pv.classList.toggle('err', !productOk);
+  if (pi) {
+    pi.classList.toggle('err', !productOk);
+    pi.title = productOk ? '' : t('productInvalid');
+  }
+  if (!productOk) ok = false;
 
   // módulos
   const mod = document.getElementById('pb-mod-' + id);
@@ -1670,7 +1768,6 @@ function salvarInformacoes() {
     html += receiptRow(t('originInvoice'), document.getElementById('f-invoice-orig').value || '—');
   }
   html += receiptRow(t('company'), document.getElementById('f-razao').value || '—');
-  html += receiptRow(t('taxId'), document.getElementById('f-cnpj').value || '—');
   html += receiptRow(t('country'), document.getElementById('f-pais').value || '—');
   html += receiptRow(t('phone'), document.getElementById('f-tel').value || '—');
   html += receiptRow(t('email'), document.getElementById('f-email').value || '—');
@@ -1720,7 +1817,7 @@ function salvarInformacoes() {
 
     html += '<div class="receipt-prod-card">';
     html += '<div class="receipt-prod-head">';
-    html += '<div><div class="receipt-prod-kicker">' + t('product') + ' ' + prodIndex + '</div><h4>' + escapeHtml(prodName) + '</h4></div>';
+    html += '<div><div class="receipt-prod-kicker">' + t('product') + ' ' + prodIndex + '</div><h4 class="notranslate" translate="no" lang="und">' + escapeHtml(prodName) + '</h4></div>';
     html += '<span class="reg-num">✓ ' + escapeHtml(reg.ticket) + '</span>';
     html += '</div>';
     html += receiptRow(t('modulesRow'), modulos);
@@ -1859,6 +1956,88 @@ function formatDate(val) {
 /* ══ Init: add first product block on load ════════════════ */
 addProdBlock();
 applyTranslations();
+
+/* ══ CLIENT SEARCH ════════════════════════════════════════ */
+const CLIENT_DB = [{"code":"8014","name":"VINIBEL","establishment":"CAREY S.A (VINIBEL)","country":"URUGUAY","city":"MONTEVIDEO","responsible":"Eliana Kaplan","emails":["elianakaplan@vinibel.com.uy"],"phones":["598 24 000018"]},{"code":"8217","name":"ANTARA","establishment":"VIAGGI S.R.L.","country":"PARAGUAY","city":"ASSUNCION","responsible":"Antonio Pecci","emails":["antonio@grupecci.com"],"phones":["595 98 1407307"]},{"code":"6171","name":"VERALIMA","establishment":"ACORV DESING GROUP E.I.R.L","country":"PERU","city":"LIMA","responsible":"Sara West","emails":["sara@veralima.pe","valery@veralima.pe"],"phones":["51 977 969 100"]},{"code":"6902","name":"VELVET HOME","establishment":"D & J VELVET WALLPAPERS & HOME DECOR SRL","country":"DOMINICAN REPUBLIC","city":"SANTO DOMINGO","responsible":"Dhianna Angeles","emails":["ventas@velvethomedecor.com"],"phones":["1 (829) 970-9452","1 (809) 702-8046"]},{"code":"6086","name":"THATS LIVING","establishment":"THATS LIVING","country":"QATAR","city":"DOHA","responsible":"Rodolfo Junior","emails":["rj@thatsliving.com","sheika@thatsliving.com"],"phones":["974 7740 9292"]},{"code":"6775","name":"SQUADRA","establishment":"SQUADRA","country":"ECUADOR","city":"QUITO","responsible":"Christian Castillo","emails":["ccastillo@squadra.com.ec"],"phones":["593 593 2226549"]},{"code":"7460","name":"RICH INTERIOR","establishment":"SS CENTER LLC","country":"AZERBAIJÃO","city":"BAKU","responsible":"Ayten Nikipur","emails":["ayten@rich.az","g.garayeva@rich.az"],"phones":["994 50 344 84 59"]},{"code":"5208","name":"OSKAL SIGNATURE PA","establishment":"OSKAL OBARRIO S.A.","country":"PANAMA","city":"CIUDAD DE PANAMA","responsible":"Madeline","emails":["mquiroz@oskalpanama.com","rdiaz@oskalpanama.com"],"phones":["507 6093-6056"]},{"code":"7979","name":"NOVO CONCEPTO INT S.A","establishment":"NOVO CONCEPTO INT S.A","country":"HONDURAS","city":"TEGUCIGALPA","responsible":"Mariana Montero","emails":["marianamonteiro@novoconceptoint.com"],"phones":["(504) 9990-1875"]},{"code":"5203","name":"MONTERO TOSKANA","establishment":"MONTERO TOSKANA SPA","country":"CHILE","city":"SANTIAGO","responsible":"Claudia Montero","emails":["claudia@monterotoskana.cl"],"phones":["56 569 82938401"]},{"code":"6310","name":"MOBILIE C.A","establishment":"MOBILIE C.A","country":"VENEZUELA","city":"VALENCIA","responsible":"Chady Makarem","emails":["chady@mobilie.com.ve"],"phones":["58 412-3427982"]},{"code":"6976","name":"LUXUS MAISON","establishment":"BRASILUXUS MAISON FURNITURE INC","country":"CANADA","city":"TORONTO","responsible":"Joanes de Sousa","emails":["joanes@luxusmaison.com"],"phones":["1 514 448-7792"]},{"code":"6898","name":"LINEE","establishment":"SPAZIO CAPITAL SL","country":"SPAIN","city":"BARCELONA","responsible":"Jorge Chavez","emails":["jchavez@linee.es"],"phones":["+34 640 08 66 71"]},{"code":"6855","name":"LANDMARK","establishment":"MIJORMI SRL","country":"ARGENTINA","city":"BUENOS AIRES","responsible":"Cecilia Coronel","emails":["ceciliacoronel@mijormi.com.ar","ricardo.capdepont@mijormi.com.ar"],"phones":["54 9 11 2620-8286"]},{"code":"5196","name":"KRONE FURNITURE","establishment":"KRONE FURNITURE CORP","country":"PORTO RICO","city":"SAN JUAN","responsible":"Modesta Santa","emails":["msanta@kronefurniture.com","logistics@kronefurniture.com"],"phones":["787 781 1159","1 (787) 525-0073"]},{"code":"5201","name":"IMPACTO","establishment":"IMPACTO S.A","country":"PARAGUAY","city":"SAN LORENZO","responsible":"Daniela Lopez","emails":["administracion@impacto.com.py"],"phones":["(595 981) 167 330"]},{"code":"5195","name":"HARMONY STUDIO","establishment":"HSTUDIO MIAMI LLC","country":"UNITED STATES OF AMERICA","city":"POMPANO BEACH","responsible":"Salim Skaff","emails":["ursula.britto@hstudiomiami.com","marcelo.boaretto@hstudiomiami.com","salim@hstudiomiami.com"],"phones":["1 (561) 403-7541","1 (365) 888-0850","55 44 9994-9098"]},{"code":"6127","name":"HABITAT MUEBLES","establishment":"ANDANI IMPORTS S.A.","country":"COSTA RICA","city":"SAN JOSE","responsible":"André Solano","emails":["andre@habitatmuebles.com","freya@habitatmuebles.com"],"phones":["506 7202 2002"]},{"code":"7278","name":"GIRALINEA S.A.C","establishment":"GIRALINEA S.A.C","country":"PERU","city":"LIMA","responsible":"Jessie D'Angelo","emails":["jessiedangelo@gmail.com","narda@jessiedangelostudio.com","giralineasac@gmail.com"],"phones":["51 992 190 653","51 991 576 486"]},{"code":"8580","name":"FURNITURE SQUARE","establishment":"METAKS SAL OFF SHORE","country":"NIGERIA","city":"LAGOS","responsible":"Abbas Ghamloush","emails":["admin@ghamloush.com"],"phones":["0704888888"]},{"code":"5206","name":"FULL HOME","establishment":"TEXTILES SADDAM INTERNACIONAL SA","country":"NICARAGUA","city":"MANAGUA","responsible":"Almuhtasen Khatib","emails":["almu@grupokhatib.com.ni","jefecompras@gk.com.ni"],"phones":["505 505 22498380","505 5860 1321"]},{"code":"6654","name":"FONTENLA S.A.","establishment":"MOBILIAROS FONTENLA S.A.","country":"ARGENTINA","city":"BUENOS AIRES","responsible":"Fernando Pilla","emails":["fpilla@fontenla-furniture.com"],"phones":["541152632529"]},{"code":"6232","name":"FERRINI DESIGN SAC","establishment":"FERRINI DESIGN SAC","country":"PERU","city":"LIMA","responsible":"Jenny Ferrini","emails":["jferrini@ferrinidesign.pe"],"phones":["519 98930094"]},{"code":"8201","name":"ENTORNO DESIGN","establishment":"FRANVALE DESIGN EIRL","country":"PERU","city":"LIMA","responsible":"Meliza Andrade","emails":["meliza@entornodeco.com"],"phones":["51 984 288 829"]},{"code":"5199","name":"DEKORATO","establishment":"DEKORATO SRL","country":"BOLIVIA","city":"SANTA CRUZ DE LA SIERRA","responsible":"LENNY SUAREZ","emails":["lennysua@dekorato.com.bo"],"phones":["591 71320505"]},{"code":"7966","name":"BARSANTE DISEGNO S.R.L.","establishment":"BARSANTE DISEGNO S.R.L.","country":"ARGENTINA","city":"ALVAREZ","responsible":"Franco Barsante","emails":["romina@barsante.com.ar","franco@barsante.com.ar"],"phones":["54 9 3416 82-0708","54 9 3402 45-8838"]},{"code":"8230","name":"CURATED DESIGN","establishment":"CURATED DESIGN","country":"UNITED STATES OF AMERICA","city":"NEW JERSEY","responsible":"Eli Medina","emails":["ap@curateddesignshop.com"],"phones":["1 718 207-3508"]},{"code":"6992","name":"COLECCION SUR","establishment":"GRANPORT AS","country":"URUGUAY","city":"MONTEVIDEO","responsible":"Maria Soledad Gattas","emails":["msolegattas@gmail.com"],"phones":["598 96 059 336"]},{"code":"7712","name":"CIEL GROUP CORP","establishment":"CIEL GROUP CORP","country":"CANADA","city":"MARKHAM","responsible":"Mary Aghei","emails":["maryafsh@gmail.com"],"phones":["1 647 802-3332"]},{"code":"7404","name":"CASA FERREIRA","establishment":"CSI TRADING LTDA","country":"BRASIL","city":"BELEM","responsible":"Suzana Ferreira","emails":["ceo@casaferreira.co.ao","carlosrocha23@yahoo.com.br"],"phones":["244 926 408 633"]},{"code":"8049","name":"CASA 100","establishment":"LUXURY FURNITURE SAC","country":"PERU","city":"LIMA","responsible":"Riad Mattar","emails":["anghelina@casa100.pe","riad@casa10.pe"],"phones":["51 950 484 196"]},{"code":"7476","name":"BURANI","establishment":"TRADING HNOS SRL","country":"ARGENTINA","city":"BUENOS AIRES","responsible":"Hernan Veja","emails":["estudio@burani.com.ar","info@burani.com.ar"],"phones":["54 911 4169-0153","54 9 11 6737-3970"]},{"code":"6720","name":"ALTRI TEMPI SRL","establishment":"ALTRI TEMPI SRL","country":"DOMINICAN REPUBLIC","city":"SANTO DOMINGO","responsible":"Yudelka Checo","emails":["compras@altritempi.com.do"],"phones":["18095406950"]},{"code":"7239","name":"ALESSO SAS","establishment":"ALESSO SAS","country":"URUGUAY","city":"MALDONADO","responsible":"Sofia Etchebarne","emails":["sofietchebarne@gmail.com"],"phones":["59895466111"]},{"code":"5627","name":"AGIMEX","establishment":"AGIMEX SRL","country":"BOLIVIA","city":"COCHABAMBA","responsible":"Maria Fernanda","emails":["comercial@agimex.com.bo"],"phones":["591 591 44223901"]}];
+
+/* ══ CLIENT LOOKUP — por e-mail (LGPD) ══════════════════ */
+function clientLookup() {
+  const raw = document.getElementById('f-client-email-lookup').value.trim().toLowerCase();
+  const errEl = document.getElementById('client-lookup-err');
+  errEl.classList.remove('show');
+
+  if (!raw) {
+    errEl.textContent = t('clientLookupRequired');
+    errEl.classList.add('show');
+    return;
+  }
+
+  // busca em todos os e-mails de cada cliente (exato, case-insensitive)
+  const c = CLIENT_DB.find(x => x.emails.some(e => e.toLowerCase() === raw));
+
+  if (!c) {
+    errEl.textContent = t('clientLookupNotFound');
+    errEl.classList.add('show');
+    return;
+  }
+
+  clientApply(c);
+}
+
+function clientApply(c) {
+  document.getElementById('f-razao').value = c.establishment;
+  document.getElementById('f-pais').value = c.country;
+  document.getElementById('f-resp').value = c.responsible;
+
+  // telefones — principal + extras
+  document.getElementById('f-tel').value = c.phones[0] || '';
+  const phonesWrap = document.getElementById('extraPhonesWrap');
+  phonesWrap.innerHTML = '';
+  c.phones.slice(1).forEach(p => {
+    const item = document.createElement('div');
+    item.className = 'contact-item';
+    item.innerHTML = '<span class="ci-icon">📞</span><span class="ci-val">' + escapeHtml(p) + '</span>';
+    phonesWrap.appendChild(item);
+  });
+
+  // e-mails — principal + extras
+  document.getElementById('f-email').value = c.emails[0] || '';
+  document.getElementById('extraEmailsWrap').innerHTML = '';
+  const emailGroup = document.getElementById('extraEmailsContactGroup');
+  emailGroup.innerHTML = '';
+  c.emails.slice(1).forEach(e => {
+    const item = document.createElement('div');
+    item.className = 'contact-item';
+    item.innerHTML = '<span class="ci-icon">✉</span><span class="ci-val">' + escapeHtml(e) + '</span>';
+    emailGroup.appendChild(item);
+  });
+
+  // badge
+  document.getElementById('cfb-name-text').textContent = c.name + ' — ' + c.establishment;
+  document.getElementById('cfb-sub-text').textContent = c.city + ', ' + c.country;
+  document.getElementById('client-filled-badge').classList.add('show');
+  document.getElementById('client-lookup-err').classList.remove('show');
+
+  checkLojista();
+}
+
+function clientSearchClear() {
+  document.getElementById('f-client-email-lookup').value = '';
+  document.getElementById('f-razao').value = '';
+  document.getElementById('f-pais').value = '';
+  document.getElementById('f-resp').value = '';
+  document.getElementById('f-tel').value = '';
+  document.getElementById('f-email').value = '';
+  document.getElementById('extraPhonesWrap').innerHTML = '';
+  document.getElementById('extraEmailsContactGroup').innerHTML = '';
+  document.getElementById('extraEmailsWrap').innerHTML = '';
+  document.getElementById('client-filled-badge').classList.remove('show');
+  document.getElementById('client-lookup-err').classList.remove('show');
+  checkLojista();
+  document.getElementById('f-client-email-lookup').focus();
+}
+
+
 </script>
 </body>
 </html>
