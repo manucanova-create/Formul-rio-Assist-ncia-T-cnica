@@ -307,14 +307,25 @@ input:checked+.slider:before{transform:translateX(20px);}
       <span class="card-status">✓ Preenchido</span>
     </div>
     <div class="card-body">
-      <div class="form-grid">
+      <!-- Invoice -->
+      <div class="form-full">
         <div class="field">
           <label>Número da Invoice <span class="req">*</span></label>
           <input type="text" id="f-invoice" placeholder="Número exato da invoice do produto reclamado" oninput="checkInvoiceCard()">
           <span class="hint">⚠ Invoice errada trava o processo — não inserir número genérico</span>
         </div>
+      </div>
+      <!-- Ordem de Compra -->
+      <div class="form-full">
         <div class="field">
-          <label>Reincidência?</label>
+          <label>Ordem de Compra (PO)</label>
+          <input type="text" id="f-po" placeholder="Número da ordem de compra (opcional)">
+          <span class="hint">Opcional. Preencha caso o lojista utilize número de PO para rastreamento interno.</span>
+        </div>
+      </div>
+      <!-- Reincidência -->
+      <div class="form-full">
+        <div class="field">
           <div class="switch-row">
             <span class="switch-label">
               Já houve AT anterior neste produto?
@@ -1608,6 +1619,12 @@ function updateCounter(){
 }
 
 /* ══ Reincidência ════════════════════════════════════════ */
+function togglePO() {
+  const extra = document.getElementById('po-extra');
+  extra.style.display = document.getElementById('f-has-po').checked ? 'block' : 'none';
+  if (!document.getElementById('f-has-po').checked) document.getElementById('f-po').value = '';
+}
+
 function toggleReincidencia(){
   document.getElementById('reincidencia-extra').style.display=
     document.getElementById('f-reincidencia').checked?'block':'none';
