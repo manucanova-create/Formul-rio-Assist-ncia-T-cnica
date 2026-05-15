@@ -677,6 +677,10 @@ const I18N = {
     invoiceLabel: 'Número da Invoice',
     invoicePlaceholder: 'Número exato da invoice do produto reclamado',
     invoiceHint: '⚠ Invoice errada trava o processo — não inserir número genérico',
+    purchaseOrder: 'Ordem de Compra (PO)',
+    purchaseOrderPlaceholder: 'Número da ordem de compra (opcional)',
+    purchaseOrderHint: 'Opcional. Preencha caso o lojista utilize número de PO para rastreamento interno.',
+    purchaseOrderRow: 'Ordem de Compra',
     recurrence: 'Reincidência?',
     recurrenceQuestion: 'Já houve assistência anterior para este mesmo produto/invoice?',
     originalInvoice: 'Invoice de Origem (1ª ocorrência)',
@@ -803,6 +807,10 @@ const I18N = {
     invoiceLabel: 'Número de Invoice',
     invoicePlaceholder: 'Número exacto de la invoice del producto reclamado',
     invoiceHint: '⚠ Una invoice incorrecta bloquea el proceso — no introduzca un número genérico',
+    purchaseOrder: 'Orden de Compra (PO)',
+    purchaseOrderPlaceholder: 'Número de la orden de compra (opcional)',
+    purchaseOrderHint: 'Opcional. Complete si el distribuidor utiliza un número de PO para seguimiento interno.',
+    purchaseOrderRow: 'Orden de Compra',
     recurrence: '¿Reincidencia?',
     recurrenceQuestion: '¿Ya hubo asistencia anterior para este mismo producto/invoice?',
     originalInvoice: 'Invoice de Origen (1ª incidencia)',
@@ -929,6 +937,10 @@ const I18N = {
     invoiceLabel: 'Invoice Number',
     invoicePlaceholder: 'Exact invoice number for the claimed product',
     invoiceHint: '⚠ Wrong invoice blocks the process — do not enter a generic number',
+    purchaseOrder: 'Purchase Order (PO)',
+    purchaseOrderPlaceholder: 'Purchase order number (optional)',
+    purchaseOrderHint: 'Optional. Fill in if the retailer uses a PO number for internal tracking.',
+    purchaseOrderRow: 'Purchase Order',
     recurrence: 'Repeat case?',
     recurrenceQuestion: 'Has there already been prior assistance for this same product/invoice?',
     originalInvoice: 'Original Invoice (1st occurrence)',
@@ -1093,6 +1105,9 @@ function applyTranslations() {
   setFieldLabel('f-invoice', t('invoiceLabel'));
   setPlaceholder('f-invoice', t('invoicePlaceholder'));
   setText('#f-invoice + .hint', t('invoiceHint'));
+  setFieldLabel('f-po', t('purchaseOrder'), false);
+  setPlaceholder('f-po', t('purchaseOrderPlaceholder'));
+  setText('#f-po + .hint', t('purchaseOrderHint'));
   setFieldLabel('f-invoice-orig', t('originalInvoice'));
   setPlaceholder('f-invoice-orig', t('originalInvoicePlaceholder'));
   setText('#c-invoice .switch-row .switch-label', t('recurrenceQuestion'));
@@ -1633,7 +1648,7 @@ function toggleReincidencia(){
 /* ══ Reset ═══════════════════════════════════════════════ */
 function resetAll(){
   // etapa 1
-  ['f-invoice','f-invoice-orig','f-razao','f-pais','f-tel','f-email','f-resp'].forEach(id=>{
+  ['f-invoice','f-po','f-invoice-orig','f-razao','f-pais','f-tel','f-email','f-resp'].forEach(id=>{
     const el=document.getElementById(id);
     if(el){el.value='';el.classList.remove('err');}
   });
@@ -1781,6 +1796,10 @@ function salvarInformacoes() {
   html += '<div class="receipt-section">';
   html += '<div class="receipt-section-title">' + t('receiptClient') + '</div>';
   html += receiptRow('Invoice', document.getElementById('f-invoice').value || '—');
+  const purchaseOrder = document.getElementById('f-po').value.trim();
+  if (purchaseOrder) {
+    html += receiptRow(t('purchaseOrderRow'), purchaseOrder);
+  }
   if (document.getElementById('f-reincidencia').checked) {
     html += receiptRow(t('originInvoice'), document.getElementById('f-invoice-orig').value || '—');
   }
