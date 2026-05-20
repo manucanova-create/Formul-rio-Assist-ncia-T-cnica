@@ -1725,8 +1725,15 @@ function daysAfterReceipt() {
   return String(Math.floor((today - received) / 864e5));
 }
 
+function bitrixTitleInvoice() {
+  const recurrence = document.getElementById('f-reincidencia');
+  const originalInvoice = fieldValue('f-invoice-orig');
+  if (recurrence && recurrence.checked && originalInvoice) return originalInvoice;
+  return fieldValue('f-invoice');
+}
+
 function buildBitrixDealTitle(dealId) {
-  return 'Exportação || Atendimento:' + dealId + ' || Invoice:' + fieldValue('f-invoice') + ' || Cliente:' + fieldValue('f-razao');
+  return 'Exportação || Atendimento:' + dealId + ' || Invoice:' + bitrixTitleInvoice() + ' || Cliente:' + fieldValue('f-razao');
 }
 
 function fileToBitrixFile(file) {
@@ -1752,7 +1759,7 @@ async function buildBitrixDealFieldsForProduct(bid, reg) {
   const repairIsYes = selectedToggleValue('pb-q3-' + bid) === 'Sim';
   const fields = {
     ...BITRIX_DEFAULT_FIELDS,
-    TITLE: 'Exportação || Atendimento:Pendente || Invoice:' + fieldValue('f-invoice') + ' || Cliente:' + fieldValue('f-razao'),
+    TITLE: 'Exportação || Atendimento:Pendente || Invoice:' + bitrixTitleInvoice() + ' || Cliente:' + fieldValue('f-razao'),
     UF_CRM_1779124884: daysAfterReceipt(),
     UF_CRM_DEAL_1758647396824: fieldValue('f-po'),
     UF_CRM_1778767737: fieldValue('pb-rp-' + bid),
