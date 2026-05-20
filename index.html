@@ -530,6 +530,9 @@ input:checked+.slider:before{transform:translateX(20px);}
 .btn-enviar-block{background:rgba(46,125,94,.85);border:1px solid rgba(46,125,94,.9);color:#fff;border-radius:3px;padding:5px 15px;font-size:11px;font-family:'DM Sans',sans-serif;cursor:pointer;transition:all .15s;display:inline-flex;align-items:center;gap:5px;white-space:nowrap;letter-spacing:.04em;text-transform:uppercase;font-weight:600;}
 .btn-enviar-block:hover{background:rgba(46,125,94,1);}
 .btn-enviar-block.sent{background:rgba(255,255,255,.13);border-color:rgba(255,255,255,.22);color:rgba(255,255,255,.5);cursor:default;pointer-events:none;}
+.prod-block.sent-locked .prod-block-body{opacity:.72;}
+.prod-block.sent-locked .upload-zone{pointer-events:none;background:var(--cream);}
+.prod-block.sent-locked input,.prod-block.sent-locked textarea{background:var(--cream);color:var(--brand-light);}
 
 /* registration badge in header */
 .reg-badge{display:none;align-items:center;gap:6px;background:rgba(46,125,94,.18);border:1px solid rgba(46,125,94,.35);border-radius:3px;padding:4px 12px;font-size:11px;color:#9fceb5;font-weight:600;letter-spacing:.04em;white-space:nowrap;}
@@ -1659,6 +1662,7 @@ function resetAll(){
   document.getElementById('receiptDate').value='';
   ['invoiceDate','receiptDate'].forEach(id=>document.getElementById(id).classList.remove('err'));
   ['c-invoice','c-lojista','c-datas'].forEach(id=>document.getElementById(id).classList.remove('complete'));
+  unlockClientInfoForReset();
   document.getElementById('err-step1').classList.remove('show');
   document.getElementById('warrantyAlert').classList.remove('show');
   updateCounter();
@@ -1787,6 +1791,53 @@ async function sendDealToBitrix(fields) {
   return data.result;
 }
 
+const CLIENT_LOCK_SELECTOR = [
+  '#f-invoice',
+  '#f-po',
+  '#f-reincidencia',
+  '#f-invoice-orig',
+  '#f-client-email-lookup',
+  '#f-razao',
+  '#f-pais',
+  '#f-resp',
+  '#f-tel',
+  '#f-email',
+  '#invoiceDate',
+  '#receiptDate',
+  '#btnAddExtraEmail',
+  '#clientLookupBtn',
+  '#clientClearBtn',
+  '#panel-id .extra-email',
+  '#panel-id .btn-remove-email'
+].join(',');
+
+function setClientInfoLocked(locked) {
+  document.querySelectorAll(CLIENT_LOCK_SELECTOR).forEach(el => {
+    el.disabled = locked;
+  });
+}
+
+function lockClientInfoAfterBitrixSend() {
+  setClientInfoLocked(true);
+}
+
+function unlockClientInfoForReset() {
+  setClientInfoLocked(false);
+}
+
+function lockProductBlockAfterBitrixSend(id) {
+  const block = document.getElementById('pb-' + id);
+  if (!block) return;
+  block.classList.add('sent-locked');
+  block.querySelectorAll('input, textarea, button').forEach(el => {
+    if (el.id === 'pb-tog-' + id) return;
+    el.disabled = true;
+  });
+  block.querySelectorAll('.upload-zone').forEach(zone => {
+    zone.setAttribute('aria-disabled', 'true');
+  });
+}
+
 /* ══ Enviar individual product block ═════════════════════ */
 async function enviarProdBlock(id) {
   const block = document.getElementById('pb-' + id);
@@ -1892,13 +1943,16 @@ async function enviarProdBlock(id) {
   const badge = document.getElementById('pb-reg-' + id);
   const badgeNum = document.getElementById('pb-reg-num-' + id);
   if (badge) badge.classList.add('show');
-  if (badgeNum) badgeNum.textContent = ticket;
+  if (badgeNum) badgeNum.textContent = 'Bitrix #' + blockRegs[id].bitrixDealId;
 
   // Mark button as sent
   if (btn) {
     btn.classList.add('sent');
-    btn.innerHTML = t('sent');
+    btn.innerHTML = 'Enviado #' + blockRegs[id].bitrixDealId;
   }
+
+  lockClientInfoAfterBitrixSend();
+  lockProductBlockAfterBitrixSend(id);
 
   // Auto-minimize
   if (!block.classList.contains('minimized')) {
@@ -1989,7 +2043,7 @@ function salvarInformacoes() {
     html += '<div class="receipt-prod-card">';
     html += '<div class="receipt-prod-head">';
     html += '<div><div class="receipt-prod-kicker">' + t('product') + ' ' + prodIndex + '</div><h4 class="notranslate" translate="no" lang="und">' + escapeHtml(prodName) + '</h4></div>';
-    html += '<span class="reg-num">✓ ' + escapeHtml(reg.ticket) + '</span>';
+    html += '<span class="reg-num">✓ Atendimento Bitrix #' + escapeHtml(reg.bitrixDealId || reg.ticket) + '</span>';
     html += '</div>';
     html += receiptRow(t('modulesRow'), modulos);
     html += receiptRow(t('defectRow'), descricao);
