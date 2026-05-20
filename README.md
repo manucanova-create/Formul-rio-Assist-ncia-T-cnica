@@ -1,147 +1,112 @@
-# Assistência Técnica — SOHOME
-**Sistema de Registro de Ocorrências — Exportação**
+# Formulario de Assistencia Tecnica - SOHOME
 
----
+Formulario publico para abertura de assistencias tecnicas de exportacao, publicado via GitHub Pages.
 
-## Visão Geral
+Link publico:
+https://manucanova-create.github.io/Formul-rio-Assist-ncia-T-cnica/
 
-Este sistema é uma aplicação web em arquivo único (`index.html`) utilizada pela equipe de exportação da SOHOME para registrar ocorrências de assistência técnica junto a lojistas internacionais. Funciona diretamente no navegador, sem necessidade de instalação ou servidor.
+## O que o formulario faz
 
----
+- Identifica o cliente por e-mail cadastrado.
+- Preenche dados da empresa, pais, responsavel, telefone e e-mail.
+- Coleta invoice, ordem de compra, datas e recorrencia.
+- Permite registrar um ou mais produtos reclamados.
+- Envia cada produto individualmente para o Bitrix24 ao clicar em **Enviar**.
+- Retorna o numero do atendimento do Bitrix no proprio bloco do produto.
+- Bloqueia os dados ja enviados para evitar alteracao depois do envio.
+- Gera um extrato final com os dados da assistencia e miniaturas das imagens anexadas.
 
-## Como Utilizar
+## Arquivos principais
 
-### Pré-requisitos
+- `index.html`: formulario completo, regras de validacao, integracao com Bitrix24 e extrato.
+- `produtos.txt`: lista de produtos exibida no campo de busca do produto.
+- `Informacoes de Clientes.xlsx`: base usada para gerar/atualizar os clientes embutidos no formulario.
+- `LOGO*.png` e `LOGO*.svg`: arquivos de identidade visual usados na pagina.
 
-- Navegador moderno (Chrome, Firefox, Edge ou Safari)
-- Conexão com a internet (para carregar a fonte e enviar os dados)
-- Os arquivos de logo (`LOGO GRUPO SOHOME-56.png` e `LOGO GRUPO SOHOME-60.png`) devem estar na mesma pasta que o `index.html`
+## Fluxo de uso
 
-### Abertura
+1. O cliente informa a invoice e consulta o cadastro pelo e-mail.
+2. O formulario preenche os dados do lojista.
+3. O cliente informa datas, recorrencia e demais dados gerais.
+4. O cliente adiciona um produto, preenche defeito, anexos e perguntas.
+5. Ao clicar em **Enviar**, o produto e enviado ao Bitrix24.
+6. O formulario mostra o atendimento retornado, por exemplo `Bitrix #32003`.
+7. Depois de enviar os produtos, o cliente pode gerar o extrato em **Salvar as Informacoes**.
 
-Basta abrir o arquivo `index.html` diretamente no navegador. O sistema detecta automaticamente o idioma preferido do navegador e exibe a interface em **Português**, **Espanhol** ou **Inglês**.
+## Integracao com Bitrix24
 
----
+A integracao fica no bloco `Bitrix24 integration` dentro do `index.html`.
 
-## Fluxo de Preenchimento
+Configuracoes atuais:
 
-O formulário é dividido em **2 etapas**, representadas na barra de progresso no topo da página.
+- Funil: `ASSISTENCIA`
+- `CATEGORY_ID`: `1`
+- Etapa inicial: `Nova Assistencia`
+- `STAGE_ID`: `C1:UC_WM3E1W`
+- Origem da Assistencia: `Exportacao`
+- `UF_CRM_1727362004`: `19451`
 
----
+O titulo do negocio e atualizado depois da criacao, porque o numero do atendimento so existe apos o Bitrix retornar o ID:
 
-### Etapa 1 — Identificação
+```text
+Exportacao || Atendimento:ID || Invoice:INVOICE || Cliente:CLIENTE
+```
 
-Reúne as informações básicas da ocorrência antes de avançar ao registro.
+## Campos importantes do Bitrix
 
-#### 🧾 Número da Invoice
+- `UF_CRM_1779124884`: prazo de garantia (`Dentro da garantia`, `Fora da garantia` ou `Data futura`)
+- `UF_CRM_DEAL_1758647396824`: ordem de compra
+- `UF_CRM_1664887086`: fotos e videos do produto
+- `UF_CRM_1778767737`: prestador de servico
+- `UF_CRM_DEAL_1668773451236`: produto
+- `UF_CRM_1664886906`: numero de modulos
+- `UF_CRM_1664886937`: descricao do defeito
+- `UF_CRM_1778767570`: embalagem avariada
+- `UF_CRM_1778767613`: defeito impede uso
+- `UF_CRM_1778767696`: custo estimado do reparo
+- `UF_CRM_1778767669`: reparo local possivel
+- `UF_CRM_1667444111295`: arquivo de orcamento
+- `UF_CRM_1748962012`: telefone
+- `UF_CRM_1748961973`: e-mail principal e e-mails adicionais
+- `UF_CRM_1749237856`: pessoa de contato
+- `UF_CRM_1778767236`: data da fatura
+- `UF_CRM_1778767167`: data de recebimento
+- `UF_CRM_1727360923`: numero da fatura
+- `UF_CRM_DEAL_1673889459929`: reincidencia (`907` = Sim, `909` = Nao)
+- `UF_CRM_1778767501`: fatura original
+- `UF_CRM_1748961942`: nome da empresa
+- `UF_CRM_1702558335`: pais
 
-| Campo | Obrigatório | Descrição |
-|---|---|---|
-| Número da Invoice | Sim | Número exato da invoice comercial do produto reclamado. Um número incorreto trava o processo. |
-| Ordem de Compra (PO) | Não | Número de PO do lojista, caso ele utilize rastreamento interno por ordem de compra. |
-| Reincidência | Não | Toggle que indica se já houve assistência técnica anterior para este mesmo produto. Ao ativar, aparece o campo para informar a invoice da primeira ocorrência. |
+## Atualizar produtos
 
-#### 👤 Dados do Lojista
+Para alterar a lista do campo **Produto**, edite `produtos.txt`.
 
-O sistema utiliza busca por e-mail para proteger os dados do cliente (LGPD). O usuário informa o e-mail cadastrado na invoice e clica em **Consultar**. Se encontrado, os dados são preenchidos automaticamente (somente leitura):
+Regras:
 
-- Razão Social
-- País
-- Nome do Responsável
-- Telefone(s)
-- E-mail de Contato
+- Um produto por linha.
+- Manter os nomes em caixa alta, seguindo o padrao atual.
+- Depois de alterar, publicar no GitHub Pages.
 
-É possível adicionar e-mails adicionais opcionais para cópia no acompanhamento.
+## Publicacao
 
-> Para corrigir os dados preenchidos, clique em **✕ Limpar** e realize uma nova consulta.
+O site e publicado pelo GitHub Pages a partir da branch `main`.
 
-#### 📅 Datas e Prazo de Garantia
+Comandos usuais:
 
-| Campo | Obrigatório | Descrição |
-|---|---|---|
-| Data da Fatura (Invoice) | Sim | Data de emissão da fatura comercial |
-| Data de Recebimento da Mercadoria | Sim | Data em que o contêiner foi recebido no destino |
+```bash
+git status
+git add index.html produtos.txt README.md
+git commit -m "Descricao da alteracao"
+git push origin main
+```
 
-Após preencher as datas, o sistema calcula automaticamente quantos dias se passaram desde o recebimento e exibe uma barra de progresso indicando a situação da garantia:
+Depois do push, o GitHub Pages pode levar alguns instantes para refletir a alteracao no link publico.
 
-- **Verde** — dentro do prazo de 1 ano
-- **Amarelo** — próximo do limite (menos de 30 dias)
-- **Vermelho / Alerta** — fora do prazo de garantia
+## Observacoes de manutencao
 
-> Casos fora da garantia não são elegíveis para assistência técnica padrão. Apenas danos estruturais comprovados podem ser avaliados em caráter excepcional, mediante aprovação da SOHOME.
-
-Clique em **Avançar para o Registro →** para prosseguir. Todos os campos obrigatórios devem estar preenchidos.
-
----
-
-### Etapa 2 — Registro da Ocorrência
-
-Permite registrar um ou mais produtos com defeito vinculados à mesma invoice.
-
-#### 🛋️ Por produto, preencha:
-
-| Campo | Obrigatório | Descrição |
-|---|---|---|
-| Produto | Sim | Busca pelo nome — selecione da lista de produtos cadastrados |
-| Qtd. de Módulos | Sim | Quantidade de módulos afetados pelo defeito |
-| Descrição do Defeito | Sim | Descreva o que ocorreu, como ocorreu e quando foi identificado |
-| Embalagem avariada? | Sim | Indicar se a embalagem chegou com avarias (amassados, rasgos, umidade, impactos) |
-| Fotos e Vídeos | Recomendado | Anexar 1 foto do produto completo, 1 foto do defeito, 1 foto no ambiente e 1 vídeo demonstrativo |
-| O defeito impede o uso? | Sim | Indicar se o produto ficou inutilizável |
-| Reparo local possível? | Sim | Indicar se há viabilidade de reparo no local do cliente |
-
-Se o reparo local for **viável**, campos adicionais são exibidos:
-- Valor estimado do reparo
-- Nome do prestador de serviço
-- Upload do orçamento do prestador
-
-> Nenhum reembolso é realizado sem orçamento previamente aprovado pela SOHOME.
-
-#### Envio por produto
-
-Cada produto deve ser **enviado individualmente** antes de salvar o extrato, clicando no botão **📤 Enviar** no cabeçalho do bloco. Após o envio, o botão muda para **✓ Enviado** e o produto fica bloqueado para edição.
-
-Para adicionar mais produtos à mesma ocorrência, clique em **＋ Adicionar outro produto**.
-
-#### Salvar as informações
-
-Após enviar pelo menos um produto, clique em **💾 Salvar as Informações**. O sistema exibirá a tela de confirmação com:
-
-- Número do ticket gerado
-- Extrato completo da ocorrência
-- Botões para **Imprimir / Salvar PDF** e **Copiar Texto**
-- Opção para iniciar um novo registro
-
----
-
-## Idiomas Suportados
-
-O sistema detecta automaticamente o idioma do navegador e alterna entre:
-
-- 🇧🇷 Português (padrão)
-- 🇪🇸 Espanhol
-- 🇺🇸 Inglês
-
----
-
-## Cobertura da Garantia
-
-São **procedentes** de assistência técnica:
-- Defeitos de fabricação comprovados
-- Reincidências documentadas
-- Componentes faltantes ou incorretos
-- Reclamações dentro do prazo de 1 ano a partir do recebimento
-
-**Não são procedentes:**
-- Variações naturais de mármore, madeira ou textura
-- Divergências de até 2 cm em produtos artesanais
-- Reclamações após 1 ano do recebimento
-
----
-
-## Observações Técnicas
-
-- O sistema é **100% client-side** (sem backend próprio). O envio dos dados depende de integração configurada no script.
-- A base de clientes está embutida no arquivo HTML e é consultada localmente por e-mail.
-- Nenhum dado é armazenado no navegador entre sessões.
-- O layout é responsivo e funciona em dispositivos móveis.
+- Cada produto enviado cria um negocio separado no Bitrix24.
+- O botao **Enviar** envia ao Bitrix; o botao **Salvar as Informacoes** apenas gera o extrato.
+- Arquivos de imagem aparecem como miniaturas no extrato.
+- Videos, PDFs e documentos aparecem pelo nome do arquivo no extrato.
+- O campo de orcamento do Bitrix aceita apenas um arquivo; o formulario envia o primeiro arquivo anexado.
+- Evite commitar arquivos temporarios, como `~$Informacoes de Clientes.xlsx` e `Thumbs.db`.
