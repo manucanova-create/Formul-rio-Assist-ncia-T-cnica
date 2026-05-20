@@ -1716,6 +1716,11 @@ function selectedToggleValue(groupId) {
   return '';
 }
 
+function bitrixRecurrenceValue() {
+  const recurrence = document.getElementById('f-reincidencia');
+  return recurrence && recurrence.checked ? '907' : '909';
+}
+
 function daysAfterReceipt() {
   const receiptDate = fieldValue('receiptDate');
   if (!receiptDate) return '';
@@ -1753,6 +1758,11 @@ async function filesToBitrixField(files) {
   return Promise.all(files.map(fileToBitrixFile));
 }
 
+async function firstFileToBitrixField(files) {
+  if (!files || !files.length) return null;
+  return fileToBitrixFile(files[0]);
+}
+
 async function buildBitrixDealFieldsForProduct(bid, reg) {
   const productName = fieldValue('pb-prod-input-' + bid);
   const emails = [fieldValue('f-email')].concat(getExtraEmails()).filter(Boolean).join(', ');
@@ -1776,7 +1786,7 @@ async function buildBitrixDealFieldsForProduct(bid, reg) {
     UF_CRM_1778767236: fieldValue('invoiceDate'),
     UF_CRM_1778767167: fieldValue('receiptDate'),
     UF_CRM_1727360923: fieldValue('f-invoice'),
-    UF_CRM_DEAL_1673889459929: document.getElementById('f-reincidencia').checked ? 'Sim' : 'Nao',
+    UF_CRM_DEAL_1673889459929: bitrixRecurrenceValue(),
     UF_CRM_1778767501: fieldValue('f-invoice-orig'),
     UF_CRM_1748961942: fieldValue('f-razao'),
     UF_CRM_1702558335: fieldValue('f-pais'),
@@ -1786,7 +1796,8 @@ async function buildBitrixDealFieldsForProduct(bid, reg) {
   const productFiles = blockFiles[bid] ? blockFiles[bid].prod : [];
   const budgetFiles = repairIsYes && blockFiles[bid] ? blockFiles[bid].orc : [];
   fields.UF_CRM_1664887086 = await filesToBitrixField(productFiles);
-  fields.UF_CRM_166744111295 = await filesToBitrixField(budgetFiles);
+  const budgetFile = await firstFileToBitrixField(budgetFiles);
+  if (budgetFile) fields.UF_CRM_1667444111295 = budgetFile;
   return fields;
 }
 
