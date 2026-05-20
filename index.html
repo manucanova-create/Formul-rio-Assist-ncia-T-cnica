@@ -1677,8 +1677,118 @@ function resetAll(){
 /* ══ Per-block registration store ════════════════════════ */
 const blockRegs = {}; // blockRegs[id] = { ticket, timestamp }
 
+/* Bitrix24 integration */
+const BITRIX_DEAL_ADD_URL = 'https://meucentury.bitrix24.com.br/rest/121/sv6750id8bnohx55/crm.deal.add.json';
+
+const BITRIX_DEFAULT_FIELDS = {
+  STAGE_ID: 'NEW',
+  IS_MANUAL_OPPORTUNITY: 'N',
+  ASSIGNED_BY_ID: '105',
+  CREATED_BY_ID: '105',
+  MODIFY_BY_ID: '0',
+  OPENED: 'Y',
+  CLOSED: 'N',
+  CATEGORY_ID: '1',
+  STAGE_SEMANTIC_ID: 'P',
+  IS_NEW: 'N',
+  IS_RECURRING: 'N',
+  IS_RETURN_CUSTOMER: 'N',
+  IS_REPEATED_APPROACH: 'N',
+  MOVED_BY_ID: '0',
+  LAST_ACTIVITY_BY: '105'
+};
+
+function fieldValue(id) {
+  const el = document.getElementById(id);
+  return el ? el.value.trim() : '';
+}
+
+function selectedToggleValue(groupId) {
+  const group = document.getElementById(groupId);
+  if (!group) return '';
+  if (group.querySelector('.yes.on')) return 'Sim';
+  if (group.querySelector('.no.on')) return 'Nao';
+  return '';
+}
+
+function daysAfterReceipt() {
+  const receiptDate = fieldValue('receiptDate');
+  if (!receiptDate) return '';
+  const today = new Date();
+  today.setHours(0, 0, 0, 0);
+  const received = new Date(receiptDate + 'T00:00:00');
+  return String(Math.floor((today - received) / 864e5));
+}
+
+function fileToBitrixFile(file) {
+  return new Promise((resolve, reject) => {
+    const reader = new FileReader();
+    reader.onload = () => {
+      const dataUrl = String(reader.result || '');
+      resolve({ fileData: [file.name, dataUrl.split(',')[1] || ''] });
+    };
+    reader.onerror = () => reject(reader.error || new Error('Falha ao ler anexo.'));
+    reader.readAsDataURL(file);
+  });
+}
+
+async function filesToBitrixField(files) {
+  if (!files || !files.length) return [];
+  return Promise.all(files.map(fileToBitrixFile));
+}
+
+async function buildBitrixDealFieldsForProduct(bid, reg) {
+  const productName = fieldValue('pb-prod-input-' + bid);
+  const emails = [fieldValue('f-email')].concat(getExtraEmails()).filter(Boolean).join(', ');
+  const repairIsYes = selectedToggleValue('pb-q3-' + bid) === 'Sim';
+  const fields = {
+    ...BITRIX_DEFAULT_FIELDS,
+    TITLE: 'Assistencia Tecnica - ' + (productName || 'Produto') + ' - ' + (fieldValue('f-invoice') || reg.ticket),
+    UF_CRM_1779124884: daysAfterReceipt(),
+    UF_CRM_DEAL_1758647396824: fieldValue('f-po'),
+    UF_CRM_1778767737: fieldValue('pb-rp-' + bid),
+    UF_CRM_DEAL_1668773451236: productName,
+    UF_CRM_1664886906: fieldValue('pb-mod-' + bid),
+    UF_CRM_1664886937: fieldValue('pb-desc-' + bid),
+    UF_CRM_1778767570: selectedToggleValue('pb-q1-' + bid),
+    UF_CRM_1778767613: selectedToggleValue('pb-q2-' + bid),
+    UF_CRM_1778767696: fieldValue('pb-rv-' + bid),
+    UF_CRM_1778767669: selectedToggleValue('pb-q3-' + bid),
+    UF_CRM_1748962012: fieldValue('f-tel'),
+    UF_CRM_1748961973: emails,
+    UF_CRM_1749237856: fieldValue('f-resp'),
+    UF_CRM_1778767236: fieldValue('invoiceDate'),
+    UF_CRM_1778767167: fieldValue('receiptDate'),
+    UF_CRM_1727360923: fieldValue('f-invoice'),
+    UF_CRM_DEAL_1673889459929: document.getElementById('f-reincidencia').checked ? 'Sim' : 'Nao',
+    UF_CRM_1778767501: fieldValue('f-invoice-orig'),
+    UF_CRM_1748961942: fieldValue('f-razao'),
+    UF_CRM_1702558335: fieldValue('f-pais'),
+    UF_CRM_1727362004: 'EXPORTAÇÃO'
+  };
+
+  const productFiles = blockFiles[bid] ? blockFiles[bid].prod : [];
+  const budgetFiles = repairIsYes && blockFiles[bid] ? blockFiles[bid].orc : [];
+  fields.UF_CRM_1664887086 = await filesToBitrixField(productFiles);
+  fields.UF_CRM_166744111295 = await filesToBitrixField(budgetFiles);
+  return fields;
+}
+
+async function sendDealToBitrix(fields) {
+  const response = await fetch(BITRIX_DEAL_ADD_URL, {
+    method: 'POST',
+    headers: { 'Content-Type': 'application/json' },
+    body: JSON.stringify({ fields: fields, params: { REGISTER_SONET_EVENT: 'Y' } })
+  });
+  const data = await response.json().catch(() => ({}));
+  if (!response.ok || data.error) {
+    throw new Error(data.error_description || data.error || 'Nao foi possivel enviar para o Bitrix.');
+  }
+  return data.result;
+}
+
 /* ══ Enviar individual product block ═════════════════════ */
-function enviarProdBlock(id) {
+async function enviarProdBlock(id) {
   const block = document.getElementById('pb-' + id);
   if (!block) return;
   let ok = true;
@@ -1752,6 +1862,32 @@ function enviarProdBlock(id) {
     timestamp: now.toLocaleString('pt-BR')
   };
 
+  const err = document.getElementById('err-step2');
+  const btn = document.getElementById('pb-enviar-' + id);
+  if (err) err.classList.remove('show');
+  if (btn) {
+    btn.disabled = true;
+    btn.dataset.originalText = btn.dataset.originalText || btn.innerHTML;
+    btn.innerHTML = 'Enviando...';
+  }
+
+  try {
+    const fields = await buildBitrixDealFieldsForProduct(id, blockRegs[id]);
+    blockRegs[id].bitrixDealId = await sendDealToBitrix(fields);
+  } catch (e) {
+    delete blockRegs[id];
+    if (btn) {
+      btn.disabled = false;
+      btn.innerHTML = btn.dataset.originalText || 'Enviar';
+    }
+    if (err) {
+      err.textContent = 'Nao foi possivel enviar este produto para o Bitrix: ' + (e && e.message ? e.message : e);
+      err.classList.add('show');
+      err.scrollIntoView({ behavior: 'smooth', block: 'center' });
+    }
+    return false;
+  }
+
   // Show badge
   const badge = document.getElementById('pb-reg-' + id);
   const badgeNum = document.getElementById('pb-reg-num-' + id);
@@ -1759,7 +1895,6 @@ function enviarProdBlock(id) {
   if (badgeNum) badgeNum.textContent = ticket;
 
   // Mark button as sent
-  const btn = document.getElementById('pb-enviar-' + id);
   if (btn) {
     btn.classList.add('sent');
     btn.innerHTML = t('sent');
