@@ -596,6 +596,11 @@ input:checked+.slider:before{transform:translateX(20px);}
 .receipt-row{display:flex;padding:6px 0;font-size:14px;line-height:1.5;}
 .receipt-row .r-label{color:var(--brand-light);min-width:180px;flex-shrink:0;font-weight:500;}
 .receipt-row .r-value{color:var(--text);flex:1;word-break:break-word;}
+.receipt-file-gallery{display:flex;flex-wrap:wrap;gap:8px;}
+.receipt-file-thumb{width:96px;border:1px solid var(--border);border-radius:4px;background:#fff;overflow:hidden;}
+.receipt-file-thumb img{display:block;width:96px;height:72px;object-fit:cover;background:var(--cream);}
+.receipt-file-thumb span,.receipt-file-chip{display:block;padding:5px 6px;font-size:10px;line-height:1.25;color:var(--brand-light);word-break:break-word;}
+.receipt-file-chip{border:1px solid var(--border);border-radius:4px;background:#fff;color:var(--text);}
 .receipt-prod-card{background:var(--brand-pale);border:1px solid var(--border);border-radius:4px;padding:16px 20px;margin-bottom:12px;}
 .receipt-prod-card h4{font-size:13px;font-weight:700;color:var(--brand-dark);margin-bottom:10px;display:flex;align-items:center;gap:8px;flex-wrap:wrap;}
 .receipt-prod-card .reg-num{font-size:12px;color:var(--success);font-weight:600;background:rgba(46,125,94,.1);padding:2px 10px;border-radius:10px;}
@@ -644,6 +649,10 @@ input:checked+.slider:before{transform:translateX(20px);}
   .receipt-row{display:flex!important;padding:2.5px 0!important;font-size:11px!important;line-height:1.28!important;}
   .receipt-row .r-label{min-width:140px!important;color:var(--brand-light)!important;font-weight:500!important;}
   .receipt-row .r-value{color:var(--text)!important;}
+  .receipt-file-gallery{gap:5px!important;}
+  .receipt-file-thumb{width:72px!important;}
+  .receipt-file-thumb img{width:72px!important;height:54px!important;}
+  .receipt-file-thumb span,.receipt-file-chip{font-size:8px!important;padding:3px 4px!important;}
   .receipt-prod-card{background:var(--brand-pale)!important;border:1px solid var(--border)!important;border-radius:3px!important;padding:10px 12px!important;margin-bottom:8px!important;break-inside:avoid;page-break-inside:avoid;-webkit-print-color-adjust:exact;print-color-adjust:exact;}
   .receipt-prod-head{display:flex!important;align-items:flex-start!important;justify-content:space-between!important;gap:10px!important;margin-bottom:7px!important;}
   .receipt-prod-kicker{font-size:8px!important;margin-bottom:1px!important;}
@@ -2093,8 +2102,8 @@ function salvarInformacoes() {
     const prestador = (document.getElementById('pb-rp-' + bid) || {}).value || '';
     const fotos = blockFiles[bid] ? blockFiles[bid].prod.length : 0;
     const orcs = blockFiles[bid] ? blockFiles[bid].orc.length : 0;
-    const fotosNomes = blockFiles[bid] ? blockFiles[bid].prod.map(f => f.name).join(', ') : '';
-    const orcsNomes = blockFiles[bid] ? blockFiles[bid].orc.map(f => f.name).join(', ') : '';
+    const fotosPreview = blockFiles[bid] ? receiptFilesPreviewHtml(blockFiles[bid].prod) : '';
+    const orcsPreview = blockFiles[bid] ? receiptFilesPreviewHtml(blockFiles[bid].orc) : '';
 
     html += '<div class="receipt-prod-card">';
     html += '<div class="receipt-prod-head">';
@@ -2110,10 +2119,10 @@ function salvarInformacoes() {
       html += receiptRow(t('repairValueRow'), valorReparo || '—');
       html += receiptRow(t('providerRow'), prestador || '—');
       html += receiptRow(t('budgetFilesRow'), t('fileCount', orcs));
-      if (orcsNomes) html += receiptRow(t('budgetNamesRow'), orcsNomes);
+      if (orcsPreview) html += receiptHtmlRow(t('budgetNamesRow'), orcsPreview);
     }
     html += receiptRow(t('mediaFilesRow'), t('fileCount', fotos));
-    if (fotosNomes) html += receiptRow(t('mediaNamesRow'), fotosNomes);
+    if (fotosPreview) html += receiptHtmlRow(t('mediaNamesRow'), fotosPreview);
     html += receiptRow(t('registeredAt'), reg.timestamp);
     html += '</div>';
   });
@@ -2226,6 +2235,23 @@ function escapeHtml(value) {
 
 function receiptRow(label, value) {
   return '<div class="receipt-row"><span class="r-label">' + escapeHtml(label) + '</span><span class="r-value">' + escapeHtml(value) + '</span></div>';
+}
+
+function receiptHtmlRow(label, htmlValue) {
+  return '<div class="receipt-row"><span class="r-label">' + escapeHtml(label) + '</span><span class="r-value">' + (htmlValue || '—') + '</span></div>';
+}
+
+function receiptFilesPreviewHtml(files) {
+  if (!files || !files.length) return '';
+  const items = files.map(file => {
+    const name = escapeHtml(file.name);
+    if (file.type && file.type.startsWith('image/')) {
+      const url = URL.createObjectURL(file);
+      return '<span class="receipt-file-thumb"><img src="' + url + '" alt="' + name + '"><span>' + name + '</span></span>';
+    }
+    return '<span class="receipt-file-chip">' + name + '</span>';
+  }).join('');
+  return '<div class="receipt-file-gallery">' + items + '</div>';
 }
 
 function formatDate(val) {
