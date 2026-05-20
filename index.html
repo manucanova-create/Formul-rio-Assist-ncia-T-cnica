@@ -1683,6 +1683,7 @@ const blockRegs = {}; // blockRegs[id] = { ticket, timestamp }
 
 /* Bitrix24 integration */
 const BITRIX_DEAL_ADD_URL = 'https://meucentury.bitrix24.com.br/rest/121/sv6750id8bnohx55/crm.deal.add.json';
+const BITRIX_DEAL_UPDATE_URL = 'https://meucentury.bitrix24.com.br/rest/121/sv6750id8bnohx55/crm.deal.update.json';
 
 const BITRIX_DEFAULT_FIELDS = {
   STAGE_ID: 'C1:UC_WM3E1W',
@@ -1724,6 +1725,10 @@ function daysAfterReceipt() {
   return String(Math.floor((today - received) / 864e5));
 }
 
+function buildBitrixDealTitle(dealId) {
+  return 'Exportação || Atendimento:' + dealId + ' || Invoice:' + fieldValue('f-invoice') + ' || Cliente:' + fieldValue('f-razao');
+}
+
 function fileToBitrixFile(file) {
   return new Promise((resolve, reject) => {
     const reader = new FileReader();
@@ -1747,7 +1752,7 @@ async function buildBitrixDealFieldsForProduct(bid, reg) {
   const repairIsYes = selectedToggleValue('pb-q3-' + bid) === 'Sim';
   const fields = {
     ...BITRIX_DEFAULT_FIELDS,
-    TITLE: 'Assistencia Tecnica - ' + (productName || 'Produto') + ' - ' + (fieldValue('f-invoice') || reg.ticket),
+    TITLE: 'Exportação || Atendimento:Pendente || Invoice:' + fieldValue('f-invoice') + ' || Cliente:' + fieldValue('f-razao'),
     UF_CRM_1779124884: daysAfterReceipt(),
     UF_CRM_DEAL_1758647396824: fieldValue('f-po'),
     UF_CRM_1778767737: fieldValue('pb-rp-' + bid),
@@ -1787,6 +1792,21 @@ async function sendDealToBitrix(fields) {
   const data = await response.json().catch(() => ({}));
   if (!response.ok || data.error) {
     throw new Error(data.error_description || data.error || 'Nao foi possivel enviar para o Bitrix.');
+  }
+  const dealId = data.result;
+  await updateBitrixDealTitle(dealId);
+  return dealId;
+}
+
+async function updateBitrixDealTitle(dealId) {
+  const response = await fetch(BITRIX_DEAL_UPDATE_URL, {
+    method: 'POST',
+    headers: { 'Content-Type': 'application/json' },
+    body: JSON.stringify({ id: dealId, fields: { TITLE: buildBitrixDealTitle(dealId) } })
+  });
+  const data = await response.json().catch(() => ({}));
+  if (!response.ok || data.error) {
+    throw new Error(data.error_description || data.error || 'Nao foi possivel atualizar o titulo no Bitrix.');
   }
   return data.result;
 }
