@@ -1721,13 +1721,15 @@ function bitrixRecurrenceValue() {
   return recurrence && recurrence.checked ? '907' : '909';
 }
 
-function daysAfterReceipt() {
+function warrantyStatus() {
   const receiptDate = fieldValue('receiptDate');
   if (!receiptDate) return '';
   const today = new Date();
   today.setHours(0, 0, 0, 0);
   const received = new Date(receiptDate + 'T00:00:00');
-  return String(Math.floor((today - received) / 864e5));
+  const days = Math.floor((today - received) / 864e5);
+  if (days < 0) return 'Data futura';
+  return days <= 365 ? 'Dentro da garantia' : 'Fora da garantia';
 }
 
 function bitrixTitleInvoice() {
@@ -1770,7 +1772,7 @@ async function buildBitrixDealFieldsForProduct(bid, reg) {
   const fields = {
     ...BITRIX_DEFAULT_FIELDS,
     TITLE: 'Exportação || Atendimento:Pendente || Invoice:' + bitrixTitleInvoice() + ' || Cliente:' + fieldValue('f-razao'),
-    UF_CRM_1779124884: daysAfterReceipt(),
+    UF_CRM_1779124884: warrantyStatus(),
     UF_CRM_DEAL_1758647396824: fieldValue('f-po'),
     UF_CRM_1778767737: fieldValue('pb-rp-' + bid),
     UF_CRM_DEAL_1668773451236: productName,
